@@ -5,7 +5,7 @@
 (function() {
     console.log('CAPTCHA Loader: Initializing...');
     
-    // FIXED: Use GitHub Pages URL instead of raw.githubusercontent.com
+    // FIXED: Use GitHub Pages URL
     const CONFIG = {
         baseUrl: 'https://id786.github.io/captcha-widget/',
         files: [
@@ -17,12 +17,6 @@
 
     function loadCSS(href) {
         return new Promise((resolve, reject) => {
-            // Check if already loaded
-            if (document.querySelector(`link[href="${href}"]`)) {
-                resolve();
-                return;
-            }
-            
             const link = document.createElement('link');
             link.rel = 'stylesheet';
             link.href = href;
@@ -40,12 +34,6 @@
 
     function loadJS(src) {
         return new Promise((resolve, reject) => {
-            // Check if already loaded
-            if (document.querySelector(`script[src="${src}"]`)) {
-                resolve();
-                return;
-            }
-            
             const script = document.createElement('script');
             script.src = src;
             script.onload = () => {
@@ -65,8 +53,7 @@
         
         let containers = document.querySelectorAll('[data-captcha]');
         
-        // Auto-create container if none exists
-        if (containers.length === 0 && !document.getElementById('captcha-container')) {
+        if (containers.length === 0) {
             const container = document.createElement('div');
             container.id = 'captcha-container';
             container.setAttribute('data-captcha', 'true');
@@ -82,14 +69,9 @@
             if (window.initCaptcha) {
                 const options = {
                     theme: container.dataset.theme || 'light',
-                    difficulty: container.dataset.difficulty || 'medium',
-                    onSuccess: function() {
-                        console.log('CAPTCHA verification successful!');
-                    }
+                    difficulty: container.dataset.difficulty || 'medium'
                 };
                 window.initCaptcha(container.id, options);
-            } else {
-                console.error('initCaptcha function not available');
             }
         });
     }
@@ -109,8 +91,6 @@
             }
             
             console.log('🎉 CAPTCHA Loader: All files loaded successfully');
-            
-            // Initialize CAPTCHA
             initializeCaptcha();
             
         } catch (error) {
@@ -131,19 +111,16 @@
         
         containers.forEach(container => {
             container.innerHTML = `
-                <div style="border: 2px solid #ff6b6b; padding: 20px; border-radius: 10px; text-align: center; background: #fff5f5;">
-                    <h3>CAPTCHA Verification Required</h3>
-                    <p>There was an issue loading the CAPTCHA system.</p>
-                    <button onclick="location.reload()" style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
-                        Retry CAPTCHA
-                    </button>
-                    <p><small>If problem persists, check console for details</small></p>
+                <div style="border: 2px solid #ff6b6b; padding: 20px; border-radius: 10px; text-align: center;">
+                    <h3>CAPTCHA Verification</h3>
+                    <p>Please refresh the page to load CAPTCHA.</p>
+                    <button onclick="location.reload()">Retry</button>
                 </div>
             `;
         });
     }
 
-    // Start loading when DOM is ready
+    // Start loading
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', loadCaptcha);
     } else {
