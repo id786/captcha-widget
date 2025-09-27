@@ -8,7 +8,7 @@
     
     // Configuration
     const CONFIG = {
-        baseUrl: 'https://cdn.jsdelivr.net/gh/yourusername/captcha-widget@latest/',
+        baseUrl: 'https://cdn.jsdelivr.net/gh/id786/captcha-widget@latest/',
         // Alternative: baseUrl: 'https://yourusername.github.io/captcha-widget/',
         files: [
             'captcha-verification.js',
