@@ -14,6 +14,6 @@
 
     // Load the main loader
     const loaderScript = document.createElement('script');
-    loaderScript.src = 'https://cdn.jsdelivr.net/gh/yourusername/captcha-widget@latest/loader.js';
+    loaderScript.src = 'https://cdn.jsdelivr.net/gh/id786/captcha-widget@latest/loader.js';
     document.head.appendChild(loaderScript);
 })();
