@@ -1,106 +1,112 @@
 /**
- * CAPTCHA Loader - Lightweight script loader
- * Add this to your HTML for quick setup
+ * CAPTCHA Loader - Fixed Version
  */
-
 (function() {
     console.log('CAPTCHA Loader: Initializing...');
     
-    // Configuration
+    // FIXED: Use raw GitHub URLs
     const CONFIG = {
-        baseUrl: 'https://cdn.jsdelivr.net/gh/id786/captcha-widget@latest/',
-        // Alternative: baseUrl: 'https://yourusername.github.io/captcha-widget/',
+        baseUrl: 'https://raw.githubusercontent.com/id786/captcha-widget/main/',
         files: [
             'captcha-verification.js',
             'captcha-widget.js',
             'styles.css'
-        ],
-        version: '1.0.0'
+        ]
     };
 
-    // Load CSS
     function loadCSS(href) {
         return new Promise((resolve, reject) => {
-            if (document.querySelector(`link[href="${href}"]`)) {
-                resolve();
-                return;
-            }
-            
             const link = document.createElement('link');
             link.rel = 'stylesheet';
             link.href = href;
             link.onload = resolve;
-            link.onerror = reject;
+            link.onerror = () => {
+                console.error('Failed to load CSS:', href);
+                reject();
+            };
             document.head.appendChild(link);
         });
     }
 
-    // Load JavaScript
     function loadJS(src) {
         return new Promise((resolve, reject) => {
-            if (document.querySelector(`script[src="${src}"]`)) {
-                resolve();
-                return;
-            }
-            
             const script = document.createElement('script');
             script.src = src;
             script.onload = resolve;
-            script.onerror = reject;
+            script.onerror = () => {
+                console.error('Failed to load JS:', src);
+                reject();
+            };
             document.head.appendChild(script);
         });
     }
 
-    // Auto-initialize CAPTCHA
-    function initializeCaptcha() {
-        const containers = document.querySelectorAll('[data-captcha]');
-        
-        containers.forEach(container => {
-            const containerId = container.id || 'captcha-container-' + Math.random().toString(36).substr(2, 9);
-            if (!container.id) container.id = containerId;
-            
-            const options = {
-                theme: container.dataset.theme || 'light',
-                difficulty: container.dataset.difficulty || 'medium',
-                autoVerify: container.dataset.autoVerify !== 'false'
-            };
-            
-            if (window.initCaptcha) {
-                window.initCaptcha(containerId, options);
-            } else {
-                // Retry after a short delay
-                setTimeout(() => initializeCaptcha(), 100);
-            }
-        });
-    }
-
-    // Main loading function
     async function loadCaptcha() {
         try {
-            // Load CSS first
+            console.log('Loading CAPTCHA files from:', CONFIG.baseUrl);
+            
+            // Load CSS
             await loadCSS(CONFIG.baseUrl + 'styles.css');
+            console.log('CSS loaded successfully');
             
             // Load JS files
             for (const file of CONFIG.files) {
                 if (file.endsWith('.js')) {
                     await loadJS(CONFIG.baseUrl + file);
+                    console.log('JS loaded:', file);
                 }
             }
             
             console.log('CAPTCHA Loader: All files loaded successfully');
-            
-            // Initialize when DOM is ready
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initializeCaptcha);
-            } else {
-                initializeCaptcha();
-            }
+            initializeCaptcha();
             
         } catch (error) {
             console.error('CAPTCHA Loader: Failed to load files', error);
+            showErrorFallback();
         }
     }
 
-    // Start loading
-    loadCaptcha();
+    function initializeCaptcha() {
+        const containers = document.querySelectorAll('[data-captcha]');
+        
+        if (containers.length === 0) {
+            // Auto-create container if none exists
+            const container = document.createElement('div');
+            container.id = 'captcha-container';
+            container.setAttribute('data-captcha', 'true');
+            document.body.appendChild(container);
+            containers = [container];
+        }
+        
+        containers.forEach(container => {
+            if (window.initCaptcha) {
+                const options = {
+                    theme: container.dataset.theme || 'light',
+                    difficulty: container.dataset.difficulty || 'medium'
+                };
+                window.initCaptcha(container.id, options);
+            }
+        });
+    }
+
+    function showErrorFallback() {
+        console.log('Showing fallback CAPTCHA');
+        const containers = document.querySelectorAll('[data-captcha]');
+        containers.forEach(container => {
+            container.innerHTML = `
+                <div style="border: 1px solid #ccc; padding: 20px; text-align: center;">
+                    <p>CAPTCHA verification required</p>
+                    <p><small>Loading issue detected. Please refresh the page.</small></p>
+                    <button onclick="location.reload()">Retry CAPTCHA</button>
+                </div>
+            `;
+        });
+    }
+
+    // Start loading when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', loadCaptcha);
+    } else {
+        loadCaptcha();
+    }
 })();
