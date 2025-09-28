@@ -1,15 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Basic CAPTCHA Example</title>
-    <script src="../auto-loader.js"></script>
+    <title>Basic CAPTCHA Usage</title>
+    <script src="https://id786.github.io/captcha-widget/loader.js"></script>
 </head>
 <body>
-    <h1>Basic CAPTCHA Example</h1>
-    <p>This page automatically loads the CAPTCHA widget.</p>
+    <h1>Basic CAPTCHA Usage</h1>
     
-    <button class="protected-btn" onclick="alert('Unlocked!')">
-        Protected Button
-    </button>
+    <!-- CAPTCHA Container -->
+    <div id="captcha-container-1"></div>
+    
+    <!-- Protected Elements -->
+    <button class="protected-btn-1" onclick="downloadFile()">Download File</button>
+    
+    <div class="protected-con-1">
+        <p>This content is protected by CAPTCHA 1.</p>
+    </div>
+
+    <script>
+        // Initialize CAPTCHA when system is ready
+        function init() {
+            if (window.initCaptcha) {
+                window.initCaptcha('captcha-container-1');
+            } else {
+                setTimeout(init, 100);
+            }
+        }
+        
+        init();
+        
+        function downloadFile() {
+            if (window.captchaVerification && window.captchaVerification.getVerificationStatus('1')) {
+                alert('File download started!');
+            } else {
+                alert('Please complete CAPTCHA first!');
+            }
+        }
+    </script>
 </body>
 </html>
