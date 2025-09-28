@@ -1,197 +1,33 @@
 /**
- * CAPTCHA Widget Styles
- * Lightweight and customizable
+ * CAPTCHA Protection Classes Only
+ * Your CAPTCHA has its own styles built-in
  */
 
-.captcha-widget {
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 24px;
-    max-width: 320px;
-    margin: 20px auto;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-}
-
-.captcha-widget.light {
-    background: #ffffff;
-    color: #2d3748;
-}
-
-.captcha-widget.dark {
-    background: #2d3748;
-    color: #e2e8f0;
-    border-color: #4a5568;
-}
-
-.captcha-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.captcha-header h3 {
-    margin: 0;
-    font-size: 18px;
-    font-weight: 600;
-}
-
-.captcha-refresh {
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 6px;
-    transition: background-color 0.2s;
-    line-height: 1;
-}
-
-.captcha-refresh:hover {
-    background: #edf2f7;
-}
-
-.captcha-widget.dark .captcha-refresh:hover {
-    background: #4a5568;
-}
-
-.captcha-image {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.captcha-img {
-    border: 1px solid #cbd5e0;
-    border-radius: 8px;
-    width: 100%;
-    height: auto;
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
-}
-
-.captcha-input-group {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 16px;
-}
-
-.captcha-input {
-    flex: 1;
-    padding: 12px;
-    border: 2px solid #e2e8f0;
-    border-radius: 8px;
-    font-size: 16px;
-    transition: border-color 0.2s;
-}
-
-.captcha-input:focus {
-    outline: none;
-    border-color: #4299e1;
-}
-
-.captcha-verify {
-    background: #4299e1;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 600;
-    transition: background-color 0.2s;
-}
-
-.captcha-verify:hover {
-    background: #3182ce;
-}
-
-.captcha-verify:active {
-    transform: translateY(1px);
-}
-
-.captcha-status {
-    text-align: center;
-    font-size: 14px;
-    min-height: 20px;
-    font-weight: 500;
-    padding: 8px;
-    border-radius: 6px;
-    transition: all 0.3s ease;
-}
-
-.captcha-status.success {
-    color: #38a169;
-    background: #f0fff4;
-}
-
-.captcha-status.error {
-    color: #e53e3e;
-    background: #fff5f5;
-}
-
-.captcha-widget.dark .captcha-status.success {
-    background: #2d4b3a;
-}
-
-.captcha-widget.dark .captcha-status.error {
-    background: #4a2a2a;
-}
-
-/* Protected content styles */
-.protected-btn {
+/* Protection classes for multiple instances */
+[class*="protected-btn-"] {
     opacity: 0.6;
     cursor: not-allowed !important;
     pointer-events: none;
 }
 
-.protected-content {
+[class*="protected-con-"] {
     display: none;
 }
 
-.captcha-verified-indicator {
+[class*="captcha-verified-indicator-"] {
     display: none;
-    background: #38a169;
-    color: white;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-    margin-left: 10px;
 }
 
-.captcha-verified {
+[class*="captcha-verified-"] {
     opacity: 1 !important;
     cursor: pointer !important;
     pointer-events: all !important;
     display: block !important;
 }
 
-/* Responsive design */
-@media (max-width: 480px) {
-    .captcha-widget {
-        margin: 10px;
-        padding: 20px;
-        max-width: none;
-    }
-    
-    .captcha-input-group {
-        flex-direction: column;
-    }
-    
-    .captcha-verify {
-        width: 100%;
-    }
-}
-
-/* Animation for verification */
-@keyframes captchaSuccess {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
-
-.captcha-status.success {
-    animation: captchaSuccess 0.6s ease;
+/* Specific instance classes for better performance */
+.protected-btn-1, .protected-btn-2, .protected-btn-3,
+.protected-con-1, .protected-con-2, .protected-con-3,
+.captcha-verified-indicator-1, .captcha-verified-indicator-2, .captcha-verified-indicator-3 {
+    transition: all 0.3s ease;
 }
