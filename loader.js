@@ -1,11 +1,10 @@
 /**
- * CAPTCHA Loader - Manual Loading Only
- * Users must call window.initCaptcha() manually
+ * CAPTCHA Loader - Fixed Version (No setTimeout needed!)
+ * Loads synchronously and waits for readiness
  */
 
 (function() {
-    console.log('CAPTCHA Loader: Manual mode initialized');
-    console.log('Call window.initCaptcha(containerId, options) to create CAPTCHA instances');
+    console.log('CAPTCHA Loader: Starting synchronous load...');
     
     // Configuration
     const CONFIG = {
@@ -17,6 +16,7 @@
         ]
     };
 
+    // Synchronous CSS load
     function loadCSS(href) {
         return new Promise((resolve, reject) => {
             if (document.querySelector(`link[href="${href}"]`)) {
@@ -33,6 +33,7 @@
         });
     }
 
+    // Synchronous JS load
     function loadJS(src) {
         return new Promise((resolve, reject) => {
             if (document.querySelector(`script[src="${src}"]`)) {
@@ -48,29 +49,60 @@
         });
     }
 
-    // Manual loading function
+    // Wait for CAPTCHA system to be ready
+    function waitForCAPTCHAReady() {
+        return new Promise((resolve) => {
+            const checkReady = () => {
+                if (typeof window.initCaptcha !== 'undefined' && 
+                    typeof window.captchaVerification !== 'undefined') {
+                    resolve();
+                } else {
+                    setTimeout(checkReady, 10); // Check every 10ms
+                }
+            };
+            checkReady();
+        });
+    }
+
+    // Auto-initialize CAPTCHA containers when system is ready
+    function autoInitializeCAPTCHAs() {
+        const containers = document.querySelectorAll('[id^="captcha-container-"]');
+        containers.forEach(container => {
+            const containerId = container.id;
+            if (window.initCaptcha) {
+                console.log(`Auto-initializing CAPTCHA: ${containerId}`);
+                window.initCaptcha(containerId);
+            }
+        });
+    }
+
+    // Main loading function
     async function loadCAPTCHASystem() {
         try {
-            console.log('🚀 Loading CAPTCHA system manually...');
-            
             // Load CSS first
             await loadCSS(CONFIG.baseUrl + 'styles.css');
+            console.log('✅ CSS loaded');
             
-            // Load JS files
+            // Load JS files in order
             for (const file of CONFIG.files) {
                 if (file.endsWith('.js')) {
                     await loadJS(CONFIG.baseUrl + file);
+                    console.log(`✅ ${file} loaded`);
                 }
             }
             
-            console.log('✅ CAPTCHA system loaded successfully');
-            console.log('💡 Use: window.initCaptcha("captcha-container-1") to create CAPTCHA');
+            // Wait for CAPTCHA system to be fully ready
+            await waitForCAPTCHAReady();
+            console.log('🎉 CAPTCHA system fully ready!');
+            
+            // Auto-initialize any CAPTCHA containers found
+            autoInitializeCAPTCHAs();
             
         } catch (error) {
             console.error('❌ CAPTCHA Loader: Failed to load files', error);
         }
     }
 
-    // Auto-load when this script is included
+    // Start loading immediately and block until ready
     loadCAPTCHASystem();
 })();
