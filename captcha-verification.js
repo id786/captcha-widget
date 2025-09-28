@@ -1,99 +1,177 @@
 /**
- * CAPTCHA Verification System
- * Handles session management and content protection
+ * CAPTCHA Verification System - Multiple Instance Support
+ * Handles session management and content protection for multiple CAPTCHAs
  */
 
 class CaptchaVerification {
     constructor() {
-        this.verified = false;
-        this.verificationToken = null;
+        this.verifiedInstances = new Set(); // Track which instances are verified
+        this.verificationTokens = new Map(); // Store tokens per instance
         this.storageKey = 'captcha_widget_verified';
-        this.tokenKey = 'captcha_widget_token';
+        this.tokenKey = 'captcha_widget_tokens';
         
         this.init();
     }
 
     init() {
-        this.checkVerification();
+        this.loadFromStorage();
+        this.enableProtectedContent();
     }
 
-    generateToken() {
-        return 'captcha_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
+    generateToken(instanceId) {
+        return `captcha_${instanceId}_${Math.random().toString(36).substr(2, 9)}_${Date.now()}`;
     }
 
-    markAsVerified() {
-        this.verified = true;
-        this.verificationToken = this.generateToken();
+    markAsVerified(instanceId = '1') {
+        this.verifiedInstances.add(instanceId);
+        this.verificationTokens.set(instanceId, this.generateToken(instanceId));
         
         // Store in session storage
-        sessionStorage.setItem(this.storageKey, 'true');
-        sessionStorage.setItem(this.tokenKey, this.verificationToken);
+        this.saveToStorage();
         
-        this.enableProtectedContent();
-        console.log('CAPTCHA: User verified successfully');
-    }
-
-    enableProtectedContent() {
-        // Enable protected buttons
-        document.querySelectorAll('.protected-btn').forEach(btn => {
-            btn.disabled = false;
-            btn.classList.remove('protected-btn');
-            btn.classList.add('captcha-verified');
-        });
-
-        // Show protected content
-        document.querySelectorAll('.protected-content').forEach(content => {
-            content.style.display = 'block';
-            content.classList.add('captcha-verified');
-        });
-
-        // Show verified indicators
-        document.querySelectorAll('.captcha-verified-indicator').forEach(indicator => {
-            indicator.style.display = 'inline';
-        });
-
+        // Enable protected content for this instance
+        this.enableProtectedContent(instanceId);
+        
+        console.log(`CAPTCHA: Instance ${instanceId} verified successfully`);
+        
         // Trigger custom event
         document.dispatchEvent(new CustomEvent('captchaVerified', {
             detail: { 
-                token: this.verificationToken,
+                instanceId: instanceId,
+                token: this.verificationTokens.get(instanceId),
                 timestamp: Date.now()
             }
         }));
     }
 
-    checkVerification() {
-        const verified = sessionStorage.getItem(this.storageKey);
-        const token = sessionStorage.getItem(this.tokenKey);
-        
-        if (verified === 'true' && token) {
-            this.verified = true;
-            this.verificationToken = token;
-            this.enableProtectedContent();
-            return true;
+    enableProtectedContent(instanceId = null) {
+        if (instanceId) {
+            // Enable specific instance's protected content
+            this.enableInstanceContent(instanceId);
+        } else {
+            // Enable all verified instances' content
+            this.verifiedInstances.forEach(instance => {
+                this.enableInstanceContent(instance);
+            });
         }
-        return false;
     }
 
-    resetVerification() {
-        this.verified = false;
-        this.verificationToken = null;
-        sessionStorage.removeItem(this.storageKey);
-        sessionStorage.removeItem(this.tokenKey);
+    enableInstanceContent(instanceId) {
+        // Enable protected buttons for this instance
+        document.querySelectorAll(`.protected-btn-${instanceId}`).forEach(btn => {
+            btn.disabled = false;
+            btn.classList.remove(`protected-btn-${instanceId}`);
+            btn.classList.add(`captcha-verified-${instanceId}`);
+        });
+
+        // Show protected content for this instance
+        document.querySelectorAll(`.protected-con-${instanceId}`).forEach(content => {
+            content.style.display = 'block';
+            content.classList.add(`captcha-verified-${instanceId}`);
+        });
+
+        // Show verified indicators for this instance
+        document.querySelectorAll(`.captcha-verified-indicator-${instanceId}`).forEach(indicator => {
+            indicator.style.display = 'inline';
+        });
+    }
+
+    getVerificationStatus(instanceId = '1') {
+        return this.verifiedInstances.has(instanceId);
+    }
+
+    getVerificationToken(instanceId = '1') {
+        return this.verificationTokens.get(instanceId);
+    }
+
+    resetVerification(instanceId = null) {
+        if (instanceId) {
+            // Reset specific instance
+            this.verifiedInstances.delete(instanceId);
+            this.verificationTokens.delete(instanceId);
+            this.disableInstanceContent(instanceId);
+        } else {
+            // Reset all instances
+            this.verifiedInstances.clear();
+            this.verificationTokens.clear();
+            this.disableAllContent();
+        }
         
-        // Reset protected content
-        document.querySelectorAll('.captcha-verified').forEach(element => {
-            element.classList.remove('captcha-verified');
+        this.saveToStorage();
+        console.log(`CAPTCHA: Verification reset for instance ${instanceId || 'all'}`);
+    }
+
+    disableInstanceContent(instanceId) {
+        document.querySelectorAll(`.captcha-verified-${instanceId}`).forEach(element => {
+            element.classList.remove(`captcha-verified-${instanceId}`);
+            
+            if (element.classList.contains(`protected-btn-${instanceId}`)) {
+                element.disabled = true;
+            }
+            
+            if (element.classList.contains(`protected-con-${instanceId}`)) {
+                element.style.display = 'none';
+            }
+            
+            if (element.classList.contains(`captcha-verified-indicator-${instanceId}`)) {
+                element.style.display = 'none';
+            }
+        });
+    }
+
+    disableAllContent() {
+        // Disable all protected content
+        document.querySelectorAll('[class*="protected-btn-"]').forEach(btn => {
+            btn.disabled = true;
         });
         
-        console.log('CAPTCHA: Verification reset');
+        document.querySelectorAll('[class*="protected-con-"]').forEach(content => {
+            content.style.display = 'none';
+        });
+        
+        document.querySelectorAll('[class*="captcha-verified-indicator-"]').forEach(indicator => {
+            indicator.style.display = 'none';
+        });
     }
 
-    getVerificationStatus() {
-        return this.verified;
+    // Storage management
+    saveToStorage() {
+        const data = {
+            instances: Array.from(this.verifiedInstances),
+            tokens: Object.fromEntries(this.verificationTokens)
+        };
+        sessionStorage.setItem(this.storageKey, JSON.stringify(data));
     }
 
-    getVerificationToken() {
-        return this.verificationToken;
+    loadFromStorage() {
+        try {
+            const stored = sessionStorage.getItem(this.storageKey);
+            if (stored) {
+                const data = JSON.parse(stored);
+                this.verifiedInstances = new Set(data.instances || []);
+                this.verificationTokens = new Map(Object.entries(data.tokens || {}));
+            }
+        } catch (error) {
+            console.warn('CAPTCHA: Failed to load verification data from storage');
+        }
+    }
+
+    // Get all verified instances
+    getVerifiedInstances() {
+        return Array.from(this.verifiedInstances);
+    }
+
+    // Check if any instance is verified
+    isAnyVerified() {
+        return this.verifiedInstances.size > 0;
+    }
+
+    // Remove specific instance
+    removeInstance(instanceId) {
+        this.verifiedInstances.delete(instanceId);
+        this.verificationTokens.delete(instanceId);
+        this.disableInstanceContent(instanceId);
+        this.saveToStorage();
     }
 }
 
