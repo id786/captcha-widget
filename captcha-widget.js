@@ -520,21 +520,6 @@ class CustomCaptcha {
                     transform: rotate(360deg);
                 }
 
-                .submit-buttongic-${this.instanceId} {
-                    margin-top: 10px;
-                    padding: 10px 20px;
-                    background: #007bff;
-                    color: white;
-                    border: none;
-                    border-radius: 5px;
-                    cursor: pointer;
-                }
-
-                .submit-buttongic-${this.instanceId}:disabled {
-                    background: #6c757d;
-                    cursor: not-allowed;
-                }
-
                 .puzzle-slidergic-${this.instanceId}.activegic-${this.instanceId} {
                     transform: scale(0.95);
                     box-shadow: 0 6px 15px rgba(0,0,0,0.3);
@@ -560,9 +545,6 @@ class CustomCaptcha {
                     <div class="loading-bargic-${this.instanceId}" id="loadingBargic-${this.instanceId}"></div>
                 </div>
             </div>
-
-            <button class="submit-buttongic-${this.instanceId} protected-btn-${this.instanceId}" id="actionButtongic-${this.instanceId}" disabled>Submit</button>
-
             <!-- Modal -->
             <div class="modal-containergic-${this.instanceId}" id="verificationModalgic-${this.instanceId}">
                 <div class="modal-contentgic-${this.instanceId}">
@@ -667,8 +649,7 @@ class CustomCaptcha {
         const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
         const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
         const closeBtngic = document.getElementById(`modalClosegic-${instanceId}`);
-        const submitBtngic = document.getElementById(`actionButtongic-${instanceId}`);
-
+        
         if (!triggergic || !modalgic) return;
 
         // Event listeners
@@ -1267,7 +1248,6 @@ class CustomCaptcha {
         const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
         const containergic = document.getElementById(`captchaContainergic-${instanceId}`);
         const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
-        const submitBtngic = document.getElementById(`actionButtongic-${instanceId}`);
         const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
 
         modalgic.style.display = 'none';
@@ -1290,10 +1270,6 @@ class CustomCaptcha {
         }
         
         this.isVerified = true;
-        
-        if (submitBtngic) {
-            submitBtngic.disabled = false;
-        }
 
         // Notify verification system
         if (window.captchaVerification) {
@@ -1380,7 +1356,6 @@ class CustomCaptcha {
         const containergic = document.getElementById(`captchaContainergic-${instanceId}`);
         const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
         const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
-        const submitBtngic = document.getElementById(`actionButtongic-${instanceId}`);
         const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
 
         // Reset visual state
@@ -1391,10 +1366,6 @@ class CustomCaptcha {
         if (triggergic) {
             triggergic.style.display = 'block';
             triggergic.classList.remove(`j1k2l3mgic-${instanceId}`);
-        }
-        
-        if (submitBtngic) {
-            submitBtngic.disabled = true;
         }
         
         modalgic.style.display = 'none';
