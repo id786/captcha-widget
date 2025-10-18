@@ -20,6 +20,7 @@ class CustomCaptcha {
     init() {
         this.createCaptcha();
         this.bindEvents();
+        this.initializeCaptchaData();
     }
 
     createCaptcha() {
@@ -533,6 +534,11 @@ class CustomCaptcha {
                     background: #6c757d;
                     cursor: not-allowed;
                 }
+
+                .puzzle-slidergic-${this.instanceId}.activegic-${this.instanceId} {
+                    transform: scale(0.95);
+                    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+                }
             </style>
 
             <div class="x1a2b3cgic-${this.instanceId}" id="captchaContainergic-${this.instanceId}">
@@ -542,7 +548,7 @@ class CustomCaptcha {
                 </div>
                 <div class="e4f5g6hgic-${this.instanceId}">
                     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="33px" height="33px" viewbox="330 330 1350 1350" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
-                        <!-- SVG content remains the same -->
+                        <!-- Your SVG content here (same as original) -->
                         <g><path style="opacity:0.852" fill="#ffd500" d="M 1140.5,324.5 C 1172.5,324.333 1204.5,324.5 1236.5,325C 1279.63,325.886 1322.63,327.219 1365.5,329C 1372.84,332.843 1375.34,338.676 1373,346.5C 1370.43,348.647 1368.59,351.314 1367.5,354.5C 1168.75,553.581 969.752,752.248 770.5,950.5C 769.024,953.143 767.024,955.31 764.5,957C 767.447,957.112 768.78,958.612 768.5,961.5C 769.978,961.238 771.311,961.571 772.5,962.5C 794.018,977.512 815.685,992.346 837.5,1007C 848.843,1015.34 860.177,1023.67 871.5,1032C 881.116,1037.64 890.45,1043.64 899.5,1050C 900.337,1051.01 900.67,1052.18 900.5,1053.5C 901.873,1053.34 903.207,1053.51 904.5,1054C 989.258,1113.22 1074.26,1172.22 1159.5,1231C 1160.34,1232.01 1160.67,1233.18 1160.5,1234.5C 1163.74,1234.88 1166.74,1236.05 1169.5,1238C 1184.98,1249.82 1200.98,1260.82 1217.5,1271C 1218.38,1272.36 1218.71,1273.86 1218.5,1275.5C 1219.5,1275.5 1220.5,1275.5 1221.5,1275.5C 1221.66,1272.81 1221.5,1270.15 1221,1267.5C 1214.84,1246.21 1208.84,1224.88 1203,1203.5C 1200.01,1189.13 1196.85,1174.8 1193.5,1160.5C 1190.34,1155.38 1188.67,1149.71 1188.5,1143.5C 1187.81,1141.73 1186.98,1140.06 1186,1138.5C 1183.16,1123.85 1179.99,1109.19 1176.5,1094.5C 1175.04,1092.72 1173.88,1090.72 1173,1088.5C 1169.72,1072.11 1166.05,1055.77 1162,1039.5C 1160.45,1033.63 1158.45,1027.97 1156,1022.5C 1152.25,1006.13 1148.59,989.795 1145,973.5C 1144.33,972.833 1143.67,972.167 1143,971.5C 1138.9,952.966 1134.23,934.633 1129,916.5C 1128.67,913.5 1128.33,910.5 1128,907.5C 1126.18,905.084 1124.85,902.418 1124,899.5C 1120.98,883.312 1117.48,867.312 1113.5,851.5C 1113.69,848.351 1114.69,845.518 1116.5,843C 1170.5,842.333 1224.5,842.333 1278.5,843C 1281.69,844.087 1285.02,844.92 1288.5,845.5C 1290.33,847.166 1291.67,849.166 1292.5,851.5C 1297.27,867.342 1301.1,883.342 1304,899.5C 1308.63,912.292 1312.63,925.292 1316,938.5C 1315.77,944.34 1317.1,949.674 1320,954.5C 1320.49,959.933 1321.49,965.267 1323,970.5C 1324.73,976.295 1326.73,981.961 1329,987.5C 1332.07,1001.41 1335.07,1015.41 1338,1029.5C 1339.89,1031.48 1341.22,1033.82 1342,1036.5C 1345.07,1050.41 1348.07,1064.41 1351,1078.5C 1353.18,1086.66 1355.85,1094.66 1359,1102.5C 1365.65,1128.75 1372.32,1155.08 1379,1181.5C 1380,1183.83 1381,1186.17 1382,1188.5C 1383.49,1196.94 1385.16,1205.28 1387,1213.5C 1390.09,1221.42 1392.76,1229.42 1395,1237.5C 1396.72,1246.51 1398.56,1255.51 1400.5,1264.5C 1402.97,1269.12 1404.14,1274.12 1404,1279.5C 1405.77,1281.58 1407.1,1283.92 1408,1286.5C 1410.98,1302.75 1414.65,1318.75 1419,1334.5C 1421.2,1340.09 1423.2,1345.76 1425,1351.5C 1432.87,1383.44 1440.87,1415.44 1449,1447.5C 1451.41,1455.51 1454.08,1463.51 1457,1471.5C 1457.33,1474.83 1457.67,1478.17 1458,1481.5C 1461.71,1491.89 1464.37,1502.55 1466,1513.5C 1466.77,1516.48 1468.1,1519.15 1470,1521.5C 1473.08,1535.15 1476.08,1548.82 1479,1562.5C 1488.84,1594.01 1497.34,1625.84 1504.5,1658C 1501.47,1673.18 1492.8,1677.85 1478.5,1672C 1439.28,1643.57 1399.61,1615.9 1359.5,1589C 1358.66,1587.99 1358.33,1586.82 1358.5,1585.5C 1355.76,1584.61 1353.09,1583.45 1350.5,1582C 1336.92,1572.62 1323.42,1563.12 1310,1553.5C 1309.52,1552.55 1309.35,1551.55 1309.5,1550.5C 1306.59,1550.42 1303.93,1549.59 1301.5,1548C 1237.36,1501.85 1172.69,1456.51 1107.5,1412C 1102.94,1407.91 1098.27,1404.07 1093.5,1400.5C 1066.59,1382.56 1039.93,1364.39 1013.5,1346C 1005.57,1339.56 997.233,1333.73 988.5,1328.5C 987.614,1327.68 987.281,1326.68 987.5,1325.5C 975.554,1318.85 964.221,1311.18 953.5,1302.5C 947.64,1299.97 942.64,1296.3 938.5,1291.5C 924.938,1283.26 911.938,1274.26 899.5,1264.5C 874.578,1247.92 849.911,1230.92 825.5,1213.5C 824.147,1212.48 823.48,1211.14 823.5,1209.5C 822.127,1209.66 820.793,1209.49 819.5,1209C 758.262,1166.01 697.095,1123.18 636,1080.5C 635.517,1079.55 635.351,1078.55 635.5,1077.5C 626.189,1073.89 617.856,1068.55 610.5,1061.5C 601.675,1057.01 593.675,1051.34 586.5,1044.5C 578.641,1040.07 571.307,1034.9 564.5,1029C 559.136,1025.93 553.803,1022.76 548.5,1019.5C 537.794,1011.49 527.127,1003.49 516.5,995.5C 505.85,992.032 499.85,984.866 498.5,974C 499.264,970.041 500.431,966.208 502,962.5C 715.089,749.911 927.922,537.245 1140.5,324.5 Z"/></g>
                         <!-- Additional SVG paths... -->
                     </svg>
@@ -575,7 +581,7 @@ class CustomCaptcha {
 
                         <div class="modal-footergic-${this.instanceId}">
                             <button id="completeVerificationgic-${this.instanceId}" class="verify-btngic-${this.instanceId}">Verify</button>
-                            <button class="refresh-buttongic-${this.instanceId}" onclick="this.captchaInstance.refreshCaptchagic(1)">
+                            <button class="refresh-buttongic-${this.instanceId}">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M23 4v6h-6"/>
                                     <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
@@ -611,7 +617,7 @@ class CustomCaptcha {
 
                         <div class="modal-footergic-${this.instanceId}">
                             <button id="verifySlidePuzzlegic-${this.instanceId}" class="verify-btngic-${this.instanceId}">Verify</button>
-                            <button class="refresh-buttongic-${this.instanceId}" onclick="this.captchaInstance.refreshCaptchagic(2)">
+                            <button class="refresh-buttongic-${this.instanceId}">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M23 4v6h-6"/>
                                     <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
@@ -632,7 +638,7 @@ class CustomCaptcha {
 
                         <div class="modal-footergic-${this.instanceId}">
                             <button id="verifyImageClickgic-${this.instanceId}" class="verify-btngic-${this.instanceId}" disabled>Verify</button>
-                            <button class="refresh-buttongic-${this.instanceId}" onclick="this.captchaInstance.refreshCaptchagic(3)">
+                            <button class="refresh-buttongic-${this.instanceId}">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M23 4v6h-6"/>
                                     <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
@@ -658,100 +664,183 @@ class CustomCaptcha {
         const instanceId = this.instanceId;
         
         // Get elements for this instance
-        const containergic = document.getElementById(`captchaContainergic-${instanceId}`);
         const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
-        const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
         const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
         const closeBtngic = document.getElementById(`modalClosegic-${instanceId}`);
         const submitBtngic = document.getElementById(`actionButtongic-${instanceId}`);
 
         if (!triggergic || !modalgic) return;
 
-        // Initialize CAPTCHA data
-        this.initializeCaptchaData();
-
         // Event listeners
         triggergic.addEventListener('click', () => {
-            this.handleTriggerClick(instanceId);
+            this.handleTriggerClick();
         });
 
         closeBtngic.addEventListener('click', () => {
-            this.handleFailuregic(instanceId);
+            this.handleFailuregic();
         });
 
-        modalgic.addEventListener('click', (egic) => {
-            if (egic.target === modalgic) this.handleFailuregic(instanceId);
+        modalgic.addEventListener('click', (e) => {
+            if (e.target === modalgic) this.handleFailuregic();
         });
 
         // Setup CAPTCHA type specific events
-        this.setupType1Events(instanceId);
-        this.setupType2Events(instanceId);
-        this.setupType3Events(instanceId);
+        this.setupType1Events();
+        this.setupType2Events();
+        this.setupType3Events();
     }
 
     initializeCaptchaData() {
         // CAPTCHA configuration data
-        this.imageDatagic = [
-            { srcgic: "https://i.postimg.cc/tJ08Qq7n/download-1.jpg", altgic: "Bird", typegic: "bird", correctgic: true },
-            { srcgic: "https://i.postimg.cc/7LFKbB4p/download-2.jpg", altgic: "Plane", typegic: "plane", correctgic: false },
-            { srcgic: "https://i.postimg.cc/hvgM1ffs/download-3.jpg", altgic: "Bottle", typegic: "bottle", correctgic: true },
-            { srcgic: "https://i.postimg.cc/kgkQyBHS/download-4.jpg", altgic: "Clock", typegic: "clock", correctgic: true },
-            { srcgic: "https://i.postimg.cc/2yhyrSws/download-5.jpg", altgic: "Palm fruit", typegic: "palm-fruit", correctgic: true },
-            { srcgic: "https://i.postimg.cc/90tFCdgn/download.jpg", altgic: "Sea", typegic: "sea", correctgic: false },
-            { srcgic: "https://i.postimg.cc/9XZQ4zdS/images-1.jpg", altgic: "Coconut tree", typegic: "coconut-tree", correctgic: false },
-            { srcgic: "https://i.postimg.cc/qvbJfKrt/download-6.jpg", altgic: "Monkey", typegic: "monkey", correctgic: false },
-            { srcgic: "https://i.postimg.cc/dQ2Jspvc/download-7.jpg", altgic: "Mars", typegic: "mars", correctgic: false },
-            { srcgic: "https://i.postimg.cc/sXXL2zdw/images-3.jpg", altgic: "New Image", typegic: "new1", correctgic: false },
-            { srcgic: "https://i.postimg.cc/QNg6rVW2/broom.jpg", altgic: "Broom", typegic: "broom", correctgic: false },
-            { srcgic: "https://i.postimg.cc/W3vM96Sd/mobile.jpg", altgic: "Mobile", typegic: "mobile", correctgic: true },
-            { srcgic: "https://i.postimg.cc/8Pjrm0D9/blb.jpg", altgic: "BLB", typegic: "blb", correctgic: true }
+        this.imageData = [
+            { src: "https://i.postimg.cc/tJ08Qq7n/download-1.jpg", alt: "Bird", type: "bird", correct: true },
+            { src: "https://i.postimg.cc/7LFKbB4p/download-2.jpg", alt: "Plane", type: "plane", correct: false },
+            { src: "https://i.postimg.cc/hvgM1ffs/download-3.jpg", alt: "Bottle", type: "bottle", correct: true },
+            { src: "https://i.postimg.cc/kgkQyBHS/download-4.jpg", alt: "Clock", type: "clock", correct: true },
+            { src: "https://i.postimg.cc/2yhyrSws/download-5.jpg", alt: "Palm fruit", type: "palm-fruit", correct: true },
+            { src: "https://i.postimg.cc/90tFCdgn/download.jpg", alt: "Sea", type: "sea", correct: false },
+            { src: "https://i.postimg.cc/9XZQ4zdS/images-1.jpg", alt: "Coconut tree", type: "coconut-tree", correct: false },
+            { src: "https://i.postimg.cc/qvbJfKrt/download-6.jpg", alt: "Monkey", type: "monkey", correct: false },
+            { src: "https://i.postimg.cc/dQ2Jspvc/download-7.jpg", alt: "Mars", type: "mars", correct: false },
+            { src: "https://i.postimg.cc/sXXL2zdw/images-3.jpg", alt: "New Image", type: "new1", correct: false },
+            { src: "https://i.postimg.cc/QNg6rVW2/broom.jpg", alt: "Broom", type: "broom", correct: false },
+            { src: "https://i.postimg.cc/W3vM96Sd/mobile.jpg", alt: "Mobile", type: "mobile", correct: true },
+            { src: "https://i.postimg.cc/8Pjrm0D9/blb.jpg", alt: "BLB", type: "blb", correct: true }
         ];
 
-        this.imageSetsgic = {
+        this.imageSets = {
             1: {
-                imageUrlgic: "https://i.postimg.cc/Z5NxCx71/Picsart-25-10-03-07-50-10-932.jpg",
-                clickSequencegic: ['book', 'scissor', 'guitar', 'vase', 'chair'],
-                areasgic: [
-                    { targetgic: 'book', coordsgic: [402,194,513,307], shapegic: 'rect' },
-                    { targetgic: 'scissor', coordsgic: [1,93,139,201], shapegic: 'rect' },
-                    { targetgic: 'guitar', coordsgic: [99,546,235,647], shapegic: 'rect' },
-                    { targetgic: 'vase', coordsgic: [485,429,631,560], shapegic: 'rect' },
-                    { targetgic: 'chair', coordsgic: [486,637,56], shapegic: 'circle' }
+                imageUrl: "https://i.postimg.cc/Z5NxCx71/Picsart-25-10-03-07-50-10-932.jpg",
+                clickSequence: ['book', 'scissor', 'guitar', 'vase', 'chair'],
+                areas: [
+                    { target: 'book', coords: [402,194,513,307], shape: 'rect' },
+                    { target: 'scissor', coords: [1,93,139,201], shape: 'rect' },
+                    { target: 'guitar', coords: [99,546,235,647], shape: 'rect' },
+                    { target: 'vase', coords: [485,429,631,560], shape: 'rect' },
+                    { target: 'chair', coords: [486,637,56], shape: 'circle' }
                 ]
             },
             2: {
-                imageUrlgic: "https://i.postimg.cc/s2cwRrMn/Colorsinorder.jpg",
-                clickSequencegic: ['house', 'plane', 'lock'],
-                areasgic: [
-                    { targetgic: 'house', coordsgic: [425,231,528,316], shapegic: 'rect' },
-                    { targetgic: 'plane', coordsgic: [434,500,573,639], shapegic: 'rect' },
-                    { targetgic: 'lock', coordsgic: [100,489,194,575], shapegic: 'rect' }
+                imageUrl: "https://i.postimg.cc/s2cwRrMn/Colorsinorder.jpg",
+                clickSequence: ['house', 'plane', 'lock'],
+                areas: [
+                    { target: 'house', coords: [425,231,528,316], shape: 'rect' },
+                    { target: 'plane', coords: [434,500,573,639], shape: 'rect' },
+                    { target: 'lock', coords: [100,489,194,575], shape: 'rect' }
                 ]
             }
         };
 
-        this.shapeTypesgic = ['square', 'circle', 'triangle', 'diamond'];
+        this.shapeTypes = ['square', 'circle', 'triangle', 'diamond'];
         
         // State variables
-        this.selectedImagesgic = [];
-        this.currentCaptchaTypegic = 1;
-        this.isDragginggic = false;
-        this.sliderPositiongic = 0;
-        this.currentCorrectAnswersgic = [];
-        this.currentShapeTypegic = 'square';
-        this.targetPositiongic = 0;
-        this.shapeStartPositiongic = 0;
-        this.isFirstTrygic = true;
-        this.hasDraggedgic = false;
-        this.clickedItemsgic = [];
-        this.clickCountergic = 0;
-        this.clickPositionsgic = [];
-        this.currentImageSetgic = 1;
+        this.selectedImages = [];
+        this.currentCaptchaType = 1;
+        this.isDragging = false;
+        this.sliderPosition = 0;
+        this.currentCorrectAnswers = [];
+        this.currentShapeType = 'square';
+        this.targetPosition = 0;
+        this.shapeStartPosition = 0;
+        this.isFirstTry = true;
+        this.hasDragged = false;
+        this.clickedItems = [];
+        this.clickCounter = 0;
+        this.clickPositions = [];
+        this.currentImageSet = 1;
     }
 
-    handleTriggerClick(instanceId) {
+    setupType1Events() {
+        const instanceId = this.instanceId;
+        const completeVerificationBtn = document.getElementById(`completeVerificationgic-${instanceId}`);
+        const captchaGrid = document.getElementById(`captchaGridgic-${instanceId}`);
+        const refreshBtn = document.querySelector(`#captchaType1gic-${instanceId} .refresh-buttongic-${instanceId}`);
+
+        if (completeVerificationBtn) {
+            completeVerificationBtn.addEventListener('click', () => {
+                this.completeType1Verification();
+            });
+        }
+
+        if (captchaGrid) {
+            captchaGrid.addEventListener('click', (e) => {
+                if (e.target.classList.contains(`captcha-imagegic-${instanceId}`)) {
+                    const container = e.target.parentElement;
+                    const type = container.getAttribute('data-type');
+                    this.handleImageSelection(container, type);
+                }
+            });
+        }
+
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', () => {
+                this.refreshCaptcha(1);
+            });
+        }
+    }
+
+    setupType2Events() {
+        const instanceId = this.instanceId;
+        const verifySlidePuzzleBtn = document.getElementById(`verifySlidePuzzlegic-${instanceId}`);
+        const puzzleSlider = document.getElementById(`puzzleSlidergic-${instanceId}`);
+        const refreshBtn = document.querySelector(`#captchaType2gic-${instanceId} .refresh-buttongic-${instanceId}`);
+
+        if (verifySlidePuzzleBtn) {
+            verifySlidePuzzleBtn.addEventListener('click', () => {
+                this.completeType2Verification();
+            });
+        }
+
+        if (puzzleSlider) {
+            // Mouse events
+            puzzleSlider.addEventListener('mousedown', (e) => this.startDrag(e));
+            document.addEventListener('mousemove', (e) => this.duringDrag(e));
+            document.addEventListener('mouseup', () => this.stopDrag());
+
+            // Touch events
+            puzzleSlider.addEventListener('touchstart', (e) => this.startDrag(e), { passive: false });
+            document.addEventListener('touchmove', (e) => this.duringDrag(e), { passive: false });
+            document.addEventListener('touchend', () => this.stopDrag());
+        }
+
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', () => {
+                this.refreshCaptcha(2);
+            });
+        }
+    }
+
+    setupType3Events() {
+        const instanceId = this.instanceId;
+        const verifyImageClickBtn = document.getElementById(`verifyImageClickgic-${instanceId}`);
+        const clickImage = document.querySelector(`#captchaType3gic-${instanceId} .click-imagegic-${instanceId}`);
+        const refreshBtn = document.querySelector(`#captchaType3gic-${instanceId} .refresh-buttongic-${instanceId}`);
+
+        if (verifyImageClickBtn) {
+            verifyImageClickBtn.addEventListener('click', () => {
+                this.completeType3Verification();
+            });
+        }
+
+        if (clickImage) {
+            clickImage.addEventListener('click', (e) => {
+                this.handleImageClick(e);
+            });
+        }
+
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', () => {
+                this.refreshCaptcha(3);
+            });
+        }
+    }
+
+    // ========== CORE CAPTCHA FUNCTIONALITY ==========
+
+    handleTriggerClick() {
         if (this.isVerified) return;
 
+        const instanceId = this.instanceId;
         const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
         const containergic = document.getElementById(`captchaContainergic-${instanceId}`);
         const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
@@ -768,418 +857,418 @@ class CustomCaptcha {
         loadingBarContainergic.classList.add(`activegic-${instanceId}`);
 
         setTimeout(() => {
-            this.currentCaptchaTypegic = this.getRandomCaptchaTypegic();
-            this.showCaptchaTypegic(this.currentCaptchaTypegic, instanceId);
+            this.currentCaptchaType = this.getRandomCaptchaType();
+            this.showCaptchaType(this.currentCaptchaType);
             modalgic.style.display = 'flex';
         }, 700);
     }
 
-    getRandomCaptchaTypegic() {
-        const randomgic = Math.random();
-        if (randomgic < 1/3) return 1;
-        if (randomgic < 2/3) return 2;
+    getRandomCaptchaType() {
+        const random = Math.random();
+        if (random < 1/3) return 1;
+        if (random < 2/3) return 2;
         return 3;
     }
 
-    showCaptchaTypegic(typegic, instanceId) {
-        const captchaType1gic = document.getElementById(`captchaType1gic-${instanceId}`);
-        const captchaType2gic = document.getElementById(`captchaType2gic-${instanceId}`);
-        const captchaType3gic = document.getElementById(`captchaType3gic-${instanceId}`);
+    showCaptchaType(type) {
+        const instanceId = this.instanceId;
+        const captchaType1 = document.getElementById(`captchaType1gic-${instanceId}`);
+        const captchaType2 = document.getElementById(`captchaType2gic-${instanceId}`);
+        const captchaType3 = document.getElementById(`captchaType3gic-${instanceId}`);
 
-        captchaType1gic.style.display = 'none';
-        captchaType2gic.style.display = 'none';
-        captchaType3gic.style.display = 'none';
+        captchaType1.style.display = 'none';
+        captchaType2.style.display = 'none';
+        captchaType3.style.display = 'none';
 
-        if (typegic === 1) {
-            captchaType1gic.style.display = 'block';
-            this.initializeType1gic(instanceId);
-        } else if (typegic === 2) {
-            captchaType2gic.style.display = 'block';
-            this.initializeType2gic(instanceId);
-        } else if (typegic === 3) {
-            captchaType3gic.style.display = 'block';
-            this.initializeType3gic(instanceId);
+        if (type === 1) {
+            captchaType1.style.display = 'block';
+            this.initializeType1();
+        } else if (type === 2) {
+            captchaType2.style.display = 'block';
+            this.initializeType2();
+        } else if (type === 3) {
+            captchaType3.style.display = 'block';
+            this.initializeType3();
         }
     }
 
-    setupType1Events(instanceId) {
-    const completeVerificationBtn = document.getElementById(`completeVerificationgic-${instanceId}`);
-    if (completeVerificationBtn) {
-        completeVerificationBtn.addEventListener('click', () => {
-            this.completeType1Verification(instanceId);
-        });
-    }
-}
-
-setupType2Events(instanceId) {
-    const verifySlidePuzzleBtn = document.getElementById(`verifySlidePuzzlegic-${instanceId}`);
-    if (verifySlidePuzzleBtn) {
-        verifySlidePuzzleBtn.addEventListener('click', () => {
-            this.completeType2Verification(instanceId);
-        });
+    // Type 1: Image Selection
+    initializeType1() {
+        this.selectedImages = [];
+        this.createCaptchaGrid();
     }
 
-    // Setup slider drag events
-    this.setupSliderEvents(instanceId);
-}
+    createCaptchaGrid() {
+        const instanceId = this.instanceId;
+        const grid = document.getElementById(`captchaGridgic-${instanceId}`);
+        if (!grid) return;
 
-setupType3Events(instanceId) {
-    const verifyImageClickBtn = document.getElementById(`verifyImageClickgic-${instanceId}`);
-    if (verifyImageClickBtn) {
-        verifyImageClickBtn.addEventListener('click', () => {
-            this.completeType3Verification(instanceId);
-        });
-    }
+        const correctImages = this.imageData.filter(img => img.correct);
+        const incorrectImages = this.imageData.filter(img => !img.correct);
 
-    // Setup image click events
-    this.setupImageClickEvents(instanceId);
-}
+        const correctCount = Math.floor(Math.random() * 2) + 3;
+        const selectedCorrect = this.shuffleArray(correctImages).slice(0, correctCount);
+        const remainingCount = 9 - correctCount;
+        const selectedIncorrect = this.shuffleArray(incorrectImages).slice(0, remainingCount);
 
-// Initialize Type 1 CAPTCHA (Image Selection)
-initializeType1gic(instanceId) {
-    this.createCaptchaGridgic(instanceId);
-    this.selectedImagesgic = [];
-}
+        const finalSelection = this.shuffleArray([...selectedCorrect, ...selectedIncorrect]);
 
-// Initialize Type 2 CAPTCHA (Slide Puzzle)
-initializeType2gic(instanceId) {
-    this.setupSlidePuzzlegic(instanceId);
-}
+        grid.innerHTML = '';
 
-// Initialize Type 3 CAPTCHA (Image Click)
-initializeType3gic(instanceId) {
-    this.setupImageClickCaptchagic(instanceId);
-}
+        finalSelection.forEach((image) => {
+            const container = document.createElement('div');
+            container.className = `image-containergic-${instanceId}`;
+            container.setAttribute('data-type', image.type);
+            container.setAttribute('data-correct', image.correct);
 
-// Create image grid for Type 1 CAPTCHA
-createCaptchaGridgic(instanceId) {
-    const grid = document.getElementById(`captchaGridgic-${instanceId}`);
-    if (!grid) return;
+            const img = document.createElement('img');
+            img.src = image.src;
+            img.alt = image.alt;
+            img.className = `captcha-imagegic-${instanceId}`;
 
-    // Shuffle and select 9 random images
-    const shuffledImages = this.shuffleArraygic([...this.imageDatagic]).slice(0, 9);
-    grid.innerHTML = '';
-
-    shuffledImages.forEach((image, index) => {
-        const imageContainer = document.createElement('div');
-        imageContainer.className = `image-containergic-${instanceId}`;
-        
-        const img = document.createElement('img');
-        img.src = image.srcgic;
-        img.alt = image.altgic;
-        img.className = `captcha-imagegic-${instanceId}`;
-        img.dataset.type = image.typegic;
-        img.dataset.correct = image.correctgic;
-        
-        img.addEventListener('click', () => {
-            this.handleImageSelectiongic(imageContainer, image, instanceId);
+            container.appendChild(img);
+            grid.appendChild(container);
         });
 
-        imageContainer.appendChild(img);
-        grid.appendChild(imageContainer);
-    });
-
-    this.updateCorrectAnswersgic(shuffledImages, instanceId);
-}
-
-// Handle image selection for Type 1 CAPTCHA
-handleImageSelectiongic(container, image, instanceId) {
-    if (this.selectedImagesgic.includes(image)) {
-        // Deselect
-        const index = this.selectedImagesgic.indexOf(image);
-        this.selectedImagesgic.splice(index, 1);
-        container.classList.remove(`selectedgic-${instanceId}`);
-    } else {
-        // Select
-        this.selectedImagesgic.push(image);
-        container.classList.add(`selectedgic-${instanceId}`);
+        this.updateCorrectAnswers(selectedCorrect.map(img => img.type));
     }
-}
 
-// Update correct answers for Type 1 CAPTCHA
-updateCorrectAnswersgic(images, instanceId) {
-    this.currentCorrectAnswersgic = images.filter(img => img.correctgic);
-}
-
-// Setup slider events for Type 2 CAPTCHA
-setupSliderEvents(instanceId) {
-    const slider = document.getElementById(`puzzleSlidergic-${instanceId}`);
-    if (!slider) return;
-
-    let isDragging = false;
-    let startX = 0;
-    let sliderLeft = 0;
-
-    const sliderContainer = slider.parentElement;
-    const containerWidth = sliderContainer.offsetWidth - slider.offsetWidth;
-
-    const onMouseMove = (e) => {
-        if (!isDragging) return;
+    handleImageSelection(container, type) {
+        const instanceId = this.instanceId;
         
-        const deltaX = e.clientX - startX;
-        let newLeft = sliderLeft + deltaX;
+        if (this.selectedImages.includes(type)) {
+            // Deselect
+            const index = this.selectedImages.indexOf(type);
+            this.selectedImages.splice(index, 1);
+            container.classList.remove(`selectedgic-${instanceId}`);
+        } else {
+            // Select
+            this.selectedImages.push(type);
+            container.classList.add(`selectedgic-${instanceId}`);
+        }
+    }
+
+    updateCorrectAnswers(correctTypes) {
+        this.currentCorrectAnswers = correctTypes;
+    }
+
+    completeType1Verification() {
+        const allCorrectSelected = this.currentCorrectAnswers.every(item => this.selectedImages.includes(item));
+        const noIncorrectSelected = this.selectedImages.every(item => this.currentCorrectAnswers.includes(item));
+
+        if (allCorrectSelected && noIncorrectSelected) {
+            this.completeVerification();
+        } else {
+            this.handleFailuregic();
+        }
+    }
+
+    // Type 2: Slide Puzzle
+    initializeType2() {
+        this.isDragging = false;
+        this.sliderPosition = 5;
+        this.isFirstTry = true;
+        this.hasDragged = false;
+
+        const instanceId = this.instanceId;
+        const puzzleSlider = document.getElementById(`puzzleSlidergic-${instanceId}`);
+        if (puzzleSlider) {
+            puzzleSlider.style.left = '5px';
+            puzzleSlider.style.transform = 'scale(1)';
+        }
+
+        this.currentShapeType = this.shapeTypes[Math.floor(Math.random() * this.shapeTypes.length)];
+
+        const trackWidth = 250;
+        const shapeWidth = 40;
+        const minTargetPos = 10 + 20;
+        const maxTargetPos = trackWidth - shapeWidth - 10 - 20;
+
+        this.targetPosition = Math.floor(Math.random() * (maxTargetPos - minTargetPos)) + minTargetPos;
+
+        const randomShape = document.getElementById(`randomShapegic-${instanceId}`);
+        const puzzleTarget = document.getElementById(`puzzleTargetgic-${instanceId}`);
+
+        if (randomShape) {
+            randomShape.className = `random-shapegic-${instanceId} ${this.currentShapeType}gic-${instanceId}`;
+            randomShape.style.left = '10px';
+        }
+
+        if (puzzleTarget) {
+            puzzleTarget.className = `puzzle-targetgic-${instanceId} ${this.currentShapeType}gic-${instanceId}`;
+            puzzleTarget.style.left = this.targetPosition + 'px';
+        }
+
+        if (puzzleSlider) {
+            puzzleSlider.style.background = 'linear-gradient(135deg, #667eea, #764ba2)';
+        }
+
+        if (this.currentShapeType === 'triangle') {
+            if (randomShape) randomShape.style.borderBottomColor = '#48dbfb';
+        } else {
+            if (randomShape) randomShape.style.background = this.getShapeColor(this.currentShapeType);
+        }
+    }
+
+    getShapeColor(shapeType) {
+        switch(shapeType) {
+            case 'square':
+                return 'linear-gradient(135deg, #FFD700, #FFA500)';
+            case 'circle':
+                return 'linear-gradient(135deg, #FF6B6B, #EE5A24)';
+            case 'triangle':
+                return '#48dbfb';
+            case 'diamond':
+                return 'linear-gradient(135deg, #1dd1a1, #10ac84)';
+            default:
+                return 'linear-gradient(135deg, #FFD700, #FFA500)';
+        }
+    }
+
+    startDrag(e) {
+        this.isDragging = true;
+        this.hasDragged = true;
+        const instanceId = this.instanceId;
+        const puzzleSlider = document.getElementById(`puzzleSlidergic-${instanceId}`);
         
-        // Constrain to container
-        newLeft = Math.max(0, Math.min(containerWidth, newLeft));
+        if (puzzleSlider) {
+            puzzleSlider.style.cursor = 'grabbing';
+            puzzleSlider.classList.add(`activegic-${instanceId}`);
+        }
+
+        if (e.cancelable) {
+            e.preventDefault();
+        }
+    }
+
+    duringDrag(e) {
+        if (!this.isDragging) return;
+
+        const instanceId = this.instanceId;
+        const sliderContainer = document.querySelector(`.puzzle-slider-containergic-${instanceId}`);
+        const puzzleSlider = document.getElementById(`puzzleSlidergic-${instanceId}`);
+        const randomShape = document.getElementById(`randomShapegic-${instanceId}`);
+
+        if (!sliderContainer || !puzzleSlider || !randomShape) return;
+
+        const sliderRect = sliderContainer.getBoundingClientRect();
+        let clientX;
+
+        if (e.type === 'mousemove') {
+            clientX = e.clientX;
+        } else if (e.touches && e.touches[0]) {
+            clientX = e.touches[0].clientX;
+        }
+
+        if (clientX) {
+            const leftGap = 5;
+            const rightGap = 5;
+            const availableWidth = sliderRect.width - (leftGap + rightGap) - 50;
+
+            let newPosition = clientX - sliderRect.left - 25;
+
+            const minSliderPosition = leftGap;
+            const maxSliderPosition = leftGap + availableWidth;
+            newPosition = Math.max(minSliderPosition, Math.min(maxSliderPosition, newPosition));
+
+            this.sliderPosition = newPosition;
+            puzzleSlider.style.left = newPosition + 'px';
+
+            const trackWidth = 250;
+            const minShapePosition = 10;
+            const maxShapePosition = trackWidth - 40 - 10;
+
+            const shapeNewPosition = minShapePosition + ((newPosition - leftGap) / availableWidth) * (maxShapePosition - minShapePosition);
+            randomShape.style.left = shapeNewPosition + 'px';
+        }
+
+        if (e.cancelable) {
+            e.preventDefault();
+        }
+    }
+
+    stopDrag() {
+        if (!this.isDragging) return;
         
-        slider.style.left = `${newLeft}px`;
-        this.updateShapePositiongic(newLeft / containerWidth, instanceId);
-    };
+        this.isDragging = false;
+        const instanceId = this.instanceId;
+        const puzzleSlider = document.getElementById(`puzzleSlidergic-${instanceId}`);
+        const randomShape = document.getElementById(`randomShapegic-${instanceId}`);
 
-    const onMouseUp = () => {
-        isDragging = false;
-        document.removeEventListener('mousemove', onMouseMove);
-        document.removeEventListener('mouseup', onMouseUp);
-    };
+        if (puzzleSlider) {
+            puzzleSlider.style.cursor = 'grab';
+            puzzleSlider.style.transform = 'scale(1)';
+            puzzleSlider.classList.remove(`activegic-${instanceId}`);
+        }
 
-    slider.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        startX = e.clientX;
-        sliderLeft = parseInt(slider.style.left || '0');
-        slider.style.cursor = 'grabbing';
-        
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('mouseup', onMouseUp);
-        e.preventDefault();
-    });
+        if (randomShape) {
+            const shapeLeft = parseInt(randomShape.style.left);
+            const distance = Math.abs(shapeLeft - this.targetPosition);
+            
+            if (distance < 4) {
+                if (puzzleSlider) {
+                    puzzleSlider.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+                }
 
-    // Touch events for mobile
-    slider.addEventListener('touchstart', (e) => {
-        isDragging = true;
-        startX = e.touches[0].clientX;
-        sliderLeft = parseInt(slider.style.left || '0');
-        e.preventDefault();
-    });
+                if (this.currentShapeType === 'triangle') {
+                    randomShape.style.borderBottomColor = '#4CAF50';
+                } else {
+                    randomShape.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+                }
 
-    slider.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-        const deltaX = e.touches[0].clientX - startX;
-        let newLeft = sliderLeft + deltaX;
-        newLeft = Math.max(0, Math.min(containerWidth, newLeft));
-        slider.style.left = `${newLeft}px`;
-        this.updateShapePositiongic(newLeft / containerWidth, instanceId);
-        e.preventDefault();
-    });
-
-    slider.addEventListener('touchend', () => {
-        isDragging = false;
-    });
-}
-
-// Update shape position for Type 2 CAPTCHA
-updateShapePositiongic(progress, instanceId) {
-    const shape = document.getElementById(`randomShapegic-${instanceId}`);
-    const track = document.querySelector(`.puzzle-trackgic-${instanceId}`);
-    
-    if (!shape || !track) return;
-
-    const trackWidth = track.offsetWidth - shape.offsetWidth;
-    const newPosition = progress * trackWidth;
-    
-    shape.style.left = `${newPosition}px`;
-    this.hasDraggedgic = true;
-}
-
-// Setup slide puzzle for Type 2 CAPTCHA
-setupSlidePuzzlegic(instanceId) {
-    const shape = document.getElementById(`randomShapegic-${instanceId}`);
-    const target = document.getElementById(`puzzleTargetgic-${instanceId}`);
-    
-    if (!shape || !target) return;
-
-    // Random shape type
-    this.currentShapeTypegic = this.shapeTypesgic[Math.floor(Math.random() * this.shapeTypesgic.length)];
-    shape.className = `random-shapegic-${instanceId} ${this.currentShapeTypegic}gic-${instanceId}`;
-    target.className = `puzzle-targetgic-${instanceId} ${this.currentShapeTypegic}gic-${instanceId}`;
-
-    // Random target position (60-90% of track)
-    const track = document.querySelector(`.puzzle-trackgic-${instanceId}`);
-    const trackWidth = track.offsetWidth - shape.offsetWidth;
-    this.targetPositiongic = 0.6 + Math.random() * 0.3; // 60-90%
-    
-    const targetPos = this.targetPositiongic * trackWidth;
-    target.style.left = `${targetPos}px`;
-
-    // Reset slider
-    const slider = document.getElementById(`puzzleSlidergic-${instanceId}`);
-    if (slider) {
-        slider.style.left = '5px';
-    }
-    shape.style.left = '10px';
-    
-    this.hasDraggedgic = false;
-    this.isFirstTrygic = true;
-}
-
-// Setup image click events for Type 3 CAPTCHA
-setupImageClickEvents(instanceId) {
-    const imageWrapper = document.querySelector(`.click-image-wrappergic-${instanceId}`);
-    if (!imageWrapper) return;
-
-    // Clear existing click markers
-    const existingMarkers = imageWrapper.querySelectorAll(`.number-markergic-${instanceId}`);
-    existingMarkers.forEach(marker => marker.remove());
-
-    this.clickedItemsgic = [];
-    this.clickCountergic = 0;
-    this.clickPositionsgic = [];
-
-    const verifyBtn = document.getElementById(`verifyImageClickgic-${instanceId}`);
-    if (verifyBtn) {
-        verifyBtn.disabled = true;
+                setTimeout(() => {
+                    this.completeVerification();
+                }, 500);
+            } else {
+                if (this.isFirstTry && this.hasDragged) {
+                    this.isFirstTry = false;
+                    setTimeout(() => {
+                        this.handleFailuregic();
+                    }, 300);
+                }
+            }
+        }
     }
 
-    const img = imageWrapper.querySelector(`.click-imagegic-${instanceId}`);
-    if (img) {
-        img.addEventListener('click', (e) => {
-            this.handleImageClickgic(e, instanceId);
-        });
-    }
-}
-
-// Handle image click for Type 3 CAPTCHA
-handleImageClickgic(e, instanceId) {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    // Create number marker
-    const marker = document.createElement('div');
-    marker.className = `number-markergic-${instanceId}`;
-    marker.textContent = ++this.clickCountergic;
-    marker.style.left = `${x}px`;
-    marker.style.top = `${y}px`;
-
-    e.currentTarget.parentElement.appendChild(marker);
-
-    // Store click position
-    this.clickPositionsgic.push({ x, y, number: this.clickCountergic });
-
-    // Check if we have enough clicks
-    const currentSet = this.imageSetsgic[this.currentImageSetgic];
-    const verifyBtn = document.getElementById(`verifyImageClickgic-${instanceId}`);
-    
-    if (verifyBtn && this.clickCountergic >= currentSet.clickSequencegic.length) {
-        verifyBtn.disabled = false;
-    }
-}
-
-// Setup image click CAPTCHA for Type 3
-setupImageClickCaptchagic(instanceId) {
-    const imageWrapper = document.querySelector(`.click-image-wrappergic-${instanceId}`);
-    if (!imageWrapper) return;
-
-    // Randomly select an image set
-    const setKeys = Object.keys(this.imageSetsgic);
-    this.currentImageSetgic = setKeys[Math.floor(Math.random() * setKeys.length)];
-    const currentSet = this.imageSetsgic[this.currentImageSetgic];
-
-    const img = imageWrapper.querySelector(`.click-imagegic-${instanceId}`);
-    if (img && currentSet) {
-        img.src = currentSet.imageUrlgic;
+    completeType2Verification() {
+        if (!this.hasDragged) {
+            this.handleFailuregic();
+        } else {
+            this.handleFailuregic();
+        }
     }
 
-    this.clickedItemsgic = [];
-    this.clickCountergic = 0;
-    this.clickPositionsgic = [];
+    // Type 3: Image Click
+    initializeType3() {
+        this.currentImageSet = Math.random() > 0.5 ? 1 : 2;
+        const imageSet = this.imageSets[this.currentImageSet];
 
-    const verifyBtn = document.getElementById(`verifyImageClickgic-${instanceId}`);
-    if (verifyBtn) {
-        verifyBtn.disabled = true;
-    }
-}
+        this.clickedItems = [];
+        this.clickCounter = 0;
+        this.clickPositions = [];
 
-// Complete verification for Type 1
-completeType1Verification(instanceId) {
-    const selectedCorrect = this.selectedImagesgic.filter(img => img.correctgic);
-    const allCorrectSelected = selectedCorrect.length === this.currentCorrectAnswersgic.length;
-    const noIncorrectSelected = this.selectedImagesgic.every(img => img.correctgic);
+        const instanceId = this.instanceId;
+        const verifyImageClickBtn = document.getElementById(`verifyImageClickgic-${instanceId}`);
+        const clickImage = document.querySelector(`#captchaType3gic-${instanceId} .click-imagegic-${instanceId}`);
+        const imageWrapper = document.querySelector(`#captchaType3gic-${instanceId} .click-image-wrappergic-${instanceId}`);
 
-    if (allCorrectSelected && noIncorrectSelected) {
-        this.completeVerificationgic(instanceId);
-    } else {
-        this.handleFailuregic(instanceId);
-    }
-}
+        // Clear existing markers
+        if (imageWrapper) {
+            const existingMarkers = imageWrapper.querySelectorAll(`.number-markergic-${instanceId}`);
+            existingMarkers.forEach(marker => marker.remove());
+        }
 
-// Complete verification for Type 2
-completeType2Verification(instanceId) {
-    if (!this.hasDraggedgic) {
-        this.handleFailuregic(instanceId);
-        return;
-    }
+        if (verifyImageClickBtn) {
+            verifyImageClickBtn.disabled = true;
+            verifyImageClickBtn.textContent = 'Verify';
+        }
 
-    const shape = document.getElementById(`randomShapegic-${instanceId}`);
-    const target = document.getElementById(`puzzleTargetgic-${instanceId}`);
-    
-    if (!shape || !target) {
-        this.handleFailuregic(instanceId);
-        return;
+        if (clickImage && imageSet) {
+            clickImage.src = imageSet.imageUrl;
+        }
     }
 
-    const shapeRect = shape.getBoundingClientRect();
-    const targetRect = target.getBoundingClientRect();
+    handleImageClick(e) {
+        const maxClicks = this.imageSets[this.currentImageSet].clickSequence.length;
+        if (this.clickCounter >= maxClicks) {
+            return;
+        }
 
-    // Check if shapes overlap (with some tolerance)
-    const tolerance = 15;
-    const overlaps = !(shapeRect.right < targetRect.left - tolerance ||
-                      shapeRect.left > targetRect.right + tolerance ||
-                      shapeRect.bottom < targetRect.top - tolerance ||
-                      shapeRect.top > targetRect.bottom + tolerance);
+        const img = e.target;
+        const rect = img.getBoundingClientRect();
 
-    if (overlaps) {
-        this.completeVerificationgic(instanceId);
-    } else {
-        this.handleFailuregic(instanceId);
+        const displayedWidth = rect.width;
+        const displayedHeight = rect.height;
+
+        const originalWidth = 720;
+        const originalHeight = 720;
+
+        const scaleX = originalWidth / displayedWidth;
+        const scaleY = originalHeight / displayedHeight;
+
+        const displayedX = e.clientX - rect.left;
+        const displayedY = e.clientY - rect.top;
+
+        const originalX = displayedX * scaleX;
+        const originalY = displayedY * scaleY;
+
+        const target = this.getClickedTarget(originalX, originalY);
+
+        this.clickCounter++;
+        this.addNumberMarker(displayedX, displayedY, this.clickCounter);
+
+        this.clickPositions.push({x: originalX, y: originalY, number: this.clickCounter, target});
+
+        if (target && this.imageSets[this.currentImageSet].clickSequence.includes(target)) {
+            this.clickedItems.push(target);
+        }
+
+        const requiredClicks = this.imageSets[this.currentImageSet].clickSequence.length;
+        if (this.clickCounter === requiredClicks) {
+            const instanceId = this.instanceId;
+            const verifyImageClickBtn = document.getElementById(`verifyImageClickgic-${instanceId}`);
+            if (verifyImageClickBtn) {
+                verifyImageClickBtn.disabled = false;
+            }
+        }
     }
-}
 
-// Complete verification for Type 3
-completeType3Verification(instanceId) {
-    const currentSet = this.imageSetsgic[this.currentImageSetgic];
-    if (!currentSet || this.clickPositionsgic.length < currentSet.clickSequencegic.length) {
-        this.handleFailuregic(instanceId);
-        return;
+    getClickedTarget(x, y) {
+        const areas = this.imageSets[this.currentImageSet].areas;
+
+        for (let area of areas) {
+            if (area.shape === 'rect') {
+                const [x1, y1, x2, y2] = area.coords;
+                if (x >= x1 && x <= x2 && y >= y1 && y <= y2) {
+                    return area.target;
+                }
+            } else if (area.shape === 'circle') {
+                const [cx, cy, r] = area.coords;
+                const distance = Math.sqrt((x - cx) ** 2 + (y - cy) ** 2);
+                if (distance <= r) {
+                    return area.target;
+                }
+            }
+        }
+
+        return null;
     }
 
-    // Simple verification - in a real implementation, you'd check if clicks
-    // were in the correct areas in the correct sequence
-    const isValid = this.clickPositionsgic.length === currentSet.clickSequencegic.length;
-    
-    if (isValid) {
-        this.completeVerificationgic(instanceId);
-    } else {
-        this.handleFailuregic(instanceId);
-    }
-}
+    addNumberMarker(x, y, number) {
+        const instanceId = this.instanceId;
+        const marker = document.createElement('div');
+        marker.className = `number-markergic-${instanceId}`;
+        marker.textContent = number;
+        marker.style.left = x + 'px';
+        marker.style.top = y + 'px';
 
-// Refresh CAPTCHA
-refreshCaptchagic(type) {
-    if (type === 1) {
-        this.createCaptchaGridgic(this.instanceId);
-        this.selectedImagesgic = [];
-    } else if (type === 2) {
-        this.setupSlidePuzzlegic(this.instanceId);
-    } else if (type === 3) {
-        this.setupImageClickCaptchagic(this.instanceId);
+        const imageWrapper = document.querySelector(`#captchaType3gic-${instanceId} .click-image-wrappergic-${instanceId}`);
+        if (imageWrapper) {
+            imageWrapper.appendChild(marker);
+        }
     }
-}
 
-// Utility function to shuffle array
-shuffleArraygic(array) {
-    const newArray = [...array];
-    for (let i = newArray.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    completeType3Verification() {
+        const imageSet = this.imageSets[this.currentImageSet];
+        const requiredSequence = imageSet.clickSequence.join(',');
+        const userSequence = this.clickedItems.join(',');
+
+        if (userSequence === requiredSequence) {
+            this.completeVerification();
+        } else {
+            this.handleFailuregic();
+        }
     }
-    return newArray;
-}
 
-    completeVerificationgic(instanceId) {
+    // ========== UTILITY FUNCTIONS ==========
+
+    completeVerification() {
+        const instanceId = this.instanceId;
         const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
         const containergic = document.getElementById(`captchaContainergic-${instanceId}`);
         const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
         const submitBtngic = document.getElementById(`actionButtongic-${instanceId}`);
+        const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
 
         modalgic.style.display = 'none';
         containergic.classList.remove(`loading-stategic-${instanceId}`);
@@ -1191,15 +1280,20 @@ shuffleArraygic(array) {
         const loadingBargic = document.getElementById(`loadingBargic-${instanceId}`);
         loadingBarContainergic.classList.remove(`activegic-${instanceId}`);
 
-        const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
         const successIndicatorgic = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         successIndicatorgic.setAttribute("class", `tick-animgic-${instanceId}`);
         successIndicatorgic.setAttribute("viewBox", "0 0 24 24");
         successIndicatorgic.innerHTML = '<polyline points="20 6 9 17 4 12"/>';
 
-        triggergic.replaceWith(successIndicatorgic);
+        if (triggergic) {
+            triggergic.replaceWith(successIndicatorgic);
+        }
+        
         this.isVerified = true;
-        submitBtngic.disabled = false;
+        
+        if (submitBtngic) {
+            submitBtngic.disabled = false;
+        }
 
         // Notify verification system
         if (window.captchaVerification) {
@@ -1211,9 +1305,10 @@ shuffleArraygic(array) {
         }
     }
 
-    handleFailuregic(instanceId) {
+    handleFailuregic() {
         if (this.isVerified) return;
         
+        const instanceId = this.instanceId;
         const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
         const containergic = document.getElementById(`captchaContainergic-${instanceId}`);
         const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
@@ -1225,8 +1320,11 @@ shuffleArraygic(array) {
         textElementgic.innerText = 'Verification failed, try again.';
         textElementgic.classList.add(`failed-textgic-${instanceId}`);
         textElementgic.classList.remove(`loading-textgic-${instanceId}`);
-        triggergic.style.display = 'block';
-        triggergic.classList.add(`j1k2l3mgic-${instanceId}`);
+        
+        if (triggergic) {
+            triggergic.style.display = 'block';
+            triggergic.classList.add(`j1k2l3mgic-${instanceId}`);
+        }
 
         const loadingBarContainergic = document.querySelector(`.loading-bar-containergic-${instanceId}`);
         loadingBarContainergic.classList.remove(`activegic-${instanceId}`);
@@ -1236,16 +1334,47 @@ shuffleArraygic(array) {
         }
     }
 
+    refreshCaptcha(type) {
+        const refreshBtn = event.target.closest(`.refresh-buttongic-${this.instanceId}`);
+        if (refreshBtn) {
+            refreshBtn.style.transform = 'rotate(360deg)';
+            setTimeout(() => {
+                refreshBtn.style.transform = 'rotate(0deg)';
+            }, 300);
+        }
+
+        switch(type) {
+            case 1:
+                this.initializeType1();
+                break;
+            case 2:
+                this.initializeType2();
+                break;
+            case 3:
+                this.initializeType3();
+                break;
+        }
+    }
+
+    shuffleArray(array) {
+        const newArray = [...array];
+        for (let i = newArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+        }
+        return newArray;
+    }
+
     getVerificationStatus() {
         return this.isVerified;
     }
 
     reset() {
         this.isVerified = false;
-        this.selectedImagesgic = [];
-        this.clickedItemsgic = [];
-        this.clickCountergic = 0;
-        this.clickPositionsgic = [];
+        this.selectedImages = [];
+        this.clickedItems = [];
+        this.clickCounter = 0;
+        this.clickPositions = [];
 
         const instanceId = this.instanceId;
         const containergic = document.getElementById(`captchaContainergic-${instanceId}`);
@@ -1258,9 +1387,16 @@ shuffleArraygic(array) {
         containergic.classList.remove(`success-stategic-${instanceId}`, `failed-stategic-${instanceId}`, `loading-stategic-${instanceId}`);
         textElementgic.classList.remove(`success-textgic-${instanceId}`, `failed-textgic-${instanceId}`, `loading-textgic-${instanceId}`);
         textElementgic.textContent = 'I\'m not a robot';
-        triggergic.style.display = 'block';
-        triggergic.classList.remove(`j1k2l3mgic-${instanceId}`);
-        submitBtngic.disabled = true;
+        
+        if (triggergic) {
+            triggergic.style.display = 'block';
+            triggergic.classList.remove(`j1k2l3mgic-${instanceId}`);
+        }
+        
+        if (submitBtngic) {
+            submitBtngic.disabled = true;
+        }
+        
         modalgic.style.display = 'none';
 
         // Reset verification system
@@ -1268,9 +1404,6 @@ shuffleArraygic(array) {
             window.captchaVerification.resetVerification(this.instanceId);
         }
     }
-
-    // Note: The complete implementation would include all the CAPTCHA logic methods
-    // from your HTML, adapted to use this.instanceId for proper isolation
 }
 
 // Global initialization function
