@@ -897,6 +897,7 @@ class CustomCaptcha {
             this.currentCaptchaType = this.getRandomCaptchaType();
             this.showCaptchaType(this.currentCaptchaType);
             modalgic.style.display = 'flex';
+            this.reset();
         }, 700);
     }
 
