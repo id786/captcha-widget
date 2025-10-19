@@ -55,6 +55,7 @@ class CustomCaptcha {
     .spat,
     .spat small {
         font-family: 'Roboto', 'Segoe UI', Tahoma, sans-serif;
+        white-space: nowrap;
     }
 .x1a2b3cgic-${this.instanceId} {
     width: 304px !important;
