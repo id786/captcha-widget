@@ -44,28 +44,6 @@ class CustomCaptcha {
     createCaptcha() {
         this.container.innerHTML = `
             <style>
-            .x1a2b3cgic-${this.instanceId},
-    .y4d5e6fgic-${this.instanceId},
-    .z7g8h9igic-${this.instanceId},
-    .a1b2c3dgic-${this.instanceId},
-    .e4f5g6hgic-${this.instanceId},
-    .modal-containergic-${this.instanceId},
-    .modal-contentgic-${this.instanceId},
-    .modal-headergic-${this.instanceId},
-    .modal-headergic-${this.instanceId} p,
-    .modal-headergic-${this.instanceId} b,
-    .modal-bodygic-${this.instanceId},
-    .modal-footergic-${this.instanceId},
-    .verify-btngic-${this.instanceId},
-    .refresh-buttongic-${this.instanceId},
-    .puzzle-instructionsgic-${this.instanceId},
-    .slider-handlegic-${this.instanceId},
-    .number-markergic-${this.instanceId},
-    .spat,
-    .spat small {
-        font-family: 'Roboto', 'Segoe UI', Tahoma, sans-serif;
-        white-space: nowrap;
-    }
 .x1a2b3cgic-${this.instanceId} {
     width: 304px !important;
     height: 78px !important;
