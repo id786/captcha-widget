@@ -1273,76 +1273,82 @@ class CustomCaptcha {
     // ========== UTILITY FUNCTIONS ==========
 
     completeVerification() {
-        const instanceId = this.instanceId;
-        const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
-        const containergic = document.getElementById(`captchaContainergic-${instanceId}`);
-        const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
-        const submitBtngic = document.getElementById(`actionButtongic-${instanceId}`);
-        const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
+    const instanceId = this.instanceId;
+    const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
+    const containergic = document.getElementById(`captchaContainergic-${instanceId}`);
+    const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
+    const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
 
-        modalgic.style.display = 'none';
-        containergic.classList.remove(`loading-stategic-${instanceId}`);
-        textElementgic.classList.add(`success-textgic-${instanceId}`);
-        textElementgic.textContent = 'Verification Successful.';
-        containergic.classList.add(`success-stategic-${instanceId}`);
+    modalgic.style.display = 'none';
+    containergic.classList.remove(`loading-stategic-${instanceId}`);
+    textElementgic.classList.add(`success-textgic-${instanceId}`);
+    textElementgic.textContent = 'Verification Successful.';
+    containergic.classList.add(`success-stategic-${instanceId}`);
 
-        const loadingBarContainergic = document.querySelector(`.loading-bar-containergic-${instanceId}`);
-        const loadingBargic = document.getElementById(`loadingBargic-${instanceId}`);
-        loadingBarContainergic.classList.remove(`activegic-${instanceId}`);
-
-        const successIndicatorgic = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        successIndicatorgic.setAttribute("class", `tick-animgic-${instanceId}`);
-        successIndicatorgic.setAttribute("viewBox", "0 0 24 24");
-        successIndicatorgic.innerHTML = '<polyline points="20 6 9 17 4 12"/>';
-
-        if (triggergic) {
-            triggergic.replaceWith(successIndicatorgic);
-        }
-        
-        this.isVerified = true;
-        
-        if (submitBtngic) {
-            submitBtngic.disabled = false;
-        }
-
-        // Notify verification system
-        if (window.captchaVerification) {
-            window.captchaVerification.markAsVerified(this.instanceId);
-        }
-
-        if (this.options.onSuccess) {
-            this.options.onSuccess();
-        }
+    const loadingBarContainergic = document.querySelector(`.loading-bar-containergic-${instanceId}`);
+    const loadingBargic = document.getElementById(`loadingBargic-${instanceId}`);
+    loadingBarContainergic.classList.remove(`activegic-${instanceId}`);
+    
+    // ADD THIS LINE to stop the loading animation:
+    if (loadingBargic) {
+        loadingBargic.style.animation = 'none';
     }
+
+    const successIndicatorgic = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    successIndicatorgic.setAttribute("class", `tick-animgic-${instanceId}`);
+    successIndicatorgic.setAttribute("viewBox", "0 0 24 24");
+    successIndicatorgic.innerHTML = '<polyline points="20 6 9 17 4 12"/>';
+
+    if (triggergic) {
+        triggergic.replaceWith(successIndicatorgic);
+    }
+    
+    this.isVerified = true;
+
+    // Notify verification system
+    if (window.captchaVerification) {
+        window.captchaVerification.markAsVerified(this.instanceId);
+    }
+
+    if (this.options.onSuccess) {
+        this.options.onSuccess();
+    }
+}
 
     handleFailuregic() {
-        if (this.isVerified) return;
-        
-        const instanceId = this.instanceId;
-        const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
-        const containergic = document.getElementById(`captchaContainergic-${instanceId}`);
-        const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
-        const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
+    if (this.isVerified) return;
+    
+    const instanceId = this.instanceId;
+    const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
+    const containergic = document.getElementById(`captchaContainergic-${instanceId}`);
+    const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
+    const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
 
-        modalgic.style.display = 'none';
-        containergic.classList.remove(`loading-stategic-${instanceId}`);
-        containergic.classList.add(`failed-stategic-${instanceId}`);
-        textElementgic.innerText = 'Verification failed, try again.';
-        textElementgic.classList.add(`failed-textgic-${instanceId}`);
-        textElementgic.classList.remove(`loading-textgic-${instanceId}`);
-        
-        if (triggergic) {
-            triggergic.style.display = 'block';
-            triggergic.classList.add(`j1k2l3mgic-${instanceId}`);
-        }
-
-        const loadingBarContainergic = document.querySelector(`.loading-bar-containergic-${instanceId}`);
-        loadingBarContainergic.classList.remove(`activegic-${instanceId}`);
-
-        if (this.options.onError) {
-            this.options.onError();
-        }
+    modalgic.style.display = 'none';
+    containergic.classList.remove(`loading-stategic-${instanceId}`);
+    containergic.classList.add(`failed-stategic-${instanceId}`);
+    textElementgic.innerText = 'Verification failed, try again.';
+    textElementgic.classList.add(`failed-textgic-${instanceId}`);
+    textElementgic.classList.remove(`loading-textgic-${instanceId}`);
+    
+    if (triggergic) {
+        triggergic.style.display = 'block';
+        triggergic.classList.add(`j1k2l3mgic-${instanceId}`);
     }
+
+    const loadingBarContainergic = document.querySelector(`.loading-bar-containergic-${instanceId}`);
+    const loadingBargic = document.getElementById(`loadingBargic-${instanceId}`);
+    loadingBarContainergic.classList.remove(`activegic-${instanceId}`);
+    
+    // ADD THIS LINE to stop the loading animation:
+    if (loadingBargic) {
+        loadingBargic.style.animation = 'none';
+    }
+
+    if (this.options.onError) {
+        this.options.onError();
+    }
+}
 
     refreshCaptcha(type) {
         const refreshBtn = event.target.closest(`.refresh-buttongic-${this.instanceId}`);
