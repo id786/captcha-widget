@@ -442,7 +442,7 @@ class CustomCaptcha {
 }
 
 .loading-bar-containergic-${this.instanceId}.activegic-${this.instanceId} {
-    display: block !important;
+    display: block;
 }
 
 .loading-bargic-${this.instanceId} {
@@ -1362,18 +1362,22 @@ class CustomCaptcha {
     const loadingBargic = document.getElementById(`loadingBargic-${instanceId}`);
     loadingBarContainergic.classList.remove(`activegic-${instanceId}`);
     
-    // ADD THIS LINE to stop the loading animation:
+    // Stop the loading animation
     if (loadingBargic) {
         loadingBargic.style.animation = 'none';
     }
 
-    const successIndicatorgic = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    successIndicatorgic.setAttribute("class", `tick-animgic-${instanceId}`);
-    successIndicatorgic.setAttribute("viewBox", "0 0 24 24");
-    successIndicatorgic.innerHTML = '<polyline points="20 6 9 17 4 12"/>';
-
-    if (triggergic) {
-        triggergic.replaceWith(successIndicatorgic);
+    // Create and show the success tick
+    const successIndicatorgic = document.createElement("div");
+    successIndicatorgic.innerHTML = `
+        <svg class="tick-animgic-${instanceId}" viewBox="0 0 24 24">
+            <polyline points="20 6 9 17 4 12" style="fill:none;stroke:#4CAF50;stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/>
+        </svg>
+    `;
+    
+    if (triggergic && triggergic.parentNode) {
+        // Replace the checkbox with the tick
+        triggergic.parentNode.replaceChild(successIndicatorgic.firstChild, triggergic);
     }
     
     this.isVerified = true;
@@ -1413,7 +1417,7 @@ class CustomCaptcha {
     const loadingBargic = document.getElementById(`loadingBargic-${instanceId}`);
     loadingBarContainergic.classList.remove(`activegic-${instanceId}`);
     
-    // ADD THIS LINE to stop the loading animation:
+    // Stop the loading animation
     if (loadingBargic) {
         loadingBargic.style.animation = 'none';
     }
