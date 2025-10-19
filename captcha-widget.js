@@ -438,7 +438,7 @@ class CustomCaptcha {
     position: absolute !important;
     bottom: 0 !important;
     left: 0 !important;
-    display: none !important;
+    display: none;
 }
 
 .loading-bar-containergic-${this.instanceId}.activegic-${this.instanceId} {
@@ -833,35 +833,54 @@ class CustomCaptcha {
     }
 
     setupType2Events() {
-        const instanceId = this.instanceId;
-        const verifySlidePuzzleBtn = document.getElementById(`verifySlidePuzzlegic-${instanceId}`);
-        const puzzleSlider = document.getElementById(`puzzleSlidergic-${instanceId}`);
-        const refreshBtn = document.querySelector(`#captchaType2gic-${instanceId} .refresh-buttongic-${instanceId}`);
+    const instanceId = this.instanceId;
+    const verifySlidePuzzleBtn = document.getElementById(`verifySlidePuzzlegic-${instanceId}`);
+    const puzzleSlider = document.getElementById(`puzzleSlidergic-${instanceId}`);
+    const refreshBtn = document.querySelector(`#captchaType2gic-${instanceId} .refresh-buttongic-${instanceId}`);
 
-        if (verifySlidePuzzleBtn) {
-            verifySlidePuzzleBtn.addEventListener('click', () => {
-                this.completeType2Verification();
-            });
-        }
-
-        if (puzzleSlider) {
-            // Mouse events
-            puzzleSlider.addEventListener('mousedown', (e) => this.startDrag(e));
-            document.addEventListener('mousemove', (e) => this.duringDrag(e));
-            document.addEventListener('mouseup', () => this.stopDrag());
-
-            // Touch events
-            puzzleSlider.addEventListener('touchstart', (e) => this.startDrag(e), { passive: false });
-            document.addEventListener('touchmove', (e) => this.duringDrag(e), { passive: false });
-            document.addEventListener('touchend', () => this.stopDrag());
-        }
-
-        if (refreshBtn) {
-            refreshBtn.addEventListener('click', () => {
-                this.refreshCaptcha(2);
-            });
-        }
+    if (verifySlidePuzzleBtn) {
+        verifySlidePuzzleBtn.addEventListener('click', () => {
+            this.completeType2Verification();
+        });
     }
+
+    if (puzzleSlider) {
+        // Store reference to this instance for event handlers
+        const captchaInstance = this;
+        
+        // Mouse events
+        puzzleSlider.addEventListener('mousedown', function(e) {
+            captchaInstance.startDrag(e);
+        });
+        
+        document.addEventListener('mousemove', function(e) {
+            captchaInstance.duringDrag(e);
+        });
+        
+        document.addEventListener('mouseup', function() {
+            captchaInstance.stopDrag();
+        });
+
+        // Touch events
+        puzzleSlider.addEventListener('touchstart', function(e) {
+            captchaInstance.startDrag(e);
+        }, { passive: false });
+        
+        document.addEventListener('touchmove', function(e) {
+            captchaInstance.duringDrag(e);
+        }, { passive: false });
+        
+        document.addEventListener('touchend', function() {
+            captchaInstance.stopDrag();
+        });
+    }
+
+    if (refreshBtn) {
+        refreshBtn.addEventListener('click', () => {
+            this.refreshCaptcha(2);
+        });
+    }
+}
 
     setupType3Events() {
         const instanceId = this.instanceId;
