@@ -899,49 +899,41 @@ class CustomCaptcha {
     const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
     const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
 
-    console.log('Trigger clicked, modal element:', modalgic); // Debug log
-
-    if (!modalgic) {
-        console.error('Modal element not found!');
-        return;
-    }
-
+    // Hide trigger and show loading state
     triggergic.style.display = 'none';
     containergic.classList.add(`loading-stategic-${instanceId}`);
     containergic.classList.remove(`failed-stategic-${instanceId}`);
     textElementgic.classList.add(`loading-textgic-${instanceId}`);
     textElementgic.innerText = 'Processing...';
 
+    // Show loading bar
     const loadingBarContainergic = document.querySelector(`.loading-bar-containergic-${instanceId}`);
-    const loadingBargic = document.getElementById(`loadingBargic-${instanceId}`);
     if (loadingBarContainergic) {
         loadingBarContainergic.classList.add(`activegic-${instanceId}`);
     }
 
     setTimeout(() => {
-        // Stop loading animation first
+        // STOP THE LOADING ANIMATION FIRST
         if (loadingBarContainergic) {
             loadingBarContainergic.classList.remove(`activegic-${instanceId}`);
         }
-        if (loadingBargic) {
-            loadingBargic.style.animation = 'none';
-        }
 
-        // Remove loading state
+        // REMOVE LOADING VISUAL STATES
         containergic.classList.remove(`loading-stategic-${instanceId}`);
         textElementgic.classList.remove(`loading-textgic-${instanceId}`);
-
-        // Set up and show modal
-        this.currentCaptchaType = this.getRandomCaptchaType();
-        console.log('Selected CAPTCHA type:', this.currentCaptchaType); // Debug log
         
+        // RESET TEXT BACK TO DEFAULT
+        textElementgic.innerText = 'I\'m not a robot';
+
+        // SHOW THE VERIFICATION MODAL
+        this.currentCaptchaType = this.getRandomCaptchaType();
         this.showCaptchaType(this.currentCaptchaType);
         
-        // Show modal with force display
+        // MAKE SURE MODAL IS VISIBLE
         modalgic.style.display = 'flex';
         modalgic.style.opacity = '1';
         
-        console.log('Modal should be visible now'); // Debug log
+        console.log('Modal should be open now. Display:', modalgic.style.display);
 
     }, 700);
 }
