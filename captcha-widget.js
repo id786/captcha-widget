@@ -18,10 +18,18 @@ class CustomCaptcha {
     }
 
     init() {
-        this.createCaptcha();
-        this.bindEvents();
-        this.initializeCaptchaData();
-    }
+    this.createCaptcha();
+    this.bindEvents();
+    this.initializeCaptchaData();
+    
+    // Load saved verification state
+    setTimeout(() => {
+        if (!this.loadVerificationState()) {
+            // If not verified, reset to initial state
+            this.reset();
+        }
+    }, 100);
+}
 
     createCaptcha() {
         this.container.innerHTML = `
@@ -1269,43 +1277,84 @@ class CustomCaptcha {
 
     // ========== UTILITY FUNCTIONS ==========
 
-    completeVerification() {
-        const instanceId = this.instanceId;
-        const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
-        const containergic = document.getElementById(`captchaContainergic-${instanceId}`);
-        const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
-        const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
+        // Add this method to save verification state
+saveVerificationState() {
+    const state = {
+        isVerified: this.isVerified,
+        timestamp: Date.now(),
+        instanceId: this.instanceId
+    };
+    localStorage.setItem(`captcha-verified-${this.instanceId}`, JSON.stringify(state));
+}
 
-        modalgic.style.display = 'none';
-        containergic.classList.remove(`loading-stategic-${instanceId}`);
+// Add this method to load verification state
+loadVerificationState() {
+    const saved = localStorage.getItem(`captcha-verified-${this.instanceId}`);
+    if (saved) {
+        try {
+            const state = JSON.parse(saved);
+            // Check if verification is still valid (e.g., within 1 hour)
+            const isExpired = Date.now() - state.timestamp > 3600000; // 1 hour
+            if (!isExpired && state.isVerified) {
+                this.isVerified = true;
+                this.showVerifiedState();
+                return true;
+            }
+        } catch (e) {
+            console.error('Error loading captcha state:', e);
+        }
+    }
+    return false;
+}
+
+// Add this method to show verified state
+showVerifiedState() {
+    const instanceId = this.instanceId;
+    const containergic = document.getElementById(`captchaContainergic-${instanceId}`);
+    const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
+    const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
+
+    if (containergic && textElementgic) {
+        containergic.classList.remove(`loading-stategic-${instanceId}`, `failed-stategic-${instanceId}`);
+        containergic.classList.add(`success-stategic-${instanceId}`);
         textElementgic.classList.add(`success-textgic-${instanceId}`);
         textElementgic.textContent = 'Verification Successful.';
-        containergic.classList.add(`success-stategic-${instanceId}`);
+    }
 
-        const loadingBarContainergic = document.querySelector(`.loading-bar-containergic-${instanceId}`);
-        const loadingBargic = document.getElementById(`loadingBargic-${instanceId}`);
-        loadingBarContainergic.classList.remove(`activegic-${instanceId}`);
-
+    if (triggergic) {
         const successIndicatorgic = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         successIndicatorgic.setAttribute("class", `tick-animgic-${instanceId}`);
         successIndicatorgic.setAttribute("viewBox", "0 0 24 24");
         successIndicatorgic.innerHTML = '<polyline points="20 6 9 17 4 12"/>';
-
-        if (triggergic) {
-            triggergic.replaceWith(successIndicatorgic);
-        }
-        
-        this.isVerified = true;
-
-        // Notify verification system
-        if (window.captchaVerification) {
-            window.captchaVerification.markAsVerified(this.instanceId);
-        }
-
-        if (this.options.onSuccess) {
-            this.options.onSuccess();
-        }
+        triggergic.replaceWith(successIndicatorgic);
     }
+
+    // Notify that CAPTCHA is verified
+    if (window.captchaVerification) {
+        window.captchaVerification.markAsVerified(this.instanceId);
+    }
+}
+
+    completeVerification() {
+    const instanceId = this.instanceId;
+    const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
+    
+    if (modalgic) {
+        modalgic.style.display = 'none';
+    }
+
+    this.isVerified = true;
+    
+    // Save verification state
+    this.saveVerificationState();
+    
+    // Show verified UI
+    this.showVerifiedState();
+
+    if (this.options.onSuccess) {
+        this.options.onSuccess();
+    }
+}
 
     handleFailuregic() {
         if (this.isVerified) return;
@@ -1372,38 +1421,62 @@ class CustomCaptcha {
     }
 
     reset() {
-        this.isVerified = false;
-        this.selectedImages = [];
-        this.clickedItems = [];
-        this.clickCounter = 0;
-        this.clickPositions = [];
+    this.isVerified = false;
+    this.selectedImages = [];
+    this.clickedItems = [];
+    this.clickCounter = 0;
+    this.clickPositions = [];
 
-        const instanceId = this.instanceId;
-        const containergic = document.getElementById(`captchaContainergic-${instanceId}`);
-        const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
-        const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
-        const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
+    // Clear saved state
+    localStorage.removeItem(`captcha-verified-${this.instanceId}`);
 
-        // Reset visual state
+    const instanceId = this.instanceId;
+    const containergic = document.getElementById(`captchaContainergic-${instanceId}`);
+    const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
+    const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
+    const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
+
+    // Reset visual state
+    if (containergic) {
         containergic.classList.remove(`success-stategic-${instanceId}`, `failed-stategic-${instanceId}`, `loading-stategic-${instanceId}`);
+    }
+    
+    if (textElementgic) {
         textElementgic.classList.remove(`success-textgic-${instanceId}`, `failed-textgic-${instanceId}`, `loading-textgic-${instanceId}`);
         textElementgic.textContent = 'I\'m not a robot';
-        
-        if (triggergic) {
-            triggergic.style.display = 'block';
-            triggergic.classList.remove(`j1k2l3mgic-${instanceId}`);
-        }
-        
-        modalgic.style.display = 'none';
-
-        // Reset verification system
-        if (window.captchaVerification) {
-            window.captchaVerification.resetVerification(this.instanceId);
-        }
     }
+    
+    if (triggergic) {
+        triggergic.style.display = 'block';
+        triggergic.classList.remove(`j1k2l3mgic-${instanceId}`);
+    }
+    
+    if (modalgic) {
+        modalgic.style.display = 'none';
+    }
+
+    // Reset verification system
+    if (window.captchaVerification) {
+        window.captchaVerification.resetVerification(this.instanceId);
+    }
+}
 }
 
 // Global initialization function
 window.initCaptcha = function(containerId, options) {
     return new CustomCaptcha(containerId, options);
+};
+// Add this outside the class, at the end of your file
+window.isCaptchaVerified = function(instanceId = '1') {
+    const saved = localStorage.getItem(`captcha-verified-${instanceId}`);
+    if (saved) {
+        try {
+            const state = JSON.parse(saved);
+            const isExpired = Date.now() - state.timestamp > 3600000; // 1 hour
+            return !isExpired && state.isVerified;
+        } catch (e) {
+            return false;
+        }
+    }
+    return false;
 };
