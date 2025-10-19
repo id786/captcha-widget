@@ -44,6 +44,28 @@ class CustomCaptcha {
     createCaptcha() {
         this.container.innerHTML = `
             <style>
+            .x1a2b3cgic-${this.instanceId},
+    .y4d5e6fgic-${this.instanceId},
+    .z7g8h9igic-${this.instanceId},
+    .a1b2c3dgic-${this.instanceId},
+    .e4f5g6hgic-${this.instanceId},
+    .modal-containergic-${this.instanceId},
+    .modal-contentgic-${this.instanceId},
+    .modal-headergic-${this.instanceId},
+    .modal-headergic-${this.instanceId} p,
+    .modal-headergic-${this.instanceId} b,
+    .modal-bodygic-${this.instanceId},
+    .modal-footergic-${this.instanceId},
+    .verify-btngic-${this.instanceId},
+    .refresh-buttongic-${this.instanceId},
+    .puzzle-instructionsgic-${this.instanceId},
+    .slider-handlegic-${this.instanceId},
+    .number-markergic-${this.instanceId},
+    .spat,
+    .spat small {
+        font-family: 'Roboto', 'Segoe UI', Tahoma, sans-serif;
+        white-space: nowrap;
+    }
 .x1a2b3cgic-${this.instanceId} {
     width: 304px !important;
     height: 78px !important;
@@ -877,42 +899,34 @@ class CustomCaptcha {
     const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
     const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
 
-    // Hide trigger and show loading state
+    // Show loading state
     triggergic.style.display = 'none';
     containergic.classList.add(`loading-stategic-${instanceId}`);
     containergic.classList.remove(`failed-stategic-${instanceId}`);
     textElementgic.classList.add(`loading-textgic-${instanceId}`);
     textElementgic.innerText = 'Processing...';
 
-    // Show loading bar
     const loadingBarContainergic = document.querySelector(`.loading-bar-containergic-${instanceId}`);
-    if (loadingBarContainergic) {
-        loadingBarContainergic.classList.add(`activegic-${instanceId}`);
-    }
+    const loadingBargic = document.getElementById(`loadingBargic-${instanceId}`);
+    loadingBarContainergic.classList.add(`activegic-${instanceId}`);
 
     setTimeout(() => {
-        // STOP THE LOADING ANIMATION FIRST
-        if (loadingBarContainergic) {
-            loadingBarContainergic.classList.remove(`activegic-${instanceId}`);
-        }
-
-        // REMOVE LOADING VISUAL STATES
+        // Remove loading state
         containergic.classList.remove(`loading-stategic-${instanceId}`);
         textElementgic.classList.remove(`loading-textgic-${instanceId}`);
-        
-        // RESET TEXT BACK TO DEFAULT
         textElementgic.innerText = 'I\'m not a robot';
+        
+        // Stop loading animation
+        loadingBarContainergic.classList.remove(`activegic-${instanceId}`);
+        if (loadingBargic) {
+            loadingBargic.style.animation = 'none';
+        }
 
-        // SHOW THE VERIFICATION MODAL
+        // Show verification modal
         this.currentCaptchaType = this.getRandomCaptchaType();
         this.showCaptchaType(this.currentCaptchaType);
-        
-        // MAKE SURE MODAL IS VISIBLE
         modalgic.style.display = 'flex';
-        modalgic.style.opacity = '1';
         
-        console.log('Modal should be open now. Display:', modalgic.style.display);
-
     }, 700);
 }
 
