@@ -899,6 +899,8 @@ class CustomCaptcha {
     const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
     const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
 
+    console.log('Modal element found:', !!modalgic); // Debug
+
     // Show loading state
     triggergic.style.display = 'none';
     containergic.classList.add(`loading-stategic-${instanceId}`);
@@ -911,22 +913,21 @@ class CustomCaptcha {
     loadingBarContainergic.classList.add(`activegic-${instanceId}`);
 
     setTimeout(() => {
-        // Remove loading state
-        containergic.classList.remove(`loading-stategic-${instanceId}`);
-        textElementgic.classList.remove(`loading-textgic-${instanceId}`);
-        textElementgic.innerText = 'I\'m not a robot';
+        console.log('700ms passed, opening modal...'); // Debug
         
-        // Stop loading animation
-        loadingBarContainergic.classList.remove(`activegic-${instanceId}`);
-        if (loadingBargic) {
-            loadingBargic.style.animation = 'none';
-        }
-
-        // Show verification modal
+        // KEEP THE LOADING STATE - DON'T REMOVE IT
+        // Just show the modal on top
         this.currentCaptchaType = this.getRandomCaptchaType();
         this.showCaptchaType(this.currentCaptchaType);
-        modalgic.style.display = 'flex';
         
+        // FORCE THE MODAL TO OPEN
+        modalgic.style.display = 'flex';
+        modalgic.style.visibility = 'visible';
+        modalgic.style.opacity = '1';
+        modalgic.style.zIndex = '10000';
+        
+        console.log('Modal display set to:', modalgic.style.display); // Debug
+
     }, 700);
 }
 
