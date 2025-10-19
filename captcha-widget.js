@@ -21,15 +21,7 @@ class CustomCaptcha {
     this.createCaptcha();
     this.bindEvents();
     this.initializeCaptchaData();
-    
-    // Always start with reset state on page load
-    // Use setTimeout to ensure everything is loaded
-    setTimeout(() => {
-        this.reset();
-        
-        // Force protection of buttons immediately
-        this.protectButtons();
-    }, 100);
+    this.reset();
 }
 
     createCaptcha() {
