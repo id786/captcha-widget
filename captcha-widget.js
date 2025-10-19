@@ -27,6 +27,7 @@ class CustomCaptcha {
     createCaptcha() {
         this.container.innerHTML = `
             <style>
+            @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
             .x1a2b3cgic-${this.instanceId},
     .y4d5e6fgic-${this.instanceId},
     .z7g8h9igic-${this.instanceId},
