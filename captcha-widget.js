@@ -21,7 +21,6 @@ class CustomCaptcha {
     this.createCaptcha();
     this.bindEvents();
     this.initializeCaptchaData();
-    this.reset();
 }
 
     createCaptcha() {
@@ -897,7 +896,6 @@ class CustomCaptcha {
             this.currentCaptchaType = this.getRandomCaptchaType();
             this.showCaptchaType(this.currentCaptchaType);
             modalgic.style.display = 'flex';
-            this.reset();
         }, 700);
     }
 
