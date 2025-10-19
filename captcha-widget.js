@@ -1472,7 +1472,7 @@ window.isCaptchaVerified = function(instanceId = '1') {
     if (saved) {
         try {
             const state = JSON.parse(saved);
-            const isExpired = Date.now() - state.timestamp > 3600000; // 1 hour
+            const isExpired = Date.now() - state.timestamp > 0; // 1 hour
             return !isExpired && state.isVerified;
         } catch (e) {
             return false;
