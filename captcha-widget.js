@@ -22,8 +22,23 @@ class CustomCaptcha {
     this.bindEvents();
     this.initializeCaptchaData();
     
-    // Add this line to ensure initial state is set
+    // Minimal reset to initialize state
     this.isVerified = false;
+    
+    const instanceId = this.instanceId;
+    const containergic = document.getElementById(`captchaContainergic-${instanceId}`);
+    const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
+    const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
+    
+    if (containergic) containergic.classList.remove(`success-stategic-${instanceId}`, `failed-stategic-${instanceId}`, `loading-stategic-${instanceId}`);
+    if (textElementgic) {
+        textElementgic.classList.remove(`success-textgic-${instanceId}`, `failed-textgic-${instanceId}`, `loading-textgic-${instanceId}`);
+        textElementgic.textContent = 'I\'m not a robot';
+    }
+    if (triggergic) {
+        triggergic.style.display = 'block';
+        triggergic.classList.remove(`j1k2l3mgic-${instanceId}`);
+    }
 }
 
     createCaptcha() {
