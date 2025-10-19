@@ -909,7 +909,7 @@ class CustomCaptcha {
     const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
     const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
 
-    console.log('Starting CAPTCHA verification...'); // Debug
+    console.log('Starting CAPTCHA verification...');
 
     triggergic.style.display = 'none';
     containergic.classList.add(`loading-stategic-${instanceId}`);
@@ -917,23 +917,23 @@ class CustomCaptcha {
     textElementgic.classList.add(`loading-textgic-${instanceId}`);
     textElementgic.innerText = 'Processing...';
 
-    // FIX: Get loading bar elements correctly
+    // FIX: Show loading bar immediately
     const loadingBarContainergic = this.container.querySelector(`.loading-bar-containergic-${instanceId}`);
-    const loadingBargic = this.container.querySelector(`.loading-bargic-${instanceId}`);
-    
-    console.log('Loading bar container:', loadingBarContainergic); // Debug
-    console.log('Loading bar:', loadingBargic); // Debug
-    
     if (loadingBarContainergic) {
-        loadingBarContainergic.style.display = 'block'; // Force display
+        loadingBarContainergic.style.display = 'block';
         loadingBarContainergic.classList.add(`activegic-${instanceId}`);
     }
 
     setTimeout(() => {
-        console.log('700ms passed, opening modal...'); // Debug
+        console.log('700ms passed, opening modal...');
         this.currentCaptchaType = this.getRandomCaptchaType();
         this.showCaptchaType(this.currentCaptchaType);
         modalgic.style.display = 'flex';
+        
+        // Hide loading bar when modal opens
+        if (loadingBarContainergic) {
+            loadingBarContainergic.style.display = 'none';
+        }
     }, 700);
 }
 
@@ -1173,55 +1173,70 @@ class CustomCaptcha {
     }
 
     stopDrag() {
-        if (!this.isDragging) return;
+    if (!this.isDragging) return;
+    
+    this.isDragging = false;
+    const instanceId = this.instanceId;
+    const puzzleSlider = document.getElementById(`puzzleSlidergic-${instanceId}`);
+    const randomShape = document.getElementById(`randomShapegic-${instanceId}`);
+
+    if (puzzleSlider) {
+        puzzleSlider.style.cursor = 'grab';
+        puzzleSlider.style.transform = 'scale(1)';
+        puzzleSlider.classList.remove(`activegic-${instanceId}`);
+    }
+
+    if (randomShape) {
+        const shapeLeft = parseInt(randomShape.style.left) || 10;
+        const distance = Math.abs(shapeLeft - this.targetPosition);
         
-        this.isDragging = false;
-        const instanceId = this.instanceId;
-        const puzzleSlider = document.getElementById(`puzzleSlidergic-${instanceId}`);
-        const randomShape = document.getElementById(`randomShapegic-${instanceId}`);
+        console.log('Drag stopped - Shape position:', shapeLeft, 'Target:', this.targetPosition, 'Distance:', distance); // Debug
+        
+        if (distance < 15) { // Increased tolerance for better UX
+            if (puzzleSlider) {
+                puzzleSlider.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+            }
 
-        if (puzzleSlider) {
-            puzzleSlider.style.cursor = 'grab';
-            puzzleSlider.style.transform = 'scale(1)';
-            puzzleSlider.classList.remove(`activegic-${instanceId}`);
-        }
-
-        if (randomShape) {
-            const shapeLeft = parseInt(randomShape.style.left);
-            const distance = Math.abs(shapeLeft - this.targetPosition);
-            
-            if (distance < 4) {
-                if (puzzleSlider) {
-                    puzzleSlider.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
-                }
-
-                if (this.currentShapeType === 'triangle') {
-                    randomShape.style.borderBottomColor = '#4CAF50';
-                } else {
-                    randomShape.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
-                }
-
-                setTimeout(() => {
-                    this.completeVerification();
-                }, 500);
+            if (this.currentShapeType === 'triangle') {
+                randomShape.style.borderBottomColor = '#4CAF50';
             } else {
-                if (this.isFirstTry && this.hasDragged) {
-                    this.isFirstTry = false;
-                    setTimeout(() => {
-                        this.handleFailuregic();
-                    }, 300);
-                }
+                randomShape.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+            }
+
+            setTimeout(() => {
+                this.completeVerification();
+            }, 500);
+        } else {
+            if (this.isFirstTry && this.hasDragged) {
+                this.isFirstTry = false;
+                setTimeout(() => {
+                    this.handleFailuregic();
+                }, 300);
             }
         }
     }
+}
 
     completeType2Verification() {
-        if (!this.hasDragged) {
-            this.handleFailuregic();
-        } else {
-            this.handleFailuregic();
-        }
+    const instanceId = this.instanceId;
+    const randomShape = document.getElementById(`randomShapegic-${instanceId}`);
+    
+    if (!randomShape) {
+        this.handleFailuregic();
+        return;
     }
+
+    const shapeLeft = parseInt(randomShape.style.left) || 10;
+    const distance = Math.abs(shapeLeft - this.targetPosition);
+    
+    console.log('Shape position:', shapeLeft, 'Target:', this.targetPosition, 'Distance:', distance); // Debug
+    
+    if (distance < 15) { // Increased tolerance for better UX
+        this.completeVerification();
+    } else {
+        this.handleFailuregic();
+    }
+}
 
     // Type 3: Image Click
     initializeType3() {
@@ -1354,7 +1369,7 @@ class CustomCaptcha {
     const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
     const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
 
-    console.log('Completing verification...'); // Debug
+    console.log('Completing verification...');
 
     modalgic.style.display = 'none';
     containergic.classList.remove(`loading-stategic-${instanceId}`);
@@ -1362,18 +1377,23 @@ class CustomCaptcha {
     textElementgic.textContent = 'Verification Successful.';
     containergic.classList.add(`success-stategic-${instanceId}`);
 
-    // Stop loading animation
+    // Hide loading bar
     const loadingBarContainergic = this.container.querySelector(`.loading-bar-containergic-${instanceId}`);
     if (loadingBarContainergic) {
         loadingBarContainergic.style.display = 'none';
     }
 
-    // Create success tick - SIMPLIFIED APPROACH
+    // Create animated tick
     if (triggergic) {
-        // Just hide the checkbox and show success state
         triggergic.style.display = 'none';
         
-        // Create tick element
+        // Remove any existing tick
+        const existingTick = triggergic.parentElement.querySelector(`.tick-animgic-${instanceId}`);
+        if (existingTick) {
+            existingTick.remove();
+        }
+        
+        // Create new animated tick
         const tickSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         tickSvg.setAttribute("class", `tick-animgic-${instanceId}`);
         tickSvg.setAttribute("width", "24");
@@ -1387,12 +1407,20 @@ class CustomCaptcha {
         polyline.setAttribute("stroke-width", "3");
         polyline.setAttribute("stroke-linecap", "round");
         polyline.setAttribute("stroke-linejoin", "round");
+        polyline.setAttribute("stroke-dasharray", "50");
+        polyline.setAttribute("stroke-dashoffset", "50");
         
         tickSvg.appendChild(polyline);
         
-        // Insert the tick next to the text
+        // Insert the tick where the checkbox was
         const container = triggergic.parentElement;
-        container.insertBefore(tickSvg, triggergic.nextSibling);
+        container.insertBefore(tickSvg, triggergic);
+        
+        // Trigger animation
+        setTimeout(() => {
+            polyline.style.strokeDashoffset = "0";
+            polyline.style.transition = "stroke-dashoffset 0.8s ease";
+        }, 100);
     }
     
     this.isVerified = true;
