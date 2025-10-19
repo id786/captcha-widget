@@ -1,5 +1,5 @@
 /**
- * CustomCaptcha - Updated CAPTCHA with multiple verification types 3.5
+ * CustomCaptcha - Updated CAPTCHA with multiple verification types
  * Enhanced version with image selection, slide puzzle, and image click CAPTCHAs
  */
 class CustomCaptcha {
@@ -18,574 +18,512 @@ class CustomCaptcha {
     }
 
     init() {
-    this.createCaptcha();
-    this.bindEvents();
-    this.initializeCaptchaData();
-    
-    // Minimal reset to initialize state
-    this.isVerified = false;
-    
-    const instanceId = this.instanceId;
-    const containergic = document.getElementById(`captchaContainergic-${instanceId}`);
-    const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
-    const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
-    
-    if (containergic) containergic.classList.remove(`success-stategic-${instanceId}`, `failed-stategic-${instanceId}`, `loading-stategic-${instanceId}`);
-    if (textElementgic) {
-        textElementgic.classList.remove(`success-textgic-${instanceId}`, `failed-textgic-${instanceId}`, `loading-textgic-${instanceId}`);
-        textElementgic.textContent = 'I\'m not a robot';
+        this.createCaptcha();
+        this.bindEvents();
+        this.initializeCaptchaData();
     }
-    if (triggergic) {
-        triggergic.style.display = 'block';
-        triggergic.classList.remove(`j1k2l3mgic-${instanceId}`);
-    }
-}
 
     createCaptcha() {
         this.container.innerHTML = `
             <style>
-            .x1a2b3cgic-${this.instanceId},
-    .y4d5e6fgic-${this.instanceId},
-    .z7g8h9igic-${this.instanceId},
-    .a1b2c3dgic-${this.instanceId},
-    .e4f5g6hgic-${this.instanceId},
-    .modal-containergic-${this.instanceId},
-    .modal-contentgic-${this.instanceId},
-    .modal-headergic-${this.instanceId},
-    .modal-headergic-${this.instanceId} p,
-    .modal-headergic-${this.instanceId} b,
-    .modal-bodygic-${this.instanceId},
-    .modal-footergic-${this.instanceId},
-    .verify-btngic-${this.instanceId},
-    .refresh-buttongic-${this.instanceId},
-    .puzzle-instructionsgic-${this.instanceId},
-    .slider-handlegic-${this.instanceId},
-    .number-markergic-${this.instanceId},
-    .spat,
-    .spat small {
-        font-family: 'Roboto', 'Segoe UI', Tahoma, sans-serif;
-        white-space: nowrap;
-    }
-.x1a2b3cgic-${this.instanceId} {
-    width: 304px !important;
-    height: 78px !important;
-    border: 1px solid #dcdcdc !important;
-    border-radius: 4px !important;
-    background: #fff !important;
-    position: relative !important;
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    padding: 0 10px !important;
-    box-sizing: border-box !important;
-    overflow: hidden !important;
-    background: #f9f9f9 !important;
-}
-
-.y4d5e6fgic-${this.instanceId} {
-    display: flex !important;
-    align-items: center !important;
-    gap: 10px !important;
-}
-
-.z7g8h9igic-${this.instanceId} {
-    width: 24px !important;
-    height: 24px !important;
-    border: 2px solid #c1c1c1 !important;
-    border-radius: 2px !important;
-    background: #fff !important;
-    cursor: pointer !important;
-    position: relative !important;
-}
-
-.z7g8h9igic-${this.instanceId}.j1k2l3mgic-${this.instanceId} {
-    border: 1px solid red !important;
-}
-
-.a1b2c3dgic-${this.instanceId} {
-    font-size: 14px !important;
-    color: #000 !important;
-}
-
-.tick-animgic-${this.instanceId} {
-    width: 40px !important;
-    height: 40px !important;
-    stroke: #4CAF50 !important;
-    stroke-width: 3 !important;
-    fill: none !important;
-    stroke-linecap: round !important;
-    stroke-linejoin: round !important;
-    stroke-dasharray: 50 !important;
-    stroke-dashoffset: 50 !important;
-    animation: drawgic-${this.instanceId} 0.8s ease forwards !important;
-}
-
-@keyframes drawgic-${this.instanceId} {
-    from { stroke-dashoffset: -50 !important; }
-    to { stroke-dashoffset: 0 !important; }
-}
-
-.e4f5g6hgic-${this.instanceId} {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    font-size: 10px !important;
-    color: #555 !important;
-}
-
-.i7j8k9lgic-${this.instanceId} {
-    width: 33px !important;
-    height: 33px !important;
-    margin-bottom: 2px !important;
-    background: red !important;
-}
-
-.e4f5g6hgic-${this.instanceId} strong {
-    font-size: 12px !important;
-}
-
-.x1a2b3cgic-${this.instanceId}.loading-stategic-${this.instanceId} {
-    border: 1px solid gold !important;
-}
-
-.x1a2b3cgic-${this.instanceId}.success-stategic-${this.instanceId} {
-    border: 1px solid #00ad00 !important;
-}
-
-.x1a2b3cgic-${this.instanceId}.failed-stategic-${this.instanceId} {
-    border: 1px solid red !important;
-}
-
-.modal-containergic-${this.instanceId} {
-    position: fixed !important;
-    inset: 0 !important;
-    background: rgba(0,0,0,0.5) !important;
-    backdrop-filter: blur(3px) !important;
-    display: none;
-    align-items: center !important;
-    justify-content: center !important;
-    z-index: 10000 !important;
-}
-
-.a1b2c3dgic-${this.instanceId}.failed-textgic-${this.instanceId} {
-    color: red !important;
-}
-
-.a1b2c3dgic-${this.instanceId}.loading-textgic-${this.instanceId} {
-    color: gold !important;
-}
-
-.a1b2c3dgic-${this.instanceId}.success-textgic-${this.instanceId} {
-    color: green !important;
-}
-
-.spat {
-    text-decoration: none !important;
-    color: #707070 !important;
-}
-
-.spat:hover {
-    text-decoration: underline !important;
-}
-
-.spat:link {
-    text-decoration: none !important;
-}
-
-.spat:visited {
-    text-decoration: none !important;
-    color: #707070 !important;
-}
-
-.spat:active {
-    text-decoration: none !important;
-}
-
-.modal-headergic-${this.instanceId} {
-    background: linear-gradient(135deg, #FFD700, #FFA500) !important;
-    margin: -20px -20px 20px -20px !important;
-    padding: 15px 20px !important;
-    border-radius: 6px 6px 0 0 !important;
-    display: flex !important;
-}
-
-.modal-headergic-${this.instanceId} p {
-    margin: 0 !important;
-    font-size: 16px !important;
-    color: #333 !important;
-    font-weight: 500 !important;
-}
-
-.image-gridgic-${this.instanceId} {
-    display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 5px !important;
-    width: 300px !important;
-    height: 300px !important;
-    aspect-ratio: 1 !important;
-}
-
-.image-containergic-${this.instanceId} {
-    transition: all 0.2s ease !important;
-    border-radius: 4px !important;
-    overflow: hidden !important;
-    background: #f5f5f5 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-}
-
-.image-containergic-${this.instanceId}.selectedgic-${this.instanceId} .captcha-imagegic-${this.instanceId} {
-    border: 3px solid #4CAF50 !important;
-    transform: scale(0.85) !important;
-}
-
-.image-containergic-${this.instanceId}.incorrectgic-${this.instanceId} .captcha-imagegic-${this.instanceId} {
-    border: 3px solid #f44336 !important;
-    transform: scale(0.85) !important;
-}
-
-.captcha-imagegic-${this.instanceId} {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    cursor: pointer !important;
-    border: none !important;
-    border-radius: 4px !important;
-    transition: all 0.2s ease !important;
-    transform-origin: center center !important;
-}
-
-.verify-btngic-${this.instanceId} {
-    background: linear-gradient(135deg, #FFD700, #FFA500) !important;
-    color: #333 !important;
-    border: none !important;
-    padding: 12px 40px !important;
-    border-radius: 25px !important;
-    font-size: 16px !important;
-    cursor: pointer !important;
-    transition: all 0.3s ease !important;
-    font-weight: bold !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.5px !important;
-    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3) !important;
-}
-
-.verify-btngic-${this.instanceId}:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4) !important;
-}
-
-.verify-btngic-${this.instanceId}:active {
-    transform: translateY(0) !important;
-    box-shadow: 0 2px 10px rgba(255, 215, 0, 0.3) !important;
-}
-
-.slide-puzzle-containergic-${this.instanceId} {
-    text-align: center !important;
-    width: 100% !important;
-    max-width: 350px !important;
-    margin: 0 auto !important;
-}
-
-.puzzle-imagegic-${this.instanceId} {
-    width: 100% !important;
-    height: 150px !important;
-    background: #f8f9f9 !important;
-    border: 2px solid #e9ecef !important;
-    border-radius: 15px !important;
-    margin: 0 auto 20px !important;
-    position: relative !important;
-    overflow: hidden !important;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
-}
-
-.puzzle-trackgic-${this.instanceId} {
-    position: absolute !important;
-    left: 20px !important;
-    right: 20px !important;
-    top: 40px !important;
-    height: 60px !important;
-    background: linear-gradient(90deg, #667eea, #764ba2) !important;
-    border-radius: 30px !important;
-    display: flex !important;
-    align-items: center !important;
-    padding: 0 10px !important;
-}
-
-.random-shapegic-${this.instanceId} {
-    width: 40px !important;
-    height: 40px !important;
-    background: linear-gradient(135deg, #FFD700, #FFA500) !important;
-    border-radius: 8px !important;
-    transition: transform 0.1s ease !important;
-    position: absolute !important;
-    left: 10px !important;
-}
-
-.puzzle-targetgic-${this.instanceId} {
-    width: 40px !important;
-    height: 40px !important;
-    background: rgba(76, 175, 80, 0.3) !important;
-    border: 2px dashed #4CAF50 !important;
-    border-radius: 8px !important;
-    animation: pulsegic-${this.instanceId} 2s infinite !important;
-    position: absolute !important;
-}
-
-.random-shapegic-${this.instanceId}.circlegic-${this.instanceId} {
-    border-radius: 50% !important;
-    background: linear-gradient(135deg, #FF6B6B, #EE5A24) !important;
-}
-
-.random-shapegic-${this.instanceId}.trianglegic-${this.instanceId} {
-    width: 0 !important;
-    height: 0 !important;
-    background: none !important;
-    border-left: 20px solid transparent !important;
-    border-right: 20px solid transparent !important;
-    border-bottom: 35px solid #48dbfb !important;
-}
-
-.random-shapegic-${this.instanceId}.diamondgic-${this.instanceId} {
-    transform: rotate(45deg) !important;
-    background: linear-gradient(135deg, #1dd1a1, #10ac84) !important;
-}
-
-.puzzle-targetgic-${this.instanceId}.circlegic-${this.instanceId} {
-    border-radius: 50% !important;
-}
-
-.puzzle-targetgic-${this.instanceId}.trianglegic-${this.instanceId} {
-    width: 0 !important;
-    height: 0 !important;
-    background: none !important;
-    border-left: 20px solid transparent !important;
-    border-right: 20px solid transparent !important;
-    border-bottom: 35px solid rgba(76, 175, 80, 0.3) !important;
-}
-
-.puzzle-targetgic-${this.instanceId}.diamondgic-${this.instanceId} {
-    transform: rotate(45deg) !important;
-}
-
-.puzzle-slider-containergic-${this.instanceId} {
-    position: absolute !important;
-    left: 20px !important;
-    right: 20px !important;
-    bottom: 15px !important;
-    height: 30px !important;
-    background: #e9ecef !important;
-    border-radius: 15px !important;
-    border: 2px solid #dee2e6 !important;
-    padding: 0 5px !important;
-    box-sizing: border-box !important;
-}
-
-.puzzle-slidergic-${this.instanceId} {
-    width: 50px !important;
-    height: 40px !important;
-    background: linear-gradient(135deg, #667eea, #764ba2) !important;
-    border-radius: 8px !important;
-    position: absolute !important;
-    left: 5px !important;
-    top: -5px !important;
-    cursor: grab !important;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
-    transition: transform 0.1s ease !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    z-index: 2 !important;
-    box-sizing: border-box !important;
-}
-
-.slider-handlegic-${this.instanceId} {
-    color: white !important;
-    font-weight: bold !important;
-    font-size: 16px !important;
-}
-
-.puzzle-slidergic-${this.instanceId}:active {
-    cursor: grabbing !important;
-    transform: scale(0.95) !important;
-}
-
-.puzzle-instructionsgic-${this.instanceId} {
-    margin-top: 15px !important;
-    color: #666 !important;
-    font-size: 14px !important;
-    text-align: center !important;
-    padding: 0 10px !important;
-}
-
-.captcha-typegic-${this.instanceId} {
-    transition: opacity 0.3s ease !important;
-}
-
-@keyframes pulsegic-${this.instanceId} {
-    0% { opacity: 0.6 !important; }
-    50% { opacity: 1 !important; }
-    100% { opacity: 0.6 !important; }
-}
-
-.loading-bar-containergic-${this.instanceId} {
-    width: 100% !important;
-    height: 3px !important;
-    background: #f0f0f0 !important;
-    border-radius: 2px !important;
-    overflow: hidden !important;
-    position: absolute !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    display: none;
-}
-
-.loading-bar-containergic-${this.instanceId}.activegic-${this.instanceId} {
-    display: block;
-}
-
-.loading-bargic-${this.instanceId} {
-    height: 100% !important;
-    background: linear-gradient(90deg, #FFD700, #FFA500) !important;
-    border-radius: 2px !important;
-    width: 30% !important;
-    animation: infiniteSlidegic-${this.instanceId} 1.5s infinite linear !important;
-    transform: translateX(-100%) !important;
-}
-
-@keyframes infiniteSlidegic-${this.instanceId} {
-    0% {
-        transform: translateX(-100%) !important;
-    }
-    100% {
-        transform: translateX(400%) !important;
-    }
-}
-
-.close-buttongic-${this.instanceId} {
-    position: absolute !important;
-    top: 8px !important;
-    right: 12px !important;
-    cursor: pointer !important;
-    font-size: 18px !important;
-    z-index: 1001 !important;
-}
-
-.number-markergic-${this.instanceId} {
-    position: absolute !important;
-    width: 30px !important;
-    height: 30px !important;
-    background: linear-gradient(135deg, #FFD700, #FFA500) !important;
-    border-radius: 50% !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    color: #333 !important;
-    font-weight: bold !important;
-    font-size: 14px !important;
-    z-index: 10 !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
-    pointer-events: none !important;
-    transform: translate(-50%, -50%) !important;
-}
-
-.modal-contentgic-${this.instanceId} {
-    background: #fff !important;
-    padding: 20px !important;
-    border-radius: 6px !important;
-    width: 90% !important;
-    max-width: 300px !important;
-    text-align: center !important;
-    position: relative !important;
-    margin: auto !important;
-}
-
-.close-buttongic-${this.instanceId} {
-    position: absolute !important;
-    top: 8px !important;
-    right: 12px !important;
-    cursor: pointer !important;
-    font-size: 18px !important;
-    z-index: 1001 !important;
-    background: none !important;
-    border: none !important;
-    color: #333 !important;
-}
-
-.modal-bodygic-${this.instanceId} {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 20px 0 !important;
-    min-height: 300px !important;
-}
-
-.modal-footergic-${this.instanceId} {
-    text-align: center !important;
-    padding-top: 20px !important;
-    border-top: 1px solid #eee !important;
-    margin-top: 20px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 10px !important;
-}
-
-.image-click-containergic-${this.instanceId} {
-    text-align: center !important;
-    width: 100% !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-}
-
-.click-image-wrappergic-${this.instanceId} {
-    position: relative !important;
-    display: inline-block !important;
-    margin: 0 auto !important;
-    cursor: crosshair !important;
-}
-
-.click-imagegic-${this.instanceId} {
-    max-width: 100% !important;
-    height: auto !important;
-    border-radius: 8px !important;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
-    display: block !important;
-    margin: 0 auto !important;
-}
-
-.refresh-buttongic-${this.instanceId} {
-    background: none !important;
-    border: none !important;
-    cursor: pointer !important;
-    width: 40px !important;
-    height: 40px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    color: #666 !important;
-    transition: all 0.3s ease !important;
-    border-radius: 50% !important;
-    margin-right: 10px !important;
-}
-
-.refresh-buttongic-${this.instanceId}:hover {
-    color: #333 !important;
-    background: rgba(0,0,0,0.05) !important;
-    transform: rotate(180deg) !important;
-}
-
-.refresh-buttongic-${this.instanceId}:active {
-    transform: rotate(360deg) !important;
-}
-
-.puzzle-slidergic-${this.instanceId}.activegic-${this.instanceId} {
-    transform: scale(0.95) !important;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.3) !important;
-}
+                .x1a2b3cgic-${this.instanceId} {
+                    width: 304px;
+                    height: 78px;
+                    border: 1.5px solid #dcdcdc;
+                    border-radius: 4px;
+                    background: #fff;
+                    position: relative;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 0 10px;
+                    box-sizing: border-box;
+                    overflow: hidden;
+                    background: #f9f9f9;
+                }
+
+                .y4d5e6fgic-${this.instanceId} {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                }
+
+                .z7g8h9igic-${this.instanceId} {
+                    width: 24px;
+                    height: 24px;
+                    border: 2px solid #c1c1c1;
+                    border-radius: 2px;
+                    background: #fff;
+                    cursor: pointer;
+                    position: relative;
+                }
+
+                .z7g8h9igic-${this.instanceId}.j1k2l3mgic-${this.instanceId} {
+                    border: 1.5px solid red;
+                }
+
+                .a1b2c3dgic-${this.instanceId} {
+                    font-size: 14px;
+                    color: #000;
+                }
+
+                .tick-animgic-${this.instanceId} {
+                    width: 40px;
+                    height: 40px;
+                    stroke: #4CAF50;
+                    stroke-width: 3;
+                    fill: none;
+                    stroke-linecap: round;
+                    stroke-linejoin: round;
+                    stroke-dasharray: 50;
+                    stroke-dashoffset: 50;
+                    animation: drawgic-${this.instanceId} 0.8s ease forwards;
+                }
+
+                @keyframes drawgic-${this.instanceId} {
+                    from { stroke-dashoffset: -50; }
+                    to { stroke-dashoffset: 0; }
+                }
+
+                .e4f5g6hgic-${this.instanceId} {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    font-size: 10px;
+                    color: #555;
+                }
+
+                .i7j8k9lgic-${this.instanceId} {
+                    width: 33px;
+                    height: 33px;
+                    margin-bottom: 2px;
+                    background: red;
+                }
+
+                .e4f5g6hgic-${this.instanceId} strong {
+                    font-size: 12px;
+                }
+
+                .x1a2b3cgic-${this.instanceId}.loading-stategic-${this.instanceId} {
+                    border: 1.5px solid gold;
+                }
+
+                .x1a2b3cgic-${this.instanceId}.success-stategic-${this.instanceId} {
+                    border: 1.5px solid #00ad00;
+                }
+
+                .x1a2b3cgic-${this.instanceId}.failed-stategic-${this.instanceId} {
+                    border: 1.5px solid red;
+                }
+
+                .modal-containergic-${this.instanceId} {
+                    position: fixed;
+                    inset: 0;
+                    background: rgba(0,0,0,0.5);
+                    backdrop-filter: blur(3px);
+                    display: none;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 10000;
+                }
+
+                .a1b2c3dgic-${this.instanceId}.failed-textgic-${this.instanceId} {
+                    color: red;
+                }
+
+                .a1b2c3dgic-${this.instanceId}.loading-textgic-${this.instanceId} {
+                    color: gold;
+                }
+
+                .a1b2c3dgic-${this.instanceId}.success-textgic-${this.instanceId} {
+                    color: green;
+                }
+
+                .modal-headergic-${this.instanceId} {
+                    background: linear-gradient(135deg, #FFD700, #FFA500);
+                    margin: -20px -20px 20px -20px;
+                    padding: 15px 20px;
+                    border-radius: 6px 6px 0 0;
+                    display: flex;
+                }
+
+                .modal-headergic-${this.instanceId} p {
+                    margin: 0;
+                    font-size: 16px;
+                    color: #333;
+                    font-weight: 500;
+                }
+
+                .image-gridgic-${this.instanceId} {
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 5px;
+                    width: 300px;
+                    height: 300px;
+                    aspect-ratio: 1;
+                }
+
+                .image-containergic-${this.instanceId} {
+                    transition: all 0.2s ease;
+                    border-radius: 4px;
+                    overflow: hidden;
+                    background: #f5f5f5;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .image-containergic-${this.instanceId}.selectedgic-${this.instanceId} .captcha-imagegic-${this.instanceId} {
+                    border: 3px solid #4CAF50 !important;
+                    transform: scale(0.85);
+                }
+
+                .image-containergic-${this.instanceId}.incorrectgic-${this.instanceId} .captcha-imagegic-${this.instanceId} {
+                    border: 3px solid #f44336 !important;
+                    transform: scale(0.85);
+                }
+
+                .captcha-imagegic-${this.instanceId} {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    cursor: pointer;
+                    border: none;
+                    border-radius: 4px;
+                    transition: all 0.2s ease;
+                    transform-origin: center center;
+                }
+
+                .verify-btngic-${this.instanceId} {
+                    background: linear-gradient(135deg, #FFD700, #FFA500);
+                    color: #333;
+                    border: none;
+                    padding: 12px 40px;
+                    border-radius: 25px;
+                    font-size: 16px;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    font-weight: bold;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+                }
+
+                .verify-btngic-${this.instanceId}:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+                }
+
+                .verify-btngic-${this.instanceId}:active {
+                    transform: translateY(0);
+                    box-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+                }
+
+                .slide-puzzle-containergic-${this.instanceId} {
+                    text-align: center;
+                    width: 100%;
+                    max-width: 350px;
+                    margin: 0 auto;
+                }
+
+                .puzzle-imagegic-${this.instanceId} {
+                    width: 100%;
+                    height: 150px;
+                    background: #f8f9f9;
+                    border: 2px solid #e9ecef;
+                    border-radius: 15px;
+                    margin: 0 auto 20px;
+                    position: relative;
+                    overflow: hidden;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                }
+
+                .puzzle-trackgic-${this.instanceId} {
+                    position: absolute;
+                    left: 20px;
+                    right: 20px;
+                    top: 40px;
+                    height: 60px;
+                    background: linear-gradient(90deg, #667eea, #764ba2);
+                    border-radius: 30px;
+                    display: flex;
+                    align-items: center;
+                    padding: 0 10px;
+                }
+
+                .random-shapegic-${this.instanceId} {
+                    width: 40px;
+                    height: 40px;
+                    background: linear-gradient(135deg, #FFD700, #FFA500);
+                    border-radius: 8px;
+                    transition: transform 0.1s ease;
+                    position: absolute;
+                    left: 10px;
+                }
+
+                .puzzle-targetgic-${this.instanceId} {
+                    width: 40px;
+                    height: 40px;
+                    background: rgba(76, 175, 80, 0.3);
+                    border: 2px dashed #4CAF50;
+                    border-radius: 8px;
+                    animation: pulsegic-${this.instanceId} 2s infinite;
+                    position: absolute;
+                }
+
+                .random-shapegic-${this.instanceId}.circlegic-${this.instanceId} {
+                    border-radius: 50%;
+                    background: linear-gradient(135deg, #FF6B6B, #EE5A24);
+                }
+
+                .random-shapegic-${this.instanceId}.trianglegic-${this.instanceId} {
+                    width: 0;
+                    height: 0;
+                    background: none;
+                    border-left: 20px solid transparent;
+                    border-right: 20px solid transparent;
+                    border-bottom: 35px solid #48dbfb;
+                }
+
+                .random-shapegic-${this.instanceId}.diamondgic-${this.instanceId} {
+                    transform: rotate(45deg);
+                    background: linear-gradient(135deg, #1dd1a1, #10ac84);
+                }
+
+                .puzzle-targetgic-${this.instanceId}.circlegic-${this.instanceId} {
+                    border-radius: 50%;
+                }
+
+                .puzzle-targetgic-${this.instanceId}.trianglegic-${this.instanceId} {
+                    width: 0;
+                    height: 0;
+                    background: none;
+                    border-left: 20px solid transparent;
+                    border-right: 20px solid transparent;
+                    border-bottom: 35px solid rgba(76, 175, 80, 0.3);
+                }
+
+                .puzzle-targetgic-${this.instanceId}.diamondgic-${this.instanceId} {
+                    transform: rotate(45deg);
+                }
+
+                .puzzle-slider-containergic-${this.instanceId} {
+                    position: absolute;
+                    left: 20px;
+                    right: 20px;
+                    bottom: 15px;
+                    height: 30px;
+                    background: #e9ecef;
+                    border-radius: 15px;
+                    border: 2px solid #dee2e6;
+                    padding: 0 5px;
+                    box-sizing: border-box;
+                }
+
+                .puzzle-slidergic-${this.instanceId} {
+                    width: 50px;
+                    height: 40px;
+                    background: linear-gradient(135deg, #667eea, #764ba2);
+                    border-radius: 8px;
+                    position: absolute;
+                    left: 5px;
+                    top: -5px;
+                    cursor: grab;
+                    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                    transition: transform 0.1s ease;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 2;
+                    box-sizing: border-box;
+                }
+
+                .slider-handlegic-${this.instanceId} {
+                    color: white;
+                    font-weight: bold;
+                    font-size: 16px;
+                }
+
+                .puzzle-slidergic-${this.instanceId}:active {
+                    cursor: grabbing;
+                    transform: scale(0.95);
+                }
+
+                .puzzle-instructionsgic-${this.instanceId} {
+                    margin-top: 15px;
+                    color: #666;
+                    font-size: 14px;
+                    text-align: center;
+                    padding: 0 10px;
+                }
+
+                .captcha-typegic-${this.instanceId} {
+                    transition: opacity 0.3s ease;
+                }
+
+                @keyframes pulsegic-${this.instanceId} {
+                    0% { opacity: 0.6; }
+                    50% { opacity: 1; }
+                    100% { opacity: 0.6; }
+                }
+
+                .loading-bar-containergic-${this.instanceId} {
+                    width: 100%;
+                    height: 3px;
+                    background: #f0f0f0;
+                    border-radius: 2px;
+                    overflow: hidden;
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    display: none; 
+                }
+
+                .loading-bar-containergic-${this.instanceId}.activegic-${this.instanceId} {
+                    display: block; 
+                }
+
+                .loading-bargic-${this.instanceId} {
+                    height: 100%;
+                    background: linear-gradient(90deg, #FFD700, #FFA500);
+                    border-radius: 2px;
+                    width: 30%;
+                    animation: infiniteSlidegic-${this.instanceId} 1.5s infinite linear;
+                    transform: translateX(-100%);
+                }
+
+                @keyframes infiniteSlidegic-${this.instanceId} {
+                    0% {
+                        transform: translateX(-100%);
+                    }
+                    100% {
+                        transform: translateX(400%);
+                    }
+                }
+
+                .close-buttongic-${this.instanceId} {
+                    position: absolute;
+                    top: 8px;
+                    right: 12px;
+                    cursor: pointer;
+                    font-size: 18px;
+                    z-index: 1001;
+                }
+
+                .number-markergic-${this.instanceId} {
+                    position: absolute;
+                    width: 30px;
+                    height: 30px;
+                    background: linear-gradient(135deg, #FFD700, #FFA500);
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #333;
+                    font-weight: bold;
+                    font-size: 14px;
+                    z-index: 10;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+                    pointer-events: none;
+                    transform: translate(-50%, -50%);
+                }
+
+                .modal-contentgic-${this.instanceId} {
+                    background: #fff;
+                    padding: 20px;
+                    border-radius: 6px;
+                    width: 90%;
+                    max-width: 300px;
+                    text-align: center;
+                    position: relative;
+                    margin: auto;
+                }
+
+                .close-buttongic-${this.instanceId} {
+                    position: absolute;
+                    top: 8px;
+                    right: 12px;
+                    cursor: pointer;
+                    font-size: 18px;
+                    z-index: 1001;
+                    background: none;
+                    border: none;
+                    color: #333;
+                }
+
+                .modal-bodygic-${this.instanceId} {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 20px 0;
+                    min-height: 300px;
+                }
+
+                .modal-footergic-${this.instanceId} {
+                    text-align: center;
+                    padding-top: 20px;
+                    border-top: 1px solid #eee;
+                    margin-top: 20px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 10px;
+                }
+
+                .image-click-containergic-${this.instanceId} {
+                    text-align: center;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .click-image-wrappergic-${this.instanceId} {
+                    position: relative;
+                    display: inline-block;
+                    margin: 0 auto;
+                    cursor: crosshair;
+                }
+
+                .click-imagegic-${this.instanceId} {
+                    max-width: 100%;
+                    height: auto;
+                    border-radius: 8px;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                    display: block;
+                    margin: 0 auto;
+                }
+
+                .refresh-buttongic-${this.instanceId} {
+                    background: none;
+                    border: none;
+                    cursor: pointer;
+                    width: 40px;
+                    height: 40px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #666;
+                    transition: all 0.3s ease;
+                    border-radius: 50%;
+                    margin-right: 10px;
+                }
+
+                .refresh-buttongic-${this.instanceId}:hover {
+                    color: #333;
+                    background: rgba(0,0,0,0.05);
+                    transform: rotate(180deg);
+                }
+
+                .refresh-buttongic-${this.instanceId}:active {
+                    transform: rotate(360deg);
+                }
+
+                .puzzle-slidergic-${this.instanceId}.activegic-${this.instanceId} {
+                    transform: scale(0.95);
+                    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+                }
             </style>
 
             <div class="x1a2b3cgic-${this.instanceId}" id="captchaContainergic-${this.instanceId}">
@@ -595,28 +533,20 @@ class CustomCaptcha {
                 </div>
                 <div class="e4f5g6hgic-${this.instanceId}">
                     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="33px" height="33px" viewbox="330 330 1350 1350" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
-          <!-- SVG paths remain the same -->
-          <g><path style="opacity:0.852" fill="#ffd500" d="M 1140.5,324.5 C 1172.5,324.333 1204.5,324.5 1236.5,325C 1279.63,325.886 1322.63,327.219 1365.5,329C 1372.84,332.843 1375.34,338.676 1373,346.5C 1370.43,348.647 1368.59,351.314 1367.5,354.5C 1168.75,553.581 969.752,752.248 770.5,950.5C 769.024,953.143 767.024,955.31 764.5,957C 767.447,957.112 768.78,958.612 768.5,961.5C 769.978,961.238 771.311,961.571 772.5,962.5C 794.018,977.512 815.685,992.346 837.5,1007C 848.843,1015.34 860.177,1023.67 871.5,1032C 881.116,1037.64 890.45,1043.64 899.5,1050C 900.337,1051.01 900.67,1052.18 900.5,1053.5C 901.873,1053.34 903.207,1053.51 904.5,1054C 989.258,1113.22 1074.26,1172.22 1159.5,1231C 1160.34,1232.01 1160.67,1233.18 1160.5,1234.5C 1163.74,1234.88 1166.74,1236.05 1169.5,1238C 1184.98,1249.82 1200.98,1260.82 1217.5,1271C 1218.38,1272.36 1218.71,1273.86 1218.5,1275.5C 1219.5,1275.5 1220.5,1275.5 1221.5,1275.5C 1221.66,1272.81 1221.5,1270.15 1221,1267.5C 1214.84,1246.21 1208.84,1224.88 1203,1203.5C 1200.01,1189.13 1196.85,1174.8 1193.5,1160.5C 1190.34,1155.38 1188.67,1149.71 1188.5,1143.5C 1187.81,1141.73 1186.98,1140.06 1186,1138.5C 1183.16,1123.85 1179.99,1109.19 1176.5,1094.5C 1175.04,1092.72 1173.88,1090.72 1173,1088.5C 1169.72,1072.11 1166.05,1055.77 1162,1039.5C 1160.45,1033.63 1158.45,1027.97 1156,1022.5C 1152.25,1006.13 1148.59,989.795 1145,973.5C 1144.33,972.833 1143.67,972.167 1143,971.5C 1138.9,952.966 1134.23,934.633 1129,916.5C 1128.67,913.5 1128.33,910.5 1128,907.5C 1126.18,905.084 1124.85,902.418 1124,899.5C 1120.98,883.312 1117.48,867.312 1113.5,851.5C 1113.69,848.351 1114.69,845.518 1116.5,843C 1170.5,842.333 1224.5,842.333 1278.5,843C 1281.69,844.087 1285.02,844.92 1288.5,845.5C 1290.33,847.166 1291.67,849.166 1292.5,851.5C 1297.27,867.342 1301.1,883.342 1304,899.5C 1308.63,912.292 1312.63,925.292 1316,938.5C 1315.77,944.34 1317.1,949.674 1320,954.5C 1320.49,959.933 1321.49,965.267 1323,970.5C 1324.73,976.295 1326.73,981.961 1329,987.5C 1332.07,1001.41 1335.07,1015.41 1338,1029.5C 1339.89,1031.48 1341.22,1033.82 1342,1036.5C 1345.07,1050.41 1348.07,1064.41 1351,1078.5C 1353.18,1086.66 1355.85,1094.66 1359,1102.5C 1365.65,1128.75 1372.32,1155.08 1379,1181.5C 1380,1183.83 1381,1186.17 1382,1188.5C 1383.49,1196.94 1385.16,1205.28 1387,1213.5C 1390.09,1221.42 1392.76,1229.42 1395,1237.5C 1396.72,1246.51 1398.56,1255.51 1400.5,1264.5C 1402.97,1269.12 1404.14,1274.12 1404,1279.5C 1405.77,1281.58 1407.1,1283.92 1408,1286.5C 1410.98,1302.75 1414.65,1318.75 1419,1334.5C 1421.2,1340.09 1423.2,1345.76 1425,1351.5C 1432.87,1383.44 1440.87,1415.44 1449,1447.5C 1451.41,1455.51 1454.08,1463.51 1457,1471.5C 1457.33,1474.83 1457.67,1478.17 1458,1481.5C 1461.71,1491.89 1464.37,1502.55 1466,1513.5C 1466.77,1516.48 1468.1,1519.15 1470,1521.5C 1473.08,1535.15 1476.08,1548.82 1479,1562.5C 1488.84,1594.01 1497.34,1625.84 1504.5,1658C 1501.47,1673.18 1492.8,1677.85 1478.5,1672C 1439.28,1643.57 1399.61,1615.9 1359.5,1589C 1358.66,1587.99 1358.33,1586.82 1358.5,1585.5C 1355.76,1584.61 1353.09,1583.45 1350.5,1582C 1336.92,1572.62 1323.42,1563.12 1310,1553.5C 1309.52,1552.55 1309.35,1551.55 1309.5,1550.5C 1306.59,1550.42 1303.93,1549.59 1301.5,1548C 1237.36,1501.85 1172.69,1456.51 1107.5,1412C 1102.94,1407.91 1098.27,1404.07 1093.5,1400.5C 1066.59,1382.56 1039.93,1364.39 1013.5,1346C 1005.57,1339.56 997.233,1333.73 988.5,1328.5C 987.614,1327.68 987.281,1326.68 987.5,1325.5C 975.554,1318.85 964.221,1311.18 953.5,1302.5C 947.64,1299.97 942.64,1296.3 938.5,1291.5C 924.938,1283.26 911.938,1274.26 899.5,1264.5C 874.578,1247.92 849.911,1230.92 825.5,1213.5C 824.147,1212.48 823.48,1211.14 823.5,1209.5C 822.127,1209.66 820.793,1209.49 819.5,1209C 758.262,1166.01 697.095,1123.18 636,1080.5C 635.517,1079.55 635.351,1078.55 635.5,1077.5C 626.189,1073.89 617.856,1068.55 610.5,1061.5C 601.675,1057.01 593.675,1051.34 586.5,1044.5C 578.641,1040.07 571.307,1034.9 564.5,1029C 559.136,1025.93 553.803,1022.76 548.5,1019.5C 537.794,1011.49 527.127,1003.49 516.5,995.5C 505.85,992.032 499.85,984.866 498.5,974C 499.264,970.041 500.431,966.208 502,962.5C 715.089,749.911 927.922,537.245 1140.5,324.5 Z"/></g>
-<g><path style="opacity:1" fill="#ffd100" d="M 1355.5,347.5 C 1356.74,346.027 1357.74,344.36 1358.5,342.5C 1351.86,341.669 1345.19,341.169 1338.5,341C 1279.66,339.23 1220.83,338.064 1162,337.5C 1156.42,337.409 1150.92,337.909 1145.5,339C 967.458,517.543 789.458,695.043 611.5,871.5C 613.168,869.66 614.668,867.66 616,865.5C 791.959,689.707 968.125,513.54 1144.5,337C 1216.18,337.022 1287.85,338.022 1359.5,340C 1360.52,341.049 1360.68,342.216 1360,343.5C 1359.12,345.635 1357.62,346.969 1355.5,347.5 Z"/></g>
-<g><path style="opacity:1" fill="#ffc800" d="M 1355.5,347.5 C 1353.8,349.192 1351.8,350.525 1349.5,351.5C 1351.27,348.971 1353.27,346.638 1355.5,344.5C 1348.59,342.75 1341.59,342.25 1334.5,343C 1332.89,344.049 1332.23,345.549 1332.5,347.5C 1331.17,347.5 1329.83,347.5 1328.5,347.5C 1327.82,351.322 1325.49,352.989 1321.5,352.5C 1321.5,353.833 1321.5,355.167 1321.5,356.5C 1317.5,357.833 1313.5,359.167 1309.5,360.5C 1309.12,362.929 1308.45,365.263 1307.5,367.5C 1302.98,367.027 1300.64,369.027 1300.5,373.5C 1296.26,375.12 1291.93,376.453 1287.5,377.5C 1287.77,379.821 1287.1,381.821 1285.5,383.5C 1283.01,385.083 1280.34,386.083 1277.5,386.5C 1277.5,387.833 1277.5,389.167 1277.5,390.5C 1273.64,391.374 1269.97,392.707 1266.5,394.5C 1266.5,396.167 1266.5,397.833 1266.5,399.5C 1262.5,399.5 1260.5,401.5 1260.5,405.5C 1256.07,406.547 1251.74,407.88 1247.5,409.5C 1247.71,414.295 1245.38,416.962 1240.5,417.5C 1239,418.842 1238.33,420.508 1238.5,422.5C 1234.5,423.833 1230.5,425.167 1226.5,426.5C 1226.5,428.167 1226.5,429.833 1226.5,431.5C 1224.09,432.201 1221.76,433.201 1219.5,434.5C 1218,435.842 1217.33,437.508 1217.5,439.5C 1212.99,440.367 1208.66,441.7 1204.5,443.5C 1204.5,445.167 1204.5,446.833 1204.5,448.5C 1201.17,449.833 1197.83,451.167 1194.5,452.5C 1194.5,453.833 1194.5,455.167 1194.5,456.5C 1191.25,456.664 1188.25,457.664 1185.5,459.5C 1183.9,461.179 1183.23,463.179 1183.5,465.5C 1179.5,465.5 1177.5,467.5 1177.5,471.5C 1173.07,472.547 1168.74,473.88 1164.5,475.5C 1164.71,480.295 1162.38,482.962 1157.5,483.5C 1156,484.842 1155.33,486.508 1155.5,488.5C 1150.99,489.367 1146.66,490.7 1142.5,492.5C 1142.5,494.167 1142.5,495.833 1142.5,497.5C 1139.17,498.833 1135.83,500.167 1132.5,501.5C 1132.5,502.833 1132.5,504.167 1132.5,505.5C 1129.42,506.13 1126.42,507.13 1123.5,508.5C 1121.9,510.179 1121.23,512.179 1121.5,514.5C 1118.03,516.293 1114.36,517.626 1110.5,518.5C 1110.5,519.833 1110.5,521.167 1110.5,522.5C 1107.83,523.167 1105.17,523.833 1102.5,524.5C 1102.79,526.288 1102.45,527.955 1101.5,529.5C 1099.07,531.382 1096.4,532.715 1093.5,533.5C 1093.5,534.833 1093.5,536.167 1093.5,537.5C 1090.14,538.285 1086.81,539.285 1083.5,540.5C 1081.9,542.179 1081.23,544.179 1081.5,546.5C 1077.64,547.374 1073.97,548.707 1070.5,550.5C 1070.5,551.833 1070.5,553.167 1070.5,554.5C 1067.42,555.13 1064.42,556.13 1061.5,557.5C 1059.9,559.179 1059.23,561.179 1059.5,563.5C 1056.17,564.833 1052.83,566.167 1049.5,567.5C 1049.5,568.833 1049.5,570.167 1049.5,571.5C 1046.25,571.664 1043.25,572.664 1040.5,574.5C 1038.9,576.179 1038.23,578.179 1038.5,580.5C 1035.03,582.293 1031.36,583.626 1027.5,584.5C 1027.5,585.833 1027.5,587.167 1027.5,588.5C 1024.83,589.167 1022.17,589.833 1019.5,590.5C 1019.5,592.167 1019.5,593.833 1019.5,595.5C 1015.83,596.833 1012.17,598.167 1008.5,599.5C 1008.5,600.833 1008.5,602.167 1008.5,603.5C 1004.73,604.554 1001.06,605.887 997.5,607.5C 997.5,609.167 997.5,610.833 997.5,612.5C 994.167,613.833 990.833,615.167 987.5,616.5C 987.5,617.833 987.5,619.167 987.5,620.5C 984.418,621.13 981.418,622.13 978.5,623.5C 976.896,625.179 976.229,627.179 976.5,629.5C 973.026,631.293 969.36,632.626 965.5,633.5C 965.5,634.833 965.5,636.167 965.5,637.5C 962.833,638.167 960.167,638.833 957.5,639.5C 957.5,640.5 957.5,641.5 957.5,642.5C 956.167,642.5 954.833,642.5 953.5,642.5C 953.357,646.973 951.023,648.973 946.5,648.5C 946.5,649.833 946.5,651.167 946.5,652.5C 943.657,652.917 940.99,653.917 938.5,655.5C 936.896,657.179 936.229,659.179 936.5,661.5C 932.64,662.374 928.974,663.707 925.5,665.5C 925.5,666.833 925.5,668.167 925.5,669.5C 922.564,670.406 919.564,671.072 916.5,671.5C 915.551,673.737 914.884,676.071 914.5,678.5C 911.167,679.833 907.833,681.167 904.5,682.5C 904.5,683.833 904.5,685.167 904.5,686.5C 901.436,686.928 898.436,687.594 895.5,688.5C 895.5,689.5 895.5,690.5 895.5,691.5C 894.167,691.5 892.833,691.5 891.5,691.5C 891.672,693.492 891.005,695.158 889.5,696.5C 886.582,697.87 883.582,698.87 880.5,699.5C 880.5,700.833 880.5,702.167 880.5,703.5C 876.96,703.377 874.96,705.043 874.5,708.5C 873.167,708.5 871.833,708.5 870.5,708.5C 870.5,709.833 870.5,711.167 870.5,712.5C 868.263,713.449 865.929,714.116 863.5,714.5C 863.5,715.833 863.5,717.167 863.5,718.5C 860.833,719.167 858.167,719.833 855.5,720.5C 854.551,722.737 853.884,725.071 853.5,727.5C 850.252,727.664 847.252,728.664 844.5,730.5C 842.995,731.842 842.328,733.508 842.5,735.5C 839.564,736.406 836.564,737.072 833.5,737.5C 833.5,738.5 833.5,739.5 833.5,740.5C 832.167,740.5 830.833,740.5 829.5,740.5C 829.672,742.492 829.005,744.158 827.5,745.5C 824.748,747.336 821.748,748.336 818.5,748.5C 818.5,749.833 818.5,751.167 818.5,752.5C 817.167,752.5 815.833,752.5 814.5,752.5C 814.04,755.957 812.04,757.623 808.5,757.5C 808.672,759.492 808.005,761.158 806.5,762.5C 803.582,763.87 800.582,764.87 797.5,765.5C 797.5,766.833 797.5,768.167 797.5,769.5C 796.167,769.5 794.833,769.5 793.5,769.5C 792.551,771.737 791.884,774.071 791.5,776.5C 788.252,776.664 785.252,777.664 782.5,779.5C 780.995,780.842 780.328,782.508 780.5,784.5C 777.833,785.167 775.167,785.833 772.5,786.5C 772.5,787.5 772.5,788.5 772.5,789.5C 770.833,789.5 769.167,789.5 767.5,789.5C 767.672,791.492 767.005,793.158 765.5,794.5C 763.01,796.083 760.343,797.083 757.5,797.5C 757.5,798.833 757.5,800.167 757.5,801.5C 755.833,801.5 754.167,801.5 752.5,801.5C 752.04,804.957 750.04,806.623 746.5,806.5C 746.672,808.492 746.005,810.158 744.5,811.5C 741.748,813.336 738.748,814.336 735.5,814.5C 735.5,815.833 735.5,817.167 735.5,818.5C 734.167,818.5 732.833,818.5 731.5,818.5C 731.04,821.957 729.04,823.623 725.5,823.5C 725.5,824.833 725.5,826.167 725.5,827.5C 721.64,828.374 717.974,829.707 714.5,831.5C 714.5,832.833 714.5,834.167 714.5,835.5C 713.167,835.5 711.833,835.5 710.5,835.5C 710.5,836.5 710.5,837.5 710.5,838.5C 708.833,838.5 707.167,838.5 705.5,838.5C 705.672,840.492 705.005,842.158 703.5,843.5C 701.01,845.083 698.343,846.083 695.5,846.5C 695.5,847.833 695.5,849.167 695.5,850.5C 694.167,850.5 692.833,850.5 691.5,850.5C 691.5,851.5 691.5,852.5 691.5,853.5C 689.263,854.449 686.929,855.116 684.5,855.5C 684.672,857.492 684.005,859.158 682.5,860.5C 679.748,862.336 676.748,863.336 673.5,863.5C 673.5,864.833 673.5,866.167 673.5,867.5C 672.167,867.5 670.833,867.5 669.5,867.5C 669.5,868.5 669.5,869.5 669.5,870.5C 665.5,870.5 663.5,872.5 663.5,876.5C 659.833,877.833 656.167,879.167 652.5,880.5C 652.5,882.167 652.5,883.833 652.5,885.5C 648.727,886.554 645.06,887.887 641.5,889.5C 641.5,890.833 641.5,892.167 641.5,893.5C 637.5,893.5 635.5,895.5 635.5,899.5C 633.5,899.5 631.5,899.5 629.5,899.5C 628.82,903.322 626.487,904.989 622.5,904.5C 622.672,906.492 622.005,908.158 620.5,909.5C 618.01,911.083 615.343,912.083 612.5,912.5C 612.5,913.833 612.5,915.167 612.5,916.5C 610.833,916.5 609.167,916.5 607.5,916.5C 607.5,917.5 607.5,918.5 607.5,919.5C 603.5,919.5 601.5,921.5 601.5,925.5C 598.026,927.293 594.36,928.626 590.5,929.5C 590.5,931.167 590.5,932.833 590.5,934.5C 587.657,934.917 584.99,935.917 582.5,937.5C 580.995,938.842 580.328,940.508 580.5,942.5C 576.345,944.3 572.012,945.633 567.5,946.5C 567.71,951.295 565.376,953.962 560.5,954.5C 558.995,955.842 558.328,957.508 558.5,959.5C 555.833,960.167 553.167,960.833 550.5,961.5C 550.5,962.833 550.5,964.167 550.5,965.5C 549.167,965.5 547.833,965.5 546.5,965.5C 546.5,966.5 546.5,967.5 546.5,968.5C 541.977,968.027 539.643,970.027 539.5,974.5C 536.026,976.293 532.36,977.626 528.5,978.5C 528.771,980.821 528.104,982.821 526.5,984.5C 541.447,994.46 555.78,1005.13 569.5,1016.5C 551.732,1004.58 534.065,992.413 516.5,980C 514.443,978.281 512.776,976.281 511.5,974C 513.309,970.876 515.476,968.042 518,965.5C 547.828,935.369 578.161,905.369 609,875.5C 610.085,874.264 610.918,872.931 611.5,871.5C 789.458,695.043 967.458,517.543 1145.5,339C 1150.92,337.909 1156.42,337.409 1162,337.5C 1220.83,338.064 1279.66,339.23 1338.5,341C 1345.19,341.169 1351.86,341.669 1358.5,342.5C 1357.74,344.36 1356.74,346.027 1355.5,347.5 Z"/></g>
-<g><path style="opacity:1" fill="#ffc500" d="M 1349.5,351.5 C 1349.63,352.239 1349.46,352.906 1349,353.5C 1150.46,552.039 952.128,750.372 754,948.5C 749.344,954.685 749.51,960.685 754.5,966.5C 778.55,982.373 802.217,998.873 825.5,1016C 831.738,1019.23 837.738,1022.9 843.5,1027C 844.252,1027.67 844.586,1028.5 844.5,1029.5C 836.579,1025.87 829.246,1021.2 822.5,1015.5C 820.689,1016.83 818.689,1017.83 816.5,1018.5C 814.995,1019.84 814.328,1021.51 814.5,1023.5C 810.259,1025.12 805.926,1026.45 801.5,1027.5C 801.785,1029.29 801.452,1030.95 800.5,1032.5C 798.5,1033.83 796.5,1035.17 794.5,1036.5C 793.571,1037.69 793.238,1039.02 793.5,1040.5C 789.167,1041.83 784.833,1043.17 780.5,1044.5C 780.785,1046.29 780.452,1047.95 779.5,1049.5C 777.5,1050.83 775.5,1052.17 773.5,1053.5C 772.571,1054.69 772.238,1056.02 772.5,1057.5C 768.074,1058.55 763.741,1059.88 759.5,1061.5C 759.5,1063.17 759.5,1064.83 759.5,1066.5C 755.64,1067.37 751.974,1068.71 748.5,1070.5C 748.5,1071.83 748.5,1073.17 748.5,1074.5C 744.727,1075.55 741.06,1076.89 737.5,1078.5C 737.5,1080.17 737.5,1081.83 737.5,1083.5C 733.5,1083.5 731.5,1085.5 731.5,1089.5C 727.167,1090.83 722.833,1092.17 718.5,1093.5C 718.785,1095.29 718.452,1096.95 717.5,1098.5C 715.5,1099.83 713.5,1101.17 711.5,1102.5C 710.571,1103.69 710.238,1105.02 710.5,1106.5C 708.833,1106.5 707.167,1106.5 705.5,1106.5C 705.383,1108.48 706.05,1110.15 707.5,1111.5C 717.823,1118.5 727.823,1125.84 737.5,1133.5C 728.919,1129.16 720.586,1123.99 712.5,1118C 664.735,1084.42 617.068,1050.58 569.5,1016.5C 555.78,1005.13 541.447,994.46 526.5,984.5C 528.104,982.821 528.771,980.821 528.5,978.5C 532.36,977.626 536.026,976.293 539.5,974.5C 539.643,970.027 541.977,968.027 546.5,968.5C 546.5,967.5 546.5,966.5 546.5,965.5C 547.833,965.5 549.167,965.5 550.5,965.5C 550.5,964.167 550.5,962.833 550.5,961.5C 553.167,960.833 555.833,960.167 558.5,959.5C 558.328,957.508 558.995,955.842 560.5,954.5C 565.376,953.962 567.71,951.295 567.5,946.5C 572.012,945.633 576.345,944.3 580.5,942.5C 580.328,940.508 580.995,938.842 582.5,937.5C 584.99,935.917 587.657,934.917 590.5,934.5C 590.5,932.833 590.5,931.167 590.5,929.5C 594.36,928.626 598.026,927.293 601.5,925.5C 601.5,921.5 603.5,919.5 607.5,919.5C 607.5,918.5 607.5,917.5 607.5,916.5C 609.167,916.5 610.833,916.5 612.5,916.5C 612.5,915.167 612.5,913.833 612.5,912.5C 615.343,912.083 618.01,911.083 620.5,909.5C 622.005,908.158 622.672,906.492 622.5,904.5C 626.487,904.989 628.82,903.322 629.5,899.5C 631.5,899.5 633.5,899.5 635.5,899.5C 635.5,895.5 637.5,893.5 641.5,893.5C 641.5,892.167 641.5,890.833 641.5,889.5C 645.06,887.887 648.727,886.554 652.5,885.5C 652.5,883.833 652.5,882.167 652.5,880.5C 656.167,879.167 659.833,877.833 663.5,876.5C 663.5,872.5 665.5,870.5 669.5,870.5C 669.5,869.5 669.5,868.5 669.5,867.5C 670.833,867.5 672.167,867.5 673.5,867.5C 673.5,866.167 673.5,864.833 673.5,863.5C 676.748,863.336 679.748,862.336 682.5,860.5C 684.005,859.158 684.672,857.492 684.5,855.5C 686.929,855.116 689.263,854.449 691.5,853.5C 691.5,852.5 691.5,851.5 691.5,850.5C 692.833,850.5 694.167,850.5 695.5,850.5C 695.5,849.167 695.5,847.833 695.5,846.5C 698.343,846.083 701.01,845.083 703.5,843.5C 705.005,842.158 705.672,840.492 705.5,838.5C 707.167,838.5 708.833,838.5 710.5,838.5C 710.5,837.5 710.5,836.5 710.5,835.5C 711.833,835.5 713.167,835.5 714.5,835.5C 714.5,834.167 714.5,832.833 714.5,831.5C 717.974,829.707 721.64,828.374 725.5,827.5C 725.5,826.167 725.5,824.833 725.5,823.5C 729.04,823.623 731.04,821.957 731.5,818.5C 732.833,818.5 734.167,818.5 735.5,818.5C 735.5,817.167 735.5,815.833 735.5,814.5C 738.748,814.336 741.748,813.336 744.5,811.5C 746.005,810.158 746.672,808.492 746.5,806.5C 750.04,806.623 752.04,804.957 752.5,801.5C 754.167,801.5 755.833,801.5 757.5,801.5C 757.5,800.167 757.5,798.833 757.5,797.5C 760.343,797.083 763.01,796.083 765.5,794.5C 767.005,793.158 767.672,791.492 767.5,789.5C 769.167,789.5 770.833,789.5 772.5,789.5C 772.5,788.5 772.5,787.5 772.5,786.5C 775.167,785.833 777.833,785.167 780.5,784.5C 780.328,782.508 780.995,780.842 782.5,779.5C 785.252,777.664 788.252,776.664 791.5,776.5C 791.884,774.071 792.551,771.737 793.5,769.5C 794.833,769.5 796.167,769.5 797.5,769.5C 797.5,768.167 797.5,766.833 797.5,765.5C 800.582,764.87 803.582,763.87 806.5,762.5C 808.005,761.158 808.672,759.492 808.5,757.5C 812.04,757.623 814.04,755.957 814.5,752.5C 815.833,752.5 817.167,752.5 818.5,752.5C 818.5,751.167 818.5,749.833 818.5,748.5C 821.748,748.336 824.748,747.336 827.5,745.5C 829.005,744.158 829.672,742.492 829.5,740.5C 830.833,740.5 832.167,740.5 833.5,740.5C 833.5,739.5 833.5,738.5 833.5,737.5C 836.564,737.072 839.564,736.406 842.5,735.5C 842.328,733.508 842.995,731.842 844.5,730.5C 847.252,728.664 850.252,727.664 853.5,727.5C 853.884,725.071 854.551,722.737 855.5,720.5C 858.167,719.833 860.833,719.167 863.5,718.5C 863.5,717.167 863.5,715.833 863.5,714.5C 865.929,714.116 868.263,713.449 870.5,712.5C 870.5,711.167 870.5,709.833 870.5,708.5C 871.833,708.5 873.167,708.5 874.5,708.5C 874.96,705.043 876.96,703.377 880.5,703.5C 880.5,702.167 880.5,700.833 880.5,699.5C 883.582,698.87 886.582,697.87 889.5,696.5C 891.005,695.158 891.672,693.492 891.5,691.5C 892.833,691.5 894.167,691.5 895.5,691.5C 895.5,690.5 895.5,689.5 895.5,688.5C 898.436,687.594 901.436,686.928 904.5,686.5C 904.5,685.167 904.5,683.833 904.5,682.5C 907.833,681.167 911.167,679.833 914.5,678.5C 914.884,676.071 915.551,673.737 916.5,671.5C 919.564,671.072 922.564,670.406 925.5,669.5C 925.5,668.167 925.5,666.833 925.5,665.5C 928.974,663.707 932.64,662.374 936.5,661.5C 936.229,659.179 936.896,657.179 938.5,655.5C 940.99,653.917 943.657,652.917 946.5,652.5C 946.5,651.167 946.5,649.833 946.5,648.5C 951.023,648.973 953.357,646.973 953.5,642.5C 954.833,642.5 956.167,642.5 957.5,642.5C 957.5,641.5 957.5,640.5 957.5,639.5C 960.167,638.833 962.833,638.167 965.5,637.5C 965.5,636.167 965.5,634.833 965.5,633.5C 969.36,632.626 973.026,631.293 976.5,629.5C 976.229,627.179 976.896,625.179 978.5,623.5C 981.418,622.13 984.418,621.13 987.5,620.5C 987.5,619.167 987.5,617.833 987.5,616.5C 990.833,615.167 994.167,613.833 997.5,612.5C 997.5,610.833 997.5,609.167 997.5,607.5C 1001.06,605.887 1004.73,604.554 1008.5,603.5C 1008.5,602.167 1008.5,600.833 1008.5,599.5C 1012.17,598.167 1015.83,596.833 1019.5,595.5C 1019.5,593.833 1019.5,592.167 1019.5,590.5C 1022.17,589.833 1024.83,589.167 1027.5,588.5C 1027.5,587.167 1027.5,585.833 1027.5,584.5C 1031.36,583.626 1035.03,582.293 1038.5,580.5C 1038.23,578.179 1038.9,576.179 1040.5,574.5C 1043.25,572.664 1046.25,571.664 1049.5,571.5C 1049.5,570.167 1049.5,568.833 1049.5,567.5C 1052.83,566.167 1056.17,564.833 1059.5,563.5C 1059.23,561.179 1059.9,559.179 1061.5,557.5C 1064.42,556.13 1067.42,555.13 1070.5,554.5C 1070.5,553.167 1070.5,551.833 1070.5,550.5C 1073.97,548.707 1077.64,547.374 1081.5,546.5C 1081.23,544.179 1081.9,542.179 1083.5,540.5C 1086.81,539.285 1090.14,538.285 1093.5,537.5C 1093.5,536.167 1093.5,534.833 1093.5,533.5C 1096.4,532.715 1099.07,531.382 1101.5,529.5C 1102.45,527.955 1102.79,526.288 1102.5,524.5C 1105.17,523.833 1107.83,523.167 1110.5,522.5C 1110.5,521.167 1110.5,519.833 1110.5,518.5C 1114.36,517.626 1118.03,516.293 1121.5,514.5C 1121.23,512.179 1121.9,510.179 1123.5,508.5C 1126.42,507.13 1129.42,506.13 1132.5,505.5C 1132.5,504.167 1132.5,502.833 1132.5,501.5C 1135.83,500.167 1139.17,498.833 1142.5,497.5C 1142.5,495.833 1142.5,494.167 1142.5,492.5C 1146.66,490.7 1150.99,489.367 1155.5,488.5C 1155.33,486.508 1156,484.842 1157.5,483.5C 1162.38,482.962 1164.71,480.295 1164.5,475.5C 1168.74,473.88 1173.07,472.547 1177.5,471.5C 1177.5,467.5 1179.5,465.5 1183.5,465.5C 1183.23,463.179 1183.9,461.179 1185.5,459.5C 1188.25,457.664 1191.25,456.664 1194.5,456.5C 1194.5,455.167 1194.5,453.833 1194.5,452.5C 1197.83,451.167 1201.17,449.833 1204.5,448.5C 1204.5,446.833 1204.5,445.167 1204.5,443.5C 1208.66,441.7 1212.99,440.367 1217.5,439.5C 1217.33,437.508 1218,435.842 1219.5,434.5C 1221.76,433.201 1224.09,432.201 1226.5,431.5C 1226.5,429.833 1226.5,428.167 1226.5,426.5C 1230.5,425.167 1234.5,423.833 1238.5,422.5C 1238.33,420.508 1239,418.842 1240.5,417.5C 1245.38,416.962 1247.71,414.295 1247.5,409.5C 1251.74,407.88 1256.07,406.547 1260.5,405.5C 1260.5,401.5 1262.5,399.5 1266.5,399.5C 1266.5,397.833 1266.5,396.167 1266.5,394.5C 1269.97,392.707 1273.64,391.374 1277.5,390.5C 1277.5,389.167 1277.5,387.833 1277.5,386.5C 1280.34,386.083 1283.01,385.083 1285.5,383.5C 1287.1,381.821 1287.77,379.821 1287.5,377.5C 1291.93,376.453 1296.26,375.12 1300.5,373.5C 1300.64,369.027 1302.98,367.027 1307.5,367.5C 1308.45,365.263 1309.12,362.929 1309.5,360.5C 1313.5,359.167 1317.5,357.833 1321.5,356.5C 1321.5,355.167 1321.5,353.833 1321.5,352.5C 1325.49,352.989 1327.82,351.322 1328.5,347.5C 1329.83,347.5 1331.17,347.5 1332.5,347.5C 1332.23,345.549 1332.89,344.049 1334.5,343C 1341.59,342.25 1348.59,342.75 1355.5,344.5C 1353.27,346.638 1351.27,348.971 1349.5,351.5 Z"/></g>
-<g><path style="opacity:1" fill="#ffcd00" d="M 1292.5,905.5 C 1291.59,903.981 1290.76,902.315 1290,900.5C 1286.81,886.383 1283.31,872.383 1279.5,858.5C 1229.53,856.132 1179.53,855.132 1129.5,855.5C 1131.86,867.262 1134.69,878.928 1138,890.5C 1137.81,900.217 1140.14,909.217 1145,917.5C 1150.61,939.027 1155.77,960.693 1160.5,982.5C 1159.88,982.389 1159.38,982.056 1159,981.5C 1156.52,971.207 1154.35,960.873 1152.5,950.5C 1151.5,950.5 1150.5,950.5 1149.5,950.5C 1142.15,918.46 1134.15,886.46 1125.5,854.5C 1125.83,853.833 1126.17,853.167 1126.5,852.5C 1129.95,851.87 1133.45,851.537 1137,851.5C 1185.16,853.13 1233.33,854.463 1281.5,855.5C 1281.95,863.881 1283.78,871.881 1287,879.5C 1288.89,888.109 1290.72,896.776 1292.5,905.5 Z"/></g>
-<g><path style="opacity:1" fill="#ffbd00" d="M 1292.5,905.5 C 1293.12,905.611 1293.62,905.944 1294,906.5C 1300.22,934.044 1307.05,961.377 1314.5,988.5C 1313.25,988.423 1312.42,987.756 1312,986.5C 1306.3,963.686 1300.3,941.019 1294,918.5C 1292.21,916.771 1290.04,916.104 1287.5,916.5C 1287.5,917.5 1287.5,918.5 1287.5,919.5C 1283.5,919.5 1281.5,921.5 1281.5,925.5C 1277.17,926.833 1272.83,928.167 1268.5,929.5C 1268.79,931.288 1268.45,932.955 1267.5,934.5C 1265.5,935.833 1263.5,937.167 1261.5,938.5C 1260.57,939.689 1260.24,941.022 1260.5,942.5C 1256.07,943.547 1251.74,944.88 1247.5,946.5C 1247.71,951.295 1245.38,953.962 1240.5,954.5C 1239,955.842 1238.33,957.508 1238.5,959.5C 1235.83,960.167 1233.17,960.833 1230.5,961.5C 1230.5,962.833 1230.5,964.167 1230.5,965.5C 1229.17,965.5 1227.83,965.5 1226.5,965.5C 1226.5,966.5 1226.5,967.5 1226.5,968.5C 1221.98,968.027 1219.64,970.027 1219.5,974.5C 1215.26,976.12 1210.93,977.453 1206.5,978.5C 1206.79,980.288 1206.45,981.955 1205.5,983.5C 1203.5,984.833 1201.5,986.167 1199.5,987.5C 1198.57,988.689 1198.24,990.022 1198.5,991.5C 1194.17,992.833 1189.83,994.167 1185.5,995.5C 1185.77,997.821 1185.1,999.821 1183.5,1001.5C 1180.75,1003.34 1177.75,1004.34 1174.5,1004.5C 1174.76,1005.98 1174.43,1007.31 1173.5,1008.5C 1172.12,1009.84 1170.79,1011.18 1169.5,1012.5C 1175.47,1029.27 1179.64,1046.61 1182,1064.5C 1184.08,1067.15 1185.41,1070.15 1186,1073.5C 1190.52,1093.62 1195.35,1113.62 1200.5,1133.5C 1194.57,1117.38 1190.07,1100.71 1187,1083.5C 1180.39,1061.27 1174.06,1038.94 1168,1016.5C 1165.16,1005.16 1162.66,993.826 1160.5,982.5C 1155.77,960.693 1150.61,939.027 1145,917.5C 1140.14,909.217 1137.81,900.217 1138,890.5C 1134.69,878.928 1131.86,867.262 1129.5,855.5C 1179.53,855.132 1229.53,856.132 1279.5,858.5C 1283.31,872.383 1286.81,886.383 1290,900.5C 1290.76,902.315 1291.59,903.981 1292.5,905.5 Z"/></g>
-<g><path style="opacity:1" fill="#ffb800" d="M 1314.5,988.5 C 1320.43,1013.46 1327.26,1038.12 1335,1062.5C 1337.78,1077.36 1341.11,1092.02 1345,1106.5C 1346.4,1107.23 1347.23,1108.39 1347.5,1110C 1350.01,1123.2 1353.51,1136.03 1358,1148.5C 1360.76,1161.81 1363.6,1175.14 1366.5,1188.5C 1364.18,1181.46 1361.68,1174.46 1359,1167.5C 1357.33,1159.17 1355.67,1150.83 1354,1142.5C 1352.89,1141 1352.05,1139.33 1351.5,1137.5C 1348.91,1136.52 1346.25,1136.19 1343.5,1136.5C 1343.36,1140.97 1341.02,1142.97 1336.5,1142.5C 1336.77,1144.82 1336.1,1146.82 1334.5,1148.5C 1332.01,1150.08 1329.34,1151.08 1326.5,1151.5C 1326.5,1152.83 1326.5,1154.17 1326.5,1155.5C 1323.25,1155.66 1320.25,1156.66 1317.5,1158.5C 1315.9,1160.18 1315.23,1162.18 1315.5,1164.5C 1312.03,1166.29 1308.36,1167.63 1304.5,1168.5C 1304.5,1169.83 1304.5,1171.17 1304.5,1172.5C 1301.66,1172.92 1298.99,1173.92 1296.5,1175.5C 1294.9,1177.18 1294.23,1179.18 1294.5,1181.5C 1290.83,1182.83 1287.17,1184.17 1283.5,1185.5C 1283.5,1186.83 1283.5,1188.17 1283.5,1189.5C 1280.83,1190.17 1278.17,1190.83 1275.5,1191.5C 1275.5,1192.5 1275.5,1193.5 1275.5,1194.5C 1274.5,1194.5 1273.5,1194.5 1272.5,1194.5C 1272.5,1195.83 1272.5,1197.17 1272.5,1198.5C 1268.5,1199.83 1264.5,1201.17 1260.5,1202.5C 1260.5,1203.83 1260.5,1205.17 1260.5,1206.5C 1255.5,1206.17 1253.17,1208.5 1253.5,1213.5C 1250.17,1214.83 1246.83,1216.17 1243.5,1217.5C 1243.5,1218.83 1243.5,1220.17 1243.5,1221.5C 1240.44,1221.93 1237.44,1222.59 1234.5,1223.5C 1233.55,1225.74 1232.88,1228.07 1232.5,1230.5C 1231.17,1230.5 1229.83,1230.5 1228.5,1230.5C 1228.02,1236.84 1228.69,1243.17 1230.5,1249.5C 1232.55,1252.54 1234.05,1255.87 1235,1259.5C 1235.32,1265.47 1236.66,1271.14 1239,1276.5C 1239.67,1282.17 1239.67,1287.83 1239,1293.5C 1230.53,1298.51 1223.37,1297.18 1217.5,1289.5C 1221.92,1291.77 1226.42,1293.77 1231,1295.5C 1235.89,1295.11 1238.06,1292.44 1237.5,1287.5C 1235.79,1277.35 1234.12,1267.18 1232.5,1257C 1232.23,1255.39 1231.4,1254.23 1230,1253.5C 1227.04,1243.02 1224.88,1232.35 1223.5,1221.5C 1222.5,1221.5 1221.5,1221.5 1220.5,1221.5C 1213.2,1192.31 1206.53,1162.98 1200.5,1133.5C 1195.35,1113.62 1190.52,1093.62 1186,1073.5C 1185.41,1070.15 1184.08,1067.15 1182,1064.5C 1179.64,1046.61 1175.47,1029.27 1169.5,1012.5C 1170.79,1011.18 1172.12,1009.84 1173.5,1008.5C 1174.43,1007.31 1174.76,1005.98 1174.5,1004.5C 1177.75,1004.34 1180.75,1003.34 1183.5,1001.5C 1185.1,999.821 1185.77,997.821 1185.5,995.5C 1189.83,994.167 1194.17,992.833 1198.5,991.5C 1198.24,990.022 1198.57,988.689 1199.5,987.5C 1201.5,986.167 1203.5,984.833 1205.5,983.5C 1206.45,981.955 1206.79,980.288 1206.5,978.5C 1210.93,977.453 1215.26,976.12 1219.5,974.5C 1219.64,970.027 1221.98,968.027 1226.5,968.5C 1226.5,967.5 1226.5,966.5 1226.5,965.5C 1227.83,965.5 1229.17,965.5 1230.5,965.5C 1230.5,964.167 1230.5,962.833 1230.5,961.5C 1233.17,960.833 1235.83,960.167 1238.5,959.5C 1238.33,957.508 1239,955.842 1240.5,954.5C 1245.38,953.962 1247.71,951.295 1247.5,946.5C 1251.74,944.88 1256.07,943.547 1260.5,942.5C 1260.24,941.022 1260.57,939.689 1261.5,938.5C 1263.5,937.167 1265.5,935.833 1267.5,934.5C 1268.45,932.955 1268.79,931.288 1268.5,929.5C 1272.83,928.167 1277.17,926.833 1281.5,925.5C 1281.5,921.5 1283.5,919.5 1287.5,919.5C 1287.5,918.5 1287.5,917.5 1287.5,916.5C 1290.04,916.104 1292.21,916.771 1294,918.5C 1300.3,941.019 1306.3,963.686 1312,986.5C 1312.42,987.756 1313.25,988.423 1314.5,988.5 Z"/></g>
-<g><path style="opacity:1" fill="#ffbe00" d="M 844.5,1029.5 C 859.724,1039.84 875.058,1050.01 890.5,1060C 893.696,1065.53 898.363,1069.2 904.5,1071C 907.278,1074.76 910.945,1077.43 915.5,1079C 923.512,1086.37 932.512,1092.03 942.5,1096C 952.927,1104.42 963.927,1112.08 975.5,1119C 982.127,1124.66 988.793,1130.32 995.5,1136C 997.087,1136.86 998.754,1137.53 1000.5,1138C 1003.57,1140.52 1006.57,1143.02 1009.5,1145.5C 1006.74,1143.91 1003.74,1142.91 1000.5,1142.5C 1000.5,1144.17 1000.5,1145.83 1000.5,1147.5C 996.94,1149.11 993.273,1150.45 989.5,1151.5C 989.672,1153.49 989.005,1155.16 987.5,1156.5C 984.748,1158.34 981.748,1159.34 978.5,1159.5C 978.5,1161.17 978.5,1162.83 978.5,1164.5C 975.167,1165.83 971.833,1167.17 968.5,1168.5C 968.5,1169.83 968.5,1171.17 968.5,1172.5C 964.94,1174.11 961.273,1175.45 957.5,1176.5C 957.5,1178.17 957.5,1179.83 957.5,1181.5C 954.026,1183.29 950.36,1184.63 946.5,1185.5C 946.5,1186.83 946.5,1188.17 946.5,1189.5C 943.833,1190.17 941.167,1190.83 938.5,1191.5C 938.5,1192.5 938.5,1193.5 938.5,1194.5C 937.167,1194.5 935.833,1194.5 934.5,1194.5C 934.5,1195.83 934.5,1197.17 934.5,1198.5C 932.092,1199.2 929.758,1200.2 927.5,1201.5C 925.995,1202.84 925.328,1204.51 925.5,1206.5C 922.564,1207.41 919.564,1208.07 916.5,1208.5C 916.5,1210.17 916.5,1211.83 916.5,1213.5C 913.167,1214.83 909.833,1216.17 906.5,1217.5C 906.357,1221.97 904.023,1223.97 899.5,1223.5C 899.5,1224.5 899.5,1225.5 899.5,1226.5C 898.167,1226.5 896.833,1226.5 895.5,1226.5C 895.5,1227.83 895.5,1229.17 895.5,1230.5C 892.286,1231.39 889.286,1232.72 886.5,1234.5C 886.297,1236.39 886.963,1237.89 888.5,1239C 890.725,1239.56 892.725,1240.56 894.5,1242C 900.02,1246.03 905.353,1250.2 910.5,1254.5C 905.61,1251.78 900.61,1249.28 895.5,1247C 894.257,1245.85 893.257,1244.51 892.5,1243C 887.941,1240.78 883.941,1237.78 880.5,1234C 872.626,1228.23 864.293,1223.23 855.5,1219C 846.696,1211.62 837.362,1204.95 827.5,1199C 825.562,1195.39 822.562,1193.39 818.5,1193C 805.165,1182.31 791.332,1172.48 777,1163.5C 771.816,1159.33 766.316,1155.5 760.5,1152C 759.695,1150.03 758.361,1148.53 756.5,1147.5C 753.063,1145.91 749.73,1144.07 746.5,1142C 743.912,1138.57 740.912,1135.74 737.5,1133.5C 727.823,1125.84 717.823,1118.5 707.5,1111.5C 706.05,1110.15 705.383,1108.48 705.5,1106.5C 707.167,1106.5 708.833,1106.5 710.5,1106.5C 710.238,1105.02 710.571,1103.69 711.5,1102.5C 713.5,1101.17 715.5,1099.83 717.5,1098.5C 718.452,1096.95 718.785,1095.29 718.5,1093.5C 722.833,1092.17 727.167,1090.83 731.5,1089.5C 731.5,1085.5 733.5,1083.5 737.5,1083.5C 737.5,1081.83 737.5,1080.17 737.5,1078.5C 741.06,1076.89 744.727,1075.55 748.5,1074.5C 748.5,1073.17 748.5,1071.83 748.5,1070.5C 751.974,1068.71 755.64,1067.37 759.5,1066.5C 759.5,1064.83 759.5,1063.17 759.5,1061.5C 763.741,1059.88 768.074,1058.55 772.5,1057.5C 772.238,1056.02 772.571,1054.69 773.5,1053.5C 775.5,1052.17 777.5,1050.83 779.5,1049.5C 780.452,1047.95 780.785,1046.29 780.5,1044.5C 784.833,1043.17 789.167,1041.83 793.5,1040.5C 793.238,1039.02 793.571,1037.69 794.5,1036.5C 796.5,1035.17 798.5,1033.83 800.5,1032.5C 801.452,1030.95 801.785,1029.29 801.5,1027.5C 805.926,1026.45 810.259,1025.12 814.5,1023.5C 814.328,1021.51 814.995,1019.84 816.5,1018.5C 818.689,1017.83 820.689,1016.83 822.5,1015.5C 829.246,1021.2 836.579,1025.87 844.5,1029.5 Z"/></g>
-<g><path style="opacity:1" fill="#ffb200" d="M 1366.5,1188.5 C 1368.76,1193.87 1370.26,1199.53 1371,1205.5C 1371.93,1207.69 1373.09,1209.69 1374.5,1211.5C 1375.32,1220.74 1377.48,1229.74 1381,1238.5C 1381.95,1246.25 1383.95,1253.58 1387,1260.5C 1392.31,1279.75 1396.98,1299.08 1401,1318.5C 1402,1320.83 1403,1323.17 1404,1325.5C 1407.64,1339.38 1410.64,1353.38 1413,1367.5C 1415.58,1377.34 1418.75,1387 1422.5,1396.5C 1424.47,1405.14 1426.3,1413.81 1428,1422.5C 1432.08,1427.3 1433.58,1432.97 1432.5,1439.5C 1429.89,1432.21 1427.39,1424.88 1425,1417.5C 1423.38,1409.12 1421.55,1400.79 1419.5,1392.5C 1418.48,1391.15 1417.14,1390.48 1415.5,1390.5C 1415.67,1392.49 1415,1394.16 1413.5,1395.5C 1411.01,1397.08 1408.34,1398.08 1405.5,1398.5C 1405.5,1399.83 1405.5,1401.17 1405.5,1402.5C 1403.83,1402.5 1402.17,1402.5 1400.5,1402.5C 1400.04,1405.96 1398.04,1407.62 1394.5,1407.5C 1394.67,1409.49 1394,1411.16 1392.5,1412.5C 1389.75,1414.34 1386.75,1415.34 1383.5,1415.5C 1383.5,1416.83 1383.5,1418.17 1383.5,1419.5C 1382.17,1419.5 1380.83,1419.5 1379.5,1419.5C 1379.04,1422.96 1377.04,1424.62 1373.5,1424.5C 1373.67,1426.49 1373,1428.16 1371.5,1429.5C 1368.58,1430.87 1365.58,1431.87 1362.5,1432.5C 1362.5,1434.17 1362.5,1435.83 1362.5,1437.5C 1359.42,1438.13 1356.42,1439.13 1353.5,1440.5C 1352,1441.84 1351.33,1443.51 1351.5,1445.5C 1347.5,1446.83 1343.5,1448.17 1339.5,1449.5C 1339.5,1451.17 1339.5,1452.83 1339.5,1454.5C 1337.26,1455.45 1334.93,1456.12 1332.5,1456.5C 1332.67,1458.49 1332,1460.16 1330.5,1461.5C 1327.75,1463.34 1324.75,1464.34 1321.5,1464.5C 1321.5,1465.83 1321.5,1467.17 1321.5,1468.5C 1320.17,1468.5 1318.83,1468.5 1317.5,1468.5C 1317.04,1471.96 1315.04,1473.62 1311.5,1473.5C 1311.67,1475.49 1311,1477.16 1309.5,1478.5C 1306.58,1479.87 1303.58,1480.87 1300.5,1481.5C 1300.5,1483.17 1300.5,1484.83 1300.5,1486.5C 1297.66,1486.92 1294.99,1487.92 1292.5,1489.5C 1291,1490.84 1290.33,1492.51 1290.5,1494.5C 1286.34,1496.3 1282.01,1497.63 1277.5,1498.5C 1277.82,1502.85 1275.82,1505.52 1271.5,1506.5C 1277.06,1511.1 1282.72,1515.43 1288.5,1519.5C 1287.45,1519.65 1286.45,1519.48 1285.5,1519C 1277.59,1512.07 1268.92,1506.41 1259.5,1502C 1255.83,1498.89 1251.83,1496.22 1247.5,1494C 1246.26,1492.85 1245.26,1491.51 1244.5,1490C 1237.97,1486.8 1231.97,1482.8 1226.5,1478C 1225.55,1477.52 1224.55,1477.35 1223.5,1477.5C 1223.72,1476.32 1223.39,1475.32 1222.5,1474.5C 1219.4,1472.9 1216.73,1470.73 1214.5,1468C 1212.65,1466.87 1210.65,1466.37 1208.5,1466.5C 1207.92,1463.36 1205.92,1461.86 1202.5,1462C 1196.23,1455.57 1188.89,1450.57 1180.5,1447C 1173.77,1440.13 1166.1,1434.46 1157.5,1430C 1149.52,1424.03 1141.52,1418.03 1133.5,1412C 1129.7,1412.03 1127.7,1410.19 1127.5,1406.5C 1125.69,1406.51 1124.02,1406.01 1122.5,1405C 1117.27,1401.24 1112.27,1397.41 1107.5,1393.5C 1094.29,1382.22 1080.29,1371.88 1065.5,1362.5C 1064.57,1361.31 1064.24,1359.98 1064.5,1358.5C 1068.04,1358.62 1070.04,1356.96 1070.5,1353.5C 1071.83,1353.5 1073.17,1353.5 1074.5,1353.5C 1074.5,1352.17 1074.5,1350.83 1074.5,1349.5C 1077.58,1348.87 1080.58,1347.87 1083.5,1346.5C 1085,1345.16 1085.67,1343.49 1085.5,1341.5C 1086.83,1341.5 1088.17,1341.5 1089.5,1341.5C 1089.5,1340.5 1089.5,1339.5 1089.5,1338.5C 1092.44,1337.59 1095.44,1336.93 1098.5,1336.5C 1098.5,1335.17 1098.5,1333.83 1098.5,1332.5C 1102.5,1332.5 1104.5,1330.5 1104.5,1326.5C 1108.04,1326.62 1110.04,1324.96 1110.5,1321.5C 1112.17,1321.5 1113.83,1321.5 1115.5,1321.5C 1115.5,1320.17 1115.5,1318.83 1115.5,1317.5C 1118.34,1317.08 1121.01,1316.08 1123.5,1314.5C 1125,1313.16 1125.67,1311.49 1125.5,1309.5C 1127.17,1309.5 1128.83,1309.5 1130.5,1309.5C 1130.96,1306.04 1132.96,1304.38 1136.5,1304.5C 1136.5,1303.17 1136.5,1301.83 1136.5,1300.5C 1139.58,1299.87 1142.58,1298.87 1145.5,1297.5C 1147,1296.16 1147.67,1294.49 1147.5,1292.5C 1148.83,1292.5 1150.17,1292.5 1151.5,1292.5C 1151.5,1291.5 1151.5,1290.5 1151.5,1289.5C 1154.17,1288.83 1156.83,1288.17 1159.5,1287.5C 1159.5,1286.17 1159.5,1284.83 1159.5,1283.5C 1163.36,1282.63 1167.03,1281.29 1170.5,1279.5C 1170.88,1277.07 1171.55,1274.74 1172.5,1272.5C 1175.56,1272.07 1178.56,1271.41 1181.5,1270.5C 1181.5,1269.5 1181.5,1268.5 1181.5,1267.5C 1182.55,1267.35 1183.55,1267.52 1184.5,1268C 1189.07,1271.42 1193.74,1274.59 1198.5,1277.5C 1201.26,1278.38 1203.93,1279.55 1206.5,1281C 1209.84,1284.33 1213.5,1287.16 1217.5,1289.5C 1223.37,1297.18 1230.53,1298.51 1239,1293.5C 1239.67,1287.83 1239.67,1282.17 1239,1276.5C 1236.66,1271.14 1235.32,1265.47 1235,1259.5C 1234.05,1255.87 1232.55,1252.54 1230.5,1249.5C 1228.69,1243.17 1228.02,1236.84 1228.5,1230.5C 1229.83,1230.5 1231.17,1230.5 1232.5,1230.5C 1232.88,1228.07 1233.55,1225.74 1234.5,1223.5C 1237.44,1222.59 1240.44,1221.93 1243.5,1221.5C 1243.5,1220.17 1243.5,1218.83 1243.5,1217.5C 1246.83,1216.17 1250.17,1214.83 1253.5,1213.5C 1253.17,1208.5 1255.5,1206.17 1260.5,1206.5C 1260.5,1205.17 1260.5,1203.83 1260.5,1202.5C 1264.5,1201.17 1268.5,1199.83 1272.5,1198.5C 1272.5,1197.17 1272.5,1195.83 1272.5,1194.5C 1273.5,1194.5 1274.5,1194.5 1275.5,1194.5C 1275.5,1193.5 1275.5,1192.5 1275.5,1191.5C 1278.17,1190.83 1280.83,1190.17 1283.5,1189.5C 1283.5,1188.17 1283.5,1186.83 1283.5,1185.5C 1287.17,1184.17 1290.83,1182.83 1294.5,1181.5C 1294.23,1179.18 1294.9,1177.18 1296.5,1175.5C 1298.99,1173.92 1301.66,1172.92 1304.5,1172.5C 1304.5,1171.17 1304.5,1169.83 1304.5,1168.5C 1308.36,1167.63 1312.03,1166.29 1315.5,1164.5C 1315.23,1162.18 1315.9,1160.18 1317.5,1158.5C 1320.25,1156.66 1323.25,1155.66 1326.5,1155.5C 1326.5,1154.17 1326.5,1152.83 1326.5,1151.5C 1329.34,1151.08 1332.01,1150.08 1334.5,1148.5C 1336.1,1146.82 1336.77,1144.82 1336.5,1142.5C 1341.02,1142.97 1343.36,1140.97 1343.5,1136.5C 1346.25,1136.19 1348.91,1136.52 1351.5,1137.5C 1352.05,1139.33 1352.89,1141 1354,1142.5C 1355.67,1150.83 1357.33,1159.17 1359,1167.5C 1361.68,1174.46 1364.18,1181.46 1366.5,1188.5 Z"/></g>
-<g><path style="opacity:1" fill="#ffb800" d="M 1009.5,1145.5 C 1014.13,1148.66 1019.13,1151.16 1024.5,1153C 1037.9,1164.54 1052.23,1174.88 1067.5,1184C 1082.56,1194.52 1097.22,1205.52 1111.5,1217C 1118.9,1219.73 1125.24,1224.07 1130.5,1230C 1139.43,1236.14 1148.76,1241.81 1158.5,1247C 1160.44,1247.91 1161.44,1249.41 1161.5,1251.5C 1167.43,1255.57 1173.77,1258.9 1180.5,1261.5C 1180.5,1262.5 1180.5,1263.5 1180.5,1264.5C 1181.93,1264.42 1183.26,1264.75 1184.5,1265.5C 1189.51,1269.18 1194.17,1273.18 1198.5,1277.5C 1193.74,1274.59 1189.07,1271.42 1184.5,1268C 1183.55,1267.52 1182.55,1267.35 1181.5,1267.5C 1181.5,1268.5 1181.5,1269.5 1181.5,1270.5C 1178.56,1271.41 1175.56,1272.07 1172.5,1272.5C 1171.55,1274.74 1170.88,1277.07 1170.5,1279.5C 1167.03,1281.29 1163.36,1282.63 1159.5,1283.5C 1159.5,1284.83 1159.5,1286.17 1159.5,1287.5C 1156.83,1288.17 1154.17,1288.83 1151.5,1289.5C 1151.5,1290.5 1151.5,1291.5 1151.5,1292.5C 1150.17,1292.5 1148.83,1292.5 1147.5,1292.5C 1147.67,1294.49 1147,1296.16 1145.5,1297.5C 1142.58,1298.87 1139.58,1299.87 1136.5,1300.5C 1136.5,1301.83 1136.5,1303.17 1136.5,1304.5C 1132.96,1304.38 1130.96,1306.04 1130.5,1309.5C 1128.83,1309.5 1127.17,1309.5 1125.5,1309.5C 1125.67,1311.49 1125,1313.16 1123.5,1314.5C 1121.01,1316.08 1118.34,1317.08 1115.5,1317.5C 1115.5,1318.83 1115.5,1320.17 1115.5,1321.5C 1113.83,1321.5 1112.17,1321.5 1110.5,1321.5C 1110.04,1324.96 1108.04,1326.62 1104.5,1326.5C 1104.5,1330.5 1102.5,1332.5 1098.5,1332.5C 1098.5,1333.83 1098.5,1335.17 1098.5,1336.5C 1095.44,1336.93 1092.44,1337.59 1089.5,1338.5C 1089.5,1339.5 1089.5,1340.5 1089.5,1341.5C 1088.17,1341.5 1086.83,1341.5 1085.5,1341.5C 1085.67,1343.49 1085,1345.16 1083.5,1346.5C 1080.58,1347.87 1077.58,1348.87 1074.5,1349.5C 1074.5,1350.83 1074.5,1352.17 1074.5,1353.5C 1073.17,1353.5 1071.83,1353.5 1070.5,1353.5C 1070.04,1356.96 1068.04,1358.62 1064.5,1358.5C 1064.24,1359.98 1064.57,1361.31 1065.5,1362.5C 1080.29,1371.88 1094.29,1382.22 1107.5,1393.5C 1098.99,1387.84 1090.32,1382.34 1081.5,1377C 1077.28,1372.4 1072.28,1369.06 1066.5,1367C 1063.6,1364.02 1060.6,1361.19 1057.5,1358.5C 1053.71,1356.86 1050.04,1355.03 1046.5,1353C 1044.96,1351.89 1044.3,1350.39 1044.5,1348.5C 1037.16,1346.55 1030.83,1342.72 1025.5,1337C 1013.95,1328.81 1002.62,1320.14 991.5,1311C 989.048,1310.71 986.715,1310.04 984.5,1309C 982.689,1306.02 980.356,1303.52 977.5,1301.5C 969.043,1296.88 960.71,1292.04 952.5,1287C 940.901,1276.2 928.234,1266.87 914.5,1259C 912.959,1257.63 911.625,1256.13 910.5,1254.5C 905.353,1250.2 900.02,1246.03 894.5,1242C 892.725,1240.56 890.725,1239.56 888.5,1239C 886.963,1237.89 886.297,1236.39 886.5,1234.5C 889.286,1232.72 892.286,1231.39 895.5,1230.5C 895.5,1229.17 895.5,1227.83 895.5,1226.5C 896.833,1226.5 898.167,1226.5 899.5,1226.5C 899.5,1225.5 899.5,1224.5 899.5,1223.5C 904.023,1223.97 906.357,1221.97 906.5,1217.5C 909.833,1216.17 913.167,1214.83 916.5,1213.5C 916.5,1211.83 916.5,1210.17 916.5,1208.5C 919.564,1208.07 922.564,1207.41 925.5,1206.5C 925.328,1204.51 925.995,1202.84 927.5,1201.5C 929.758,1200.2 932.092,1199.2 934.5,1198.5C 934.5,1197.17 934.5,1195.83 934.5,1194.5C 935.833,1194.5 937.167,1194.5 938.5,1194.5C 938.5,1193.5 938.5,1192.5 938.5,1191.5C 941.167,1190.83 943.833,1190.17 946.5,1189.5C 946.5,1188.17 946.5,1186.83 946.5,1185.5C 950.36,1184.63 954.026,1183.29 957.5,1181.5C 957.5,1179.83 957.5,1178.17 957.5,1176.5C 961.273,1175.45 964.94,1174.11 968.5,1172.5C 968.5,1171.17 968.5,1169.83 968.5,1168.5C 971.833,1167.17 975.167,1165.83 978.5,1164.5C 978.5,1162.83 978.5,1161.17 978.5,1159.5C 981.748,1159.34 984.748,1158.34 987.5,1156.5C 989.005,1155.16 989.672,1153.49 989.5,1151.5C 993.273,1150.45 996.94,1149.11 1000.5,1147.5C 1000.5,1145.83 1000.5,1144.17 1000.5,1142.5C 1003.74,1142.91 1006.74,1143.91 1009.5,1145.5 Z"/></g>
-<g><path style="opacity:1" fill="#ffcc00" d="M 1374.5,1211.5 C 1375.79,1212.84 1376.63,1214.51 1377,1216.5C 1396.89,1294.67 1417.56,1372.67 1439,1450.5C 1439.3,1454.55 1439.8,1458.55 1440.5,1462.5C 1439.88,1462.39 1439.38,1462.06 1439,1461.5C 1438.31,1453.61 1436.14,1446.27 1432.5,1439.5C 1433.58,1432.97 1432.08,1427.3 1428,1422.5C 1426.3,1413.81 1424.47,1405.14 1422.5,1396.5C 1418.75,1387 1415.58,1377.34 1413,1367.5C 1410.64,1353.38 1407.64,1339.38 1404,1325.5C 1403,1323.17 1402,1320.83 1401,1318.5C 1396.98,1299.08 1392.31,1279.75 1387,1260.5C 1383.95,1253.58 1381.95,1246.25 1381,1238.5C 1377.48,1229.74 1375.32,1220.74 1374.5,1211.5 Z"/></g>
-<g><path style="opacity:1" fill="#ffac00" d="M 1432.5,1439.5 C 1436.14,1446.27 1438.31,1453.61 1439,1461.5C 1439.38,1462.06 1439.88,1462.39 1440.5,1462.5C 1447.78,1492.83 1455.28,1523.17 1463,1553.5C 1465.78,1558.46 1467.11,1563.79 1467,1569.5C 1469.78,1574.41 1471.11,1579.74 1471,1585.5C 1471.61,1588.31 1472.94,1590.64 1475,1592.5C 1479.35,1609.47 1483.51,1626.47 1487.5,1643.5C 1488.82,1648.76 1489.49,1654.09 1489.5,1659.5C 1466.95,1658.49 1484.28,1657.66 1481.5,1657C 1466.27,1646.78 1451.27,1636.12 1436.5,1625C 1432.2,1624.35 1429.2,1622.02 1427.5,1618C 1417.6,1612.89 1408.6,1606.55 1400.5,1599C 1395.04,1596.18 1389.71,1593.18 1384.5,1590C 1383.83,1588.67 1383.17,1587.33 1382.5,1586C 1372.49,1580.66 1362.82,1574.83 1353.5,1568.5C 1353.72,1567.32 1353.39,1566.32 1352.5,1565.5C 1333.08,1553.24 1314.08,1540.41 1295.5,1527C 1293.18,1524.5 1290.84,1522 1288.5,1519.5C 1282.72,1515.43 1277.06,1511.1 1271.5,1506.5C 1275.82,1505.52 1277.82,1502.85 1277.5,1498.5C 1282.01,1497.63 1286.34,1496.3 1290.5,1494.5C 1290.33,1492.51 1291,1490.84 1292.5,1489.5C 1294.99,1487.92 1297.66,1486.92 1300.5,1486.5C 1300.5,1484.83 1300.5,1483.17 1300.5,1481.5C 1303.58,1480.87 1306.58,1479.87 1309.5,1478.5C 1311,1477.16 1311.67,1475.49 1311.5,1473.5C 1315.04,1473.62 1317.04,1471.96 1317.5,1468.5C 1318.83,1468.5 1320.17,1468.5 1321.5,1468.5C 1321.5,1467.17 1321.5,1465.83 1321.5,1464.5C 1324.75,1464.34 1327.75,1463.34 1330.5,1461.5C 1332,1460.16 1332.67,1458.49 1332.5,1456.5C 1334.93,1456.12 1337.26,1455.45 1339.5,1454.5C 1339.5,1452.83 1339.5,1451.17 1339.5,1449.5C 1343.5,1448.17 1347.5,1446.83 1351.5,1445.5C 1351.33,1443.51 1352,1441.84 1353.5,1440.5C 1356.42,1439.13 1359.42,1438.13 1362.5,1437.5C 1362.5,1435.83 1362.5,1434.17 1362.5,1432.5C 1365.58,1431.87 1368.58,1430.87 1371.5,1429.5C 1373,1428.16 1373.67,1426.49 1373.5,1424.5C 1377.04,1424.62 1379.04,1422.96 1379.5,1419.5C 1380.83,1419.5 1382.17,1419.5 1383.5,1419.5C 1383.5,1418.17 1383.5,1416.83 1383.5,1415.5C 1386.75,1415.34 1389.75,1414.34 1392.5,1412.5C 1394,1411.16 1394.67,1409.49 1394.5,1407.5C 1398.04,1407.62 1400.04,1405.96 1400.5,1402.5C 1402.17,1402.5 1403.83,1402.5 1405.5,1402.5C 1405.5,1401.17 1405.5,1399.83 1405.5,1398.5C 1408.34,1398.08 1411.01,1397.08 1413.5,1395.5C 1415,1394.16 1415.67,1392.49 1415.5,1390.5C 1417.14,1390.48 1418.48,1391.15 1419.5,1392.5C 1421.55,1400.79 1423.38,1409.12 1425,1417.5C 1427.39,1424.88 1429.89,1432.21 1432.5,1439.5 Z"/></g>
-        </svg>
+                        <!-- Your SVG content here (same as original) -->
+                        <g><path style="opacity:0.852" fill="#ffd500" d="M 1140.5,324.5 C 1172.5,324.333 1204.5,324.5 1236.5,325C 1279.63,325.886 1322.63,327.219 1365.5,329C 1372.84,332.843 1375.34,338.676 1373,346.5C 1370.43,348.647 1368.59,351.314 1367.5,354.5C 1168.75,553.581 969.752,752.248 770.5,950.5C 769.024,953.143 767.024,955.31 764.5,957C 767.447,957.112 768.78,958.612 768.5,961.5C 769.978,961.238 771.311,961.571 772.5,962.5C 794.018,977.512 815.685,992.346 837.5,1007C 848.843,1015.34 860.177,1023.67 871.5,1032C 881.116,1037.64 890.45,1043.64 899.5,1050C 900.337,1051.01 900.67,1052.18 900.5,1053.5C 901.873,1053.34 903.207,1053.51 904.5,1054C 989.258,1113.22 1074.26,1172.22 1159.5,1231C 1160.34,1232.01 1160.67,1233.18 1160.5,1234.5C 1163.74,1234.88 1166.74,1236.05 1169.5,1238C 1184.98,1249.82 1200.98,1260.82 1217.5,1271C 1218.38,1272.36 1218.71,1273.86 1218.5,1275.5C 1219.5,1275.5 1220.5,1275.5 1221.5,1275.5C 1221.66,1272.81 1221.5,1270.15 1221,1267.5C 1214.84,1246.21 1208.84,1224.88 1203,1203.5C 1200.01,1189.13 1196.85,1174.8 1193.5,1160.5C 1190.34,1155.38 1188.67,1149.71 1188.5,1143.5C 1187.81,1141.73 1186.98,1140.06 1186,1138.5C 1183.16,1123.85 1179.99,1109.19 1176.5,1094.5C 1175.04,1092.72 1173.88,1090.72 1173,1088.5C 1169.72,1072.11 1166.05,1055.77 1162,1039.5C 1160.45,1033.63 1158.45,1027.97 1156,1022.5C 1152.25,1006.13 1148.59,989.795 1145,973.5C 1144.33,972.833 1143.67,972.167 1143,971.5C 1138.9,952.966 1134.23,934.633 1129,916.5C 1128.67,913.5 1128.33,910.5 1128,907.5C 1126.18,905.084 1124.85,902.418 1124,899.5C 1120.98,883.312 1117.48,867.312 1113.5,851.5C 1113.69,848.351 1114.69,845.518 1116.5,843C 1170.5,842.333 1224.5,842.333 1278.5,843C 1281.69,844.087 1285.02,844.92 1288.5,845.5C 1290.33,847.166 1291.67,849.166 1292.5,851.5C 1297.27,867.342 1301.1,883.342 1304,899.5C 1308.63,912.292 1312.63,925.292 1316,938.5C 1315.77,944.34 1317.1,949.674 1320,954.5C 1320.49,959.933 1321.49,965.267 1323,970.5C 1324.73,976.295 1326.73,981.961 1329,987.5C 1332.07,1001.41 1335.07,1015.41 1338,1029.5C 1339.89,1031.48 1341.22,1033.82 1342,1036.5C 1345.07,1050.41 1348.07,1064.41 1351,1078.5C 1353.18,1086.66 1355.85,1094.66 1359,1102.5C 1365.65,1128.75 1372.32,1155.08 1379,1181.5C 1380,1183.83 1381,1186.17 1382,1188.5C 1383.49,1196.94 1385.16,1205.28 1387,1213.5C 1390.09,1221.42 1392.76,1229.42 1395,1237.5C 1396.72,1246.51 1398.56,1255.51 1400.5,1264.5C 1402.97,1269.12 1404.14,1274.12 1404,1279.5C 1405.77,1281.58 1407.1,1283.92 1408,1286.5C 1410.98,1302.75 1414.65,1318.75 1419,1334.5C 1421.2,1340.09 1423.2,1345.76 1425,1351.5C 1432.87,1383.44 1440.87,1415.44 1449,1447.5C 1451.41,1455.51 1454.08,1463.51 1457,1471.5C 1457.33,1474.83 1457.67,1478.17 1458,1481.5C 1461.71,1491.89 1464.37,1502.55 1466,1513.5C 1466.77,1516.48 1468.1,1519.15 1470,1521.5C 1473.08,1535.15 1476.08,1548.82 1479,1562.5C 1488.84,1594.01 1497.34,1625.84 1504.5,1658C 1501.47,1673.18 1492.8,1677.85 1478.5,1672C 1439.28,1643.57 1399.61,1615.9 1359.5,1589C 1358.66,1587.99 1358.33,1586.82 1358.5,1585.5C 1355.76,1584.61 1353.09,1583.45 1350.5,1582C 1336.92,1572.62 1323.42,1563.12 1310,1553.5C 1309.52,1552.55 1309.35,1551.55 1309.5,1550.5C 1306.59,1550.42 1303.93,1549.59 1301.5,1548C 1237.36,1501.85 1172.69,1456.51 1107.5,1412C 1102.94,1407.91 1098.27,1404.07 1093.5,1400.5C 1066.59,1382.56 1039.93,1364.39 1013.5,1346C 1005.57,1339.56 997.233,1333.73 988.5,1328.5C 987.614,1327.68 987.281,1326.68 987.5,1325.5C 975.554,1318.85 964.221,1311.18 953.5,1302.5C 947.64,1299.97 942.64,1296.3 938.5,1291.5C 924.938,1283.26 911.938,1274.26 899.5,1264.5C 874.578,1247.92 849.911,1230.92 825.5,1213.5C 824.147,1212.48 823.48,1211.14 823.5,1209.5C 822.127,1209.66 820.793,1209.49 819.5,1209C 758.262,1166.01 697.095,1123.18 636,1080.5C 635.517,1079.55 635.351,1078.55 635.5,1077.5C 626.189,1073.89 617.856,1068.55 610.5,1061.5C 601.675,1057.01 593.675,1051.34 586.5,1044.5C 578.641,1040.07 571.307,1034.9 564.5,1029C 559.136,1025.93 553.803,1022.76 548.5,1019.5C 537.794,1011.49 527.127,1003.49 516.5,995.5C 505.85,992.032 499.85,984.866 498.5,974C 499.264,970.041 500.431,966.208 502,962.5C 715.089,749.911 927.922,537.245 1140.5,324.5 Z"/></g>
+                        <!-- Additional SVG paths... -->
+                    </svg>
                     <strong>gCaptcha</strong>
-                    <a href="https://id786.github.io/captcha-widget/#Privacy" class="spat"><small>Privacy and Terms</small></a>
+                    <a href="#" style="text-decoration:none;color:default;"><small>Free Captcha Here</small></a>
                 </div>
 
                 <div class="loading-bar-containergic-${this.instanceId}">
                     <div class="loading-bargic-${this.instanceId}" id="loadingBargic-${this.instanceId}"></div>
                 </div>
             </div>
+
+            
             <!-- Modal -->
             <div class="modal-containergic-${this.instanceId}" id="verificationModalgic-${this.instanceId}">
                 <div class="modal-contentgic-${this.instanceId}">
@@ -706,18 +636,13 @@ class CustomCaptcha {
     }
 
     bindEvents() {
-    this.container.captchaInstance = this;
-    
-    setTimeout(() => {
-        console.log('=== CAPTCHA DEBUG ===');
-        console.log('Instance ID:', this.instanceId);
-        console.log('Trigger element:', document.getElementById(`verifyTriggergic-${this.instanceId}`));
-        console.log('Modal element:', document.getElementById(`verificationModalgic-${this.instanceId}`));
-        console.log('Loading bar:', this.container.querySelector(`.loading-bar-containergic-${this.instanceId}`));
+        // Store reference to this instance for event handlers
+        this.container.captchaInstance = this;
         
-        this.setupEventListeners();
-    }, 100);
-}
+        setTimeout(() => {
+            this.setupEventListeners();
+        }, 100);
+    }
 
     setupEventListeners() {
         const instanceId = this.instanceId;
@@ -726,7 +651,7 @@ class CustomCaptcha {
         const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
         const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
         const closeBtngic = document.getElementById(`modalClosegic-${instanceId}`);
-        
+
         if (!triggergic || !modalgic) return;
 
         // Event listeners
@@ -838,40 +763,35 @@ class CustomCaptcha {
     }
 
     setupType2Events() {
-    const instanceId = this.instanceId;
-    const verifySlidePuzzleBtn = document.getElementById(`verifySlidePuzzlegic-${instanceId}`);
-    const puzzleSlider = document.getElementById(`puzzleSlidergic-${instanceId}`);
-    const refreshBtn = document.querySelector(`#captchaType2gic-${instanceId} .refresh-buttongic-${instanceId}`);
+        const instanceId = this.instanceId;
+        const verifySlidePuzzleBtn = document.getElementById(`verifySlidePuzzlegic-${instanceId}`);
+        const puzzleSlider = document.getElementById(`puzzleSlidergic-${instanceId}`);
+        const refreshBtn = document.querySelector(`#captchaType2gic-${instanceId} .refresh-buttongic-${instanceId}`);
 
-    if (verifySlidePuzzleBtn) {
-        verifySlidePuzzleBtn.addEventListener('click', () => {
-            this.completeType2Verification();
-        });
+        if (verifySlidePuzzleBtn) {
+            verifySlidePuzzleBtn.addEventListener('click', () => {
+                this.completeType2Verification();
+            });
+        }
+
+        if (puzzleSlider) {
+            // Mouse events
+            puzzleSlider.addEventListener('mousedown', (e) => this.startDrag(e));
+            document.addEventListener('mousemove', (e) => this.duringDrag(e));
+            document.addEventListener('mouseup', () => this.stopDrag());
+
+            // Touch events
+            puzzleSlider.addEventListener('touchstart', (e) => this.startDrag(e), { passive: false });
+            document.addEventListener('touchmove', (e) => this.duringDrag(e), { passive: false });
+            document.addEventListener('touchend', () => this.stopDrag());
+        }
+
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', () => {
+                this.refreshCaptcha(2);
+            });
+        }
     }
-
-    if (puzzleSlider) {
-        // Use arrow functions to maintain 'this' context
-        const startDrag = (e) => this.startDrag(e);
-        const duringDrag = (e) => this.duringDrag(e);
-        const stopDrag = () => this.stopDrag();
-
-        // Mouse events
-        puzzleSlider.addEventListener('mousedown', startDrag);
-        document.addEventListener('mousemove', duringDrag);
-        document.addEventListener('mouseup', stopDrag);
-
-        // Touch events
-        puzzleSlider.addEventListener('touchstart', startDrag, { passive: false });
-        document.addEventListener('touchmove', duringDrag, { passive: false });
-        document.addEventListener('touchend', stopDrag);
-    }
-
-    if (refreshBtn) {
-        refreshBtn.addEventListener('click', () => {
-            this.refreshCaptcha(2);
-        });
-    }
-}
 
     setupType3Events() {
         const instanceId = this.instanceId;
@@ -901,41 +821,30 @@ class CustomCaptcha {
     // ========== CORE CAPTCHA FUNCTIONALITY ==========
 
     handleTriggerClick() {
-    if (this.isVerified) return;
+        if (this.isVerified) return;
 
-    const instanceId = this.instanceId;
-    const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
-    const containergic = document.getElementById(`captchaContainergic-${instanceId}`);
-    const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
-    const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
+        const instanceId = this.instanceId;
+        const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
+        const containergic = document.getElementById(`captchaContainergic-${instanceId}`);
+        const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
+        const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
 
-    console.log('Starting CAPTCHA verification...');
+        triggergic.style.display = 'none';
+        containergic.classList.add(`loading-stategic-${instanceId}`);
+        containergic.classList.remove(`failed-stategic-${instanceId}`);
+        textElementgic.classList.add(`loading-textgic-${instanceId}`);
+        textElementgic.innerText = 'Processing...';
 
-    triggergic.style.display = 'none';
-    containergic.classList.add(`loading-stategic-${instanceId}`);
-    containergic.classList.remove(`failed-stategic-${instanceId}`);
-    textElementgic.classList.add(`loading-textgic-${instanceId}`);
-    textElementgic.innerText = 'Processing...';
-
-    // FIX: Show loading bar immediately
-    const loadingBarContainergic = this.container.querySelector(`.loading-bar-containergic-${instanceId}`);
-    if (loadingBarContainergic) {
-        loadingBarContainergic.style.display = 'block';
+        const loadingBarContainergic = document.querySelector(`.loading-bar-containergic-${instanceId}`);
+        const loadingBargic = document.getElementById(`loadingBargic-${instanceId}`);
         loadingBarContainergic.classList.add(`activegic-${instanceId}`);
-    }
 
-    setTimeout(() => {
-        console.log('700ms passed, opening modal...');
-        this.currentCaptchaType = this.getRandomCaptchaType();
-        this.showCaptchaType(this.currentCaptchaType);
-        modalgic.style.display = 'flex';
-        
-        // Hide loading bar when modal opens
-        if (loadingBarContainergic) {
-            loadingBarContainergic.style.display = 'none';
-        }
-    }, 700);
-}
+        setTimeout(() => {
+            this.currentCaptchaType = this.getRandomCaptchaType();
+            this.showCaptchaType(this.currentCaptchaType);
+            modalgic.style.display = 'flex';
+        }, 700);
+    }
 
     getRandomCaptchaType() {
         const random = Math.random();
@@ -945,37 +854,26 @@ class CustomCaptcha {
     }
 
     showCaptchaType(type) {
-    const instanceId = this.instanceId;
-    const captchaType1 = document.getElementById(`captchaType1gic-${instanceId}`);
-    const captchaType2 = document.getElementById(`captchaType2gic-${instanceId}`);
-    const captchaType3 = document.getElementById(`captchaType3gic-${instanceId}`);
+        const instanceId = this.instanceId;
+        const captchaType1 = document.getElementById(`captchaType1gic-${instanceId}`);
+        const captchaType2 = document.getElementById(`captchaType2gic-${instanceId}`);
+        const captchaType3 = document.getElementById(`captchaType3gic-${instanceId}`);
 
-    console.log('Showing CAPTCHA type:', type); // Debug log
+        captchaType1.style.display = 'none';
+        captchaType2.style.display = 'none';
+        captchaType3.style.display = 'none';
 
-    // Hide all types first
-    if (captchaType1) captchaType1.style.display = 'none';
-    if (captchaType2) captchaType2.style.display = 'none';
-    if (captchaType3) captchaType3.style.display = 'none';
-
-    // Show selected type and initialize it
-    if (type === 1 && captchaType1) {
-        captchaType1.style.display = 'block';
-        this.initializeType1();
-    } else if (type === 2 && captchaType2) {
-        captchaType2.style.display = 'block';
-        this.initializeType2();
-    } else if (type === 3 && captchaType3) {
-        captchaType3.style.display = 'block';
-        this.initializeType3();
-    } else {
-        console.error('Invalid CAPTCHA type or element not found:', type);
-        // Fallback to type 1
-        if (captchaType1) {
+        if (type === 1) {
             captchaType1.style.display = 'block';
             this.initializeType1();
+        } else if (type === 2) {
+            captchaType2.style.display = 'block';
+            this.initializeType2();
+        } else if (type === 3) {
+            captchaType3.style.display = 'block';
+            this.initializeType3();
         }
     }
-}
 
     // Type 1: Image Selection
     initializeType1() {
@@ -1173,70 +1071,55 @@ class CustomCaptcha {
     }
 
     stopDrag() {
-    if (!this.isDragging) return;
-    
-    this.isDragging = false;
-    const instanceId = this.instanceId;
-    const puzzleSlider = document.getElementById(`puzzleSlidergic-${instanceId}`);
-    const randomShape = document.getElementById(`randomShapegic-${instanceId}`);
-
-    if (puzzleSlider) {
-        puzzleSlider.style.cursor = 'grab';
-        puzzleSlider.style.transform = 'scale(1)';
-        puzzleSlider.classList.remove(`activegic-${instanceId}`);
-    }
-
-    if (randomShape) {
-        const shapeLeft = parseInt(randomShape.style.left) || 10;
-        const distance = Math.abs(shapeLeft - this.targetPosition);
+        if (!this.isDragging) return;
         
-        console.log('Drag stopped - Shape position:', shapeLeft, 'Target:', this.targetPosition, 'Distance:', distance); // Debug
-        
-        if (distance < 15) { // Increased tolerance for better UX
-            if (puzzleSlider) {
-                puzzleSlider.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
-            }
+        this.isDragging = false;
+        const instanceId = this.instanceId;
+        const puzzleSlider = document.getElementById(`puzzleSlidergic-${instanceId}`);
+        const randomShape = document.getElementById(`randomShapegic-${instanceId}`);
 
-            if (this.currentShapeType === 'triangle') {
-                randomShape.style.borderBottomColor = '#4CAF50';
-            } else {
-                randomShape.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
-            }
+        if (puzzleSlider) {
+            puzzleSlider.style.cursor = 'grab';
+            puzzleSlider.style.transform = 'scale(1)';
+            puzzleSlider.classList.remove(`activegic-${instanceId}`);
+        }
 
-            setTimeout(() => {
-                this.completeVerification();
-            }, 500);
-        } else {
-            if (this.isFirstTry && this.hasDragged) {
-                this.isFirstTry = false;
+        if (randomShape) {
+            const shapeLeft = parseInt(randomShape.style.left);
+            const distance = Math.abs(shapeLeft - this.targetPosition);
+            
+            if (distance < 4) {
+                if (puzzleSlider) {
+                    puzzleSlider.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+                }
+
+                if (this.currentShapeType === 'triangle') {
+                    randomShape.style.borderBottomColor = '#4CAF50';
+                } else {
+                    randomShape.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+                }
+
                 setTimeout(() => {
-                    this.handleFailuregic();
-                }, 300);
+                    this.completeVerification();
+                }, 500);
+            } else {
+                if (this.isFirstTry && this.hasDragged) {
+                    this.isFirstTry = false;
+                    setTimeout(() => {
+                        this.handleFailuregic();
+                    }, 300);
+                }
             }
         }
     }
-}
 
     completeType2Verification() {
-    const instanceId = this.instanceId;
-    const randomShape = document.getElementById(`randomShapegic-${instanceId}`);
-    
-    if (!randomShape) {
-        this.handleFailuregic();
-        return;
+        if (!this.hasDragged) {
+            this.handleFailuregic();
+        } else {
+            this.handleFailuregic();
+        }
     }
-
-    const shapeLeft = parseInt(randomShape.style.left) || 10;
-    const distance = Math.abs(shapeLeft - this.targetPosition);
-    
-    console.log('Shape position:', shapeLeft, 'Target:', this.targetPosition, 'Distance:', distance); // Debug
-    
-    if (distance < 15) { // Increased tolerance for better UX
-        this.completeVerification();
-    } else {
-        this.handleFailuregic();
-    }
-}
 
     // Type 3: Image Click
     initializeType3() {
@@ -1363,111 +1246,71 @@ class CustomCaptcha {
     // ========== UTILITY FUNCTIONS ==========
 
     completeVerification() {
-    const instanceId = this.instanceId;
-    const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
-    const containergic = document.getElementById(`captchaContainergic-${instanceId}`);
-    const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
-    const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
+        const instanceId = this.instanceId;
+        const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
+        const containergic = document.getElementById(`captchaContainergic-${instanceId}`);
+        const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
+        const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
 
-    console.log('Completing verification...');
+        modalgic.style.display = 'none';
+        containergic.classList.remove(`loading-stategic-${instanceId}`);
+        textElementgic.classList.add(`success-textgic-${instanceId}`);
+        textElementgic.textContent = 'Verification Successful.';
+        containergic.classList.add(`success-stategic-${instanceId}`);
 
-    modalgic.style.display = 'none';
-    containergic.classList.remove(`loading-stategic-${instanceId}`);
-    textElementgic.classList.add(`success-textgic-${instanceId}`);
-    textElementgic.textContent = 'Verification Successful.';
-    containergic.classList.add(`success-stategic-${instanceId}`);
+        const loadingBarContainergic = document.querySelector(`.loading-bar-containergic-${instanceId}`);
+        const loadingBargic = document.getElementById(`loadingBargic-${instanceId}`);
+        loadingBarContainergic.classList.remove(`activegic-${instanceId}`);
 
-    // Hide loading bar
-    const loadingBarContainergic = this.container.querySelector(`.loading-bar-containergic-${instanceId}`);
-    if (loadingBarContainergic) {
-        loadingBarContainergic.style.display = 'none';
-    }
+        const successIndicatorgic = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        successIndicatorgic.setAttribute("class", `tick-animgic-${instanceId}`);
+        successIndicatorgic.setAttribute("viewBox", "0 0 24 24");
+        successIndicatorgic.innerHTML = '<polyline points="20 6 9 17 4 12"/>';
 
-    // Create animated tick
-    if (triggergic) {
-        triggergic.style.display = 'none';
-        
-        // Remove any existing tick
-        const existingTick = triggergic.parentElement.querySelector(`.tick-animgic-${instanceId}`);
-        if (existingTick) {
-            existingTick.remove();
+        if (triggergic) {
+            triggergic.replaceWith(successIndicatorgic);
         }
         
-        // Create new animated tick
-        const tickSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        tickSvg.setAttribute("class", `tick-animgic-${instanceId}`);
-        tickSvg.setAttribute("width", "24");
-        tickSvg.setAttribute("height", "24");
-        tickSvg.setAttribute("viewBox", "0 0 24 24");
-        
-        const polyline = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
-        polyline.setAttribute("points", "20 6 9 17 4 12");
-        polyline.setAttribute("fill", "none");
-        polyline.setAttribute("stroke", "#4CAF50");
-        polyline.setAttribute("stroke-width", "3");
-        polyline.setAttribute("stroke-linecap", "round");
-        polyline.setAttribute("stroke-linejoin", "round");
-        polyline.setAttribute("stroke-dasharray", "50");
-        polyline.setAttribute("stroke-dashoffset", "50");
-        
-        tickSvg.appendChild(polyline);
-        
-        // Insert the tick where the checkbox was
-        const container = triggergic.parentElement;
-        container.insertBefore(tickSvg, triggergic);
-        
-        // Trigger animation
-        setTimeout(() => {
-            polyline.style.strokeDashoffset = "0";
-            polyline.style.transition = "stroke-dashoffset 0.8s ease";
-        }, 100);
-    }
-    
-    this.isVerified = true;
+        this.isVerified = true;
 
-    if (window.captchaVerification) {
-        window.captchaVerification.markAsVerified(this.instanceId);
-    }
+        // Notify verification system
+        if (window.captchaVerification) {
+            window.captchaVerification.markAsVerified(this.instanceId);
+        }
 
-    if (this.options.onSuccess) {
-        this.options.onSuccess();
+        if (this.options.onSuccess) {
+            this.options.onSuccess();
+        }
     }
-}
 
     handleFailuregic() {
-    if (this.isVerified) return;
-    
-    const instanceId = this.instanceId;
-    const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
-    const containergic = document.getElementById(`captchaContainergic-${instanceId}`);
-    const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
-    const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
+        if (this.isVerified) return;
+        
+        const instanceId = this.instanceId;
+        const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
+        const containergic = document.getElementById(`captchaContainergic-${instanceId}`);
+        const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
+        const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
 
-    modalgic.style.display = 'none';
-    containergic.classList.remove(`loading-stategic-${instanceId}`);
-    containergic.classList.add(`failed-stategic-${instanceId}`);
-    textElementgic.innerText = 'Verification failed, try again.';
-    textElementgic.classList.add(`failed-textgic-${instanceId}`);
-    textElementgic.classList.remove(`loading-textgic-${instanceId}`);
-    
-    if (triggergic) {
-        triggergic.style.display = 'block';
-        triggergic.classList.add(`j1k2l3mgic-${instanceId}`);
-    }
+        modalgic.style.display = 'none';
+        containergic.classList.remove(`loading-stategic-${instanceId}`);
+        containergic.classList.add(`failed-stategic-${instanceId}`);
+        textElementgic.innerText = 'Verification failed, try again.';
+        textElementgic.classList.add(`failed-textgic-${instanceId}`);
+        textElementgic.classList.remove(`loading-textgic-${instanceId}`);
+        
+        if (triggergic) {
+            triggergic.style.display = 'block';
+            triggergic.classList.add(`j1k2l3mgic-${instanceId}`);
+        }
 
-    const loadingBarContainergic = document.querySelector(`.loading-bar-containergic-${instanceId}`);
-    const loadingBargic = document.getElementById(`loadingBargic-${instanceId}`);
-    loadingBarContainergic.classList.remove(`activegic-${instanceId}`);
-    
-    // Stop the loading animation
-    if (loadingBargic) {
-        loadingBargic.style.animation = 'none';
-    }
+        const loadingBarContainergic = document.querySelector(`.loading-bar-containergic-${instanceId}`);
+        loadingBarContainergic.classList.remove(`activegic-${instanceId}`);
 
-    if (this.options.onError) {
-        this.options.onError();
+        if (this.options.onError) {
+            this.options.onError();
+        }
     }
-}
 
     refreshCaptcha(type) {
         const refreshBtn = event.target.closest(`.refresh-buttongic-${this.instanceId}`);
@@ -1505,35 +1348,35 @@ class CustomCaptcha {
     }
 
     reset() {
-    this.isVerified = false;
-    this.selectedImages = [];
-    this.clickedItems = [];
-    this.clickCounter = 0;
-    this.clickPositions = [];
+        this.isVerified = false;
+        this.selectedImages = [];
+        this.clickedItems = [];
+        this.clickCounter = 0;
+        this.clickPositions = [];
 
-    const instanceId = this.instanceId;
-    const containergic = document.getElementById(`captchaContainergic-${instanceId}`);
-    const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
-    const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
-    const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
+        const instanceId = this.instanceId;
+        const containergic = document.getElementById(`captchaContainergic-${instanceId}`);
+        const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
+        const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
+        const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
 
-    // Reset visual state
-    containergic.classList.remove(`success-stategic-${instanceId}`, `failed-stategic-${instanceId}`, `loading-stategic-${instanceId}`);
-    textElementgic.classList.remove(`success-textgic-${instanceId}`, `failed-textgic-${instanceId}`, `loading-textgic-${instanceId}`);
-    textElementgic.textContent = 'I\'m not a robot';
-    
-    if (triggergic) {
-        triggergic.style.display = 'block';
-        triggergic.classList.remove(`j1k2l3mgic-${instanceId}`);
+        // Reset visual state
+        containergic.classList.remove(`success-stategic-${instanceId}`, `failed-stategic-${instanceId}`, `loading-stategic-${instanceId}`);
+        textElementgic.classList.remove(`success-textgic-${instanceId}`, `failed-textgic-${instanceId}`, `loading-textgic-${instanceId}`);
+        textElementgic.textContent = 'I\'m not a robot';
+        
+        if (triggergic) {
+            triggergic.style.display = 'block';
+            triggergic.classList.remove(`j1k2l3mgic-${instanceId}`);
+        }
+        
+        modalgic.style.display = 'none';
+
+        // Reset verification system
+        if (window.captchaVerification) {
+            window.captchaVerification.resetVerification(this.instanceId);
+        }
     }
-    
-    modalgic.style.display = 'none';
-
-    // Reset verification system
-    if (window.captchaVerification) {
-        window.captchaVerification.resetVerification(this.instanceId);
-    }
-}
 }
 
 // Global initialization function
