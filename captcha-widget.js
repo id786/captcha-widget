@@ -21,12 +21,14 @@ class CustomCaptcha {
     this.createCaptcha();
     this.bindEvents();
     this.initializeCaptchaData();
+    
+    // Add this line to ensure initial state is set
+    this.isVerified = false;
 }
 
     createCaptcha() {
         this.container.innerHTML = `
             <style>
-            @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
             .x1a2b3cgic-${this.instanceId},
     .y4d5e6fgic-${this.instanceId},
     .z7g8h9igic-${this.instanceId},
@@ -689,13 +691,14 @@ class CustomCaptcha {
     }
 
     bindEvents() {
-        // Store reference to this instance for event handlers
-        this.container.captchaInstance = this;
-        
-        setTimeout(() => {
-            this.setupEventListeners();
-        }, 100);
-    }
+    // Store reference to this instance for event handlers
+    this.container.captchaInstance = this;
+    
+    // Reduce timeout to ensure events are bound sooner
+    setTimeout(() => {
+        this.setupEventListeners();
+    }, 50); // Reduced from 100ms to 50ms
+}
 
     setupEventListeners() {
         const instanceId = this.instanceId;
@@ -874,30 +877,46 @@ class CustomCaptcha {
     // ========== CORE CAPTCHA FUNCTIONALITY ==========
 
     handleTriggerClick() {
-        if (this.isVerified) return;
+    if (this.isVerified) return;
 
-        const instanceId = this.instanceId;
-        const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
-        const containergic = document.getElementById(`captchaContainergic-${instanceId}`);
-        const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
-        const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
+    const instanceId = this.instanceId;
+    const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
+    const containergic = document.getElementById(`captchaContainergic-${instanceId}`);
+    const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
+    const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
 
-        triggergic.style.display = 'none';
-        containergic.classList.add(`loading-stategic-${instanceId}`);
-        containergic.classList.remove(`failed-stategic-${instanceId}`);
-        textElementgic.classList.add(`loading-textgic-${instanceId}`);
-        textElementgic.innerText = 'Processing...';
-
-        const loadingBarContainergic = document.querySelector(`.loading-bar-containergic-${instanceId}`);
-        const loadingBargic = document.getElementById(`loadingBargic-${instanceId}`);
-        loadingBarContainergic.classList.add(`activegic-${instanceId}`);
-
-        setTimeout(() => {
-            this.currentCaptchaType = this.getRandomCaptchaType();
-            this.showCaptchaType(this.currentCaptchaType);
-            modalgic.style.display = 'flex';
-        }, 700);
+    // Ensure modal is properly initialized
+    if (!modalgic) {
+        console.error('Modal element not found');
+        return;
     }
+
+    triggergic.style.display = 'none';
+    containergic.classList.add(`loading-stategic-${instanceId}`);
+    containergic.classList.remove(`failed-stategic-${instanceId}`);
+    textElementgic.classList.add(`loading-textgic-${instanceId}`);
+    textElementgic.innerText = 'Processing...';
+
+    const loadingBarContainergic = document.querySelector(`.loading-bar-containergic-${instanceId}`);
+    const loadingBargic = document.getElementById(`loadingBargic-${instanceId}`);
+    loadingBarContainergic.classList.add(`activegic-${instanceId}`);
+
+    setTimeout(() => {
+        this.currentCaptchaType = this.getRandomCaptchaType();
+        this.showCaptchaType(this.currentCaptchaType);
+        
+        // Force reflow and ensure modal displays
+        modalgic.style.display = 'flex';
+        modalgic.style.opacity = '0';
+        
+        // Trigger animation
+        setTimeout(() => {
+            modalgic.style.opacity = '1';
+            modalgic.style.transition = 'opacity 0.3s ease';
+        }, 10);
+        
+    }, 700);
+}
 
     getRandomCaptchaType() {
         const random = Math.random();
