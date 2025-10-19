@@ -891,45 +891,30 @@ class CustomCaptcha {
     // ========== CORE CAPTCHA FUNCTIONALITY ==========
 
     handleTriggerClick() {
-    if (this.isVerified) return;
+        if (this.isVerified) return;
 
-    const instanceId = this.instanceId;
-    const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
-    const containergic = document.getElementById(`captchaContainergic-${instanceId}`);
-    const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
-    const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
+        const instanceId = this.instanceId;
+        const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
+        const containergic = document.getElementById(`captchaContainergic-${instanceId}`);
+        const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
+        const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
 
-    console.log('Modal element found:', !!modalgic); // Debug
+        triggergic.style.display = 'none';
+        containergic.classList.add(`loading-stategic-${instanceId}`);
+        containergic.classList.remove(`failed-stategic-${instanceId}`);
+        textElementgic.classList.add(`loading-textgic-${instanceId}`);
+        textElementgic.innerText = 'Processing...';
 
-    // Show loading state
-    triggergic.style.display = 'none';
-    containergic.classList.add(`loading-stategic-${instanceId}`);
-    containergic.classList.remove(`failed-stategic-${instanceId}`);
-    textElementgic.classList.add(`loading-textgic-${instanceId}`);
-    textElementgic.innerText = 'Processing...';
+        const loadingBarContainergic = document.querySelector(`.loading-bar-containergic-${instanceId}`);
+        const loadingBargic = document.getElementById(`loadingBargic-${instanceId}`);
+        loadingBarContainergic.classList.add(`activegic-${instanceId}`);
 
-    const loadingBarContainergic = document.querySelector(`.loading-bar-containergic-${instanceId}`);
-    const loadingBargic = document.getElementById(`loadingBargic-${instanceId}`);
-    loadingBarContainergic.classList.add(`activegic-${instanceId}`);
-
-    setTimeout(() => {
-        console.log('700ms passed, opening modal...'); // Debug
-        
-        // KEEP THE LOADING STATE - DON'T REMOVE IT
-        // Just show the modal on top
-        this.currentCaptchaType = this.getRandomCaptchaType();
-        this.showCaptchaType(this.currentCaptchaType);
-        
-        // FORCE THE MODAL TO OPEN
-        modalgic.style.display = 'flex';
-        modalgic.style.visibility = 'visible';
-        modalgic.style.opacity = '1';
-        modalgic.style.zIndex = '10000';
-        
-        console.log('Modal display set to:', modalgic.style.display); // Debug
-
-    }, 700);
-}
+        setTimeout(() => {
+            this.currentCaptchaType = this.getRandomCaptchaType();
+            this.showCaptchaType(this.currentCaptchaType);
+            modalgic.style.display = 'flex';
+        }, 700);
+    }
 
     getRandomCaptchaType() {
         const random = Math.random();
