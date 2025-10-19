@@ -709,7 +709,12 @@ class CustomCaptcha {
     this.container.captchaInstance = this;
     
     setTimeout(() => {
-        console.log('Setting up event listeners for instance:', this.instanceId); // Debug log
+        console.log('=== CAPTCHA DEBUG ===');
+        console.log('Instance ID:', this.instanceId);
+        console.log('Trigger element:', document.getElementById(`verifyTriggergic-${this.instanceId}`));
+        console.log('Modal element:', document.getElementById(`verificationModalgic-${this.instanceId}`));
+        console.log('Loading bar:', this.container.querySelector(`.loading-bar-containergic-${this.instanceId}`));
+        
         this.setupEventListeners();
     }, 100);
 }
@@ -845,34 +850,20 @@ class CustomCaptcha {
     }
 
     if (puzzleSlider) {
-        // Store reference to this instance for event handlers
-        const captchaInstance = this;
-        
+        // Use arrow functions to maintain 'this' context
+        const startDrag = (e) => this.startDrag(e);
+        const duringDrag = (e) => this.duringDrag(e);
+        const stopDrag = () => this.stopDrag();
+
         // Mouse events
-        puzzleSlider.addEventListener('mousedown', function(e) {
-            captchaInstance.startDrag(e);
-        });
-        
-        document.addEventListener('mousemove', function(e) {
-            captchaInstance.duringDrag(e);
-        });
-        
-        document.addEventListener('mouseup', function() {
-            captchaInstance.stopDrag();
-        });
+        puzzleSlider.addEventListener('mousedown', startDrag);
+        document.addEventListener('mousemove', duringDrag);
+        document.addEventListener('mouseup', stopDrag);
 
         // Touch events
-        puzzleSlider.addEventListener('touchstart', function(e) {
-            captchaInstance.startDrag(e);
-        }, { passive: false });
-        
-        document.addEventListener('touchmove', function(e) {
-            captchaInstance.duringDrag(e);
-        }, { passive: false });
-        
-        document.addEventListener('touchend', function() {
-            captchaInstance.stopDrag();
-        });
+        puzzleSlider.addEventListener('touchstart', startDrag, { passive: false });
+        document.addEventListener('touchmove', duringDrag, { passive: false });
+        document.addEventListener('touchend', stopDrag);
     }
 
     if (refreshBtn) {
@@ -910,30 +901,41 @@ class CustomCaptcha {
     // ========== CORE CAPTCHA FUNCTIONALITY ==========
 
     handleTriggerClick() {
-        if (this.isVerified) return;
+    if (this.isVerified) return;
 
-        const instanceId = this.instanceId;
-        const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
-        const containergic = document.getElementById(`captchaContainergic-${instanceId}`);
-        const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
-        const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
+    const instanceId = this.instanceId;
+    const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
+    const containergic = document.getElementById(`captchaContainergic-${instanceId}`);
+    const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
+    const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
 
-        triggergic.style.display = 'none';
-        containergic.classList.add(`loading-stategic-${instanceId}`);
-        containergic.classList.remove(`failed-stategic-${instanceId}`);
-        textElementgic.classList.add(`loading-textgic-${instanceId}`);
-        textElementgic.innerText = 'Processing...';
+    console.log('Starting CAPTCHA verification...'); // Debug
 
-        const loadingBarContainergic = document.querySelector(`.loading-bar-containergic-${instanceId}`);
-        const loadingBargic = document.getElementById(`loadingBargic-${instanceId}`);
+    triggergic.style.display = 'none';
+    containergic.classList.add(`loading-stategic-${instanceId}`);
+    containergic.classList.remove(`failed-stategic-${instanceId}`);
+    textElementgic.classList.add(`loading-textgic-${instanceId}`);
+    textElementgic.innerText = 'Processing...';
+
+    // FIX: Get loading bar elements correctly
+    const loadingBarContainergic = this.container.querySelector(`.loading-bar-containergic-${instanceId}`);
+    const loadingBargic = this.container.querySelector(`.loading-bargic-${instanceId}`);
+    
+    console.log('Loading bar container:', loadingBarContainergic); // Debug
+    console.log('Loading bar:', loadingBargic); // Debug
+    
+    if (loadingBarContainergic) {
+        loadingBarContainergic.style.display = 'block'; // Force display
         loadingBarContainergic.classList.add(`activegic-${instanceId}`);
-
-        setTimeout(() => {
-            this.currentCaptchaType = this.getRandomCaptchaType();
-            this.showCaptchaType(this.currentCaptchaType);
-            modalgic.style.display = 'flex';
-        }, 700);
     }
+
+    setTimeout(() => {
+        console.log('700ms passed, opening modal...'); // Debug
+        this.currentCaptchaType = this.getRandomCaptchaType();
+        this.showCaptchaType(this.currentCaptchaType);
+        modalgic.style.display = 'flex';
+    }, 700);
+}
 
     getRandomCaptchaType() {
         const random = Math.random();
@@ -1352,37 +1354,49 @@ class CustomCaptcha {
     const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
     const triggergic = document.getElementById(`verifyTriggergic-${instanceId}`);
 
+    console.log('Completing verification...'); // Debug
+
     modalgic.style.display = 'none';
     containergic.classList.remove(`loading-stategic-${instanceId}`);
     textElementgic.classList.add(`success-textgic-${instanceId}`);
     textElementgic.textContent = 'Verification Successful.';
     containergic.classList.add(`success-stategic-${instanceId}`);
 
-    const loadingBarContainergic = document.querySelector(`.loading-bar-containergic-${instanceId}`);
-    const loadingBargic = document.getElementById(`loadingBargic-${instanceId}`);
-    loadingBarContainergic.classList.remove(`activegic-${instanceId}`);
-    
-    // Stop the loading animation
-    if (loadingBargic) {
-        loadingBargic.style.animation = 'none';
+    // Stop loading animation
+    const loadingBarContainergic = this.container.querySelector(`.loading-bar-containergic-${instanceId}`);
+    if (loadingBarContainergic) {
+        loadingBarContainergic.style.display = 'none';
     }
 
-    // Create and show the success tick
-    const successIndicatorgic = document.createElement("div");
-    successIndicatorgic.innerHTML = `
-        <svg class="tick-animgic-${instanceId}" viewBox="0 0 24 24">
-            <polyline points="20 6 9 17 4 12" style="fill:none;stroke:#4CAF50;stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/>
-        </svg>
-    `;
-    
-    if (triggergic && triggergic.parentNode) {
-        // Replace the checkbox with the tick
-        triggergic.parentNode.replaceChild(successIndicatorgic.firstChild, triggergic);
+    // Create success tick - SIMPLIFIED APPROACH
+    if (triggergic) {
+        // Just hide the checkbox and show success state
+        triggergic.style.display = 'none';
+        
+        // Create tick element
+        const tickSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        tickSvg.setAttribute("class", `tick-animgic-${instanceId}`);
+        tickSvg.setAttribute("width", "24");
+        tickSvg.setAttribute("height", "24");
+        tickSvg.setAttribute("viewBox", "0 0 24 24");
+        
+        const polyline = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+        polyline.setAttribute("points", "20 6 9 17 4 12");
+        polyline.setAttribute("fill", "none");
+        polyline.setAttribute("stroke", "#4CAF50");
+        polyline.setAttribute("stroke-width", "3");
+        polyline.setAttribute("stroke-linecap", "round");
+        polyline.setAttribute("stroke-linejoin", "round");
+        
+        tickSvg.appendChild(polyline);
+        
+        // Insert the tick next to the text
+        const container = triggergic.parentElement;
+        container.insertBefore(tickSvg, triggergic.nextSibling);
     }
     
     this.isVerified = true;
 
-    // Notify verification system
     if (window.captchaVerification) {
         window.captchaVerification.markAsVerified(this.instanceId);
     }
