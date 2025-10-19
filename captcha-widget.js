@@ -161,7 +161,7 @@ class CustomCaptcha {
     inset: 0 !important;
     background: rgba(0,0,0,0.5) !important;
     backdrop-filter: blur(3px) !important;
-    display: none !important;
+    display: none;
     align-items: center !important;
     justify-content: center !important;
     z-index: 10000 !important;
