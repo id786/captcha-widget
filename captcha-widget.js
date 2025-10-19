@@ -706,13 +706,12 @@ class CustomCaptcha {
     }
 
     bindEvents() {
-    // Store reference to this instance for event handlers
     this.container.captchaInstance = this;
     
-    // Reduce timeout to ensure events are bound sooner
     setTimeout(() => {
+        console.log('Setting up event listeners for instance:', this.instanceId); // Debug log
         this.setupEventListeners();
-    }, 50); // Reduced from 100ms to 50ms
+    }, 100);
 }
 
     setupEventListeners() {
@@ -900,9 +899,10 @@ class CustomCaptcha {
     const textElementgic = document.getElementById(`statusTextgic-${instanceId}`);
     const modalgic = document.getElementById(`verificationModalgic-${instanceId}`);
 
-    // Ensure modal is properly initialized
+    console.log('Trigger clicked, modal element:', modalgic); // Debug log
+
     if (!modalgic) {
-        console.error('Modal element not found');
+        console.error('Modal element not found!');
         return;
     }
 
@@ -914,22 +914,35 @@ class CustomCaptcha {
 
     const loadingBarContainergic = document.querySelector(`.loading-bar-containergic-${instanceId}`);
     const loadingBargic = document.getElementById(`loadingBargic-${instanceId}`);
-    loadingBarContainergic.classList.add(`activegic-${instanceId}`);
+    if (loadingBarContainergic) {
+        loadingBarContainergic.classList.add(`activegic-${instanceId}`);
+    }
 
     setTimeout(() => {
+        // Stop loading animation first
+        if (loadingBarContainergic) {
+            loadingBarContainergic.classList.remove(`activegic-${instanceId}`);
+        }
+        if (loadingBargic) {
+            loadingBargic.style.animation = 'none';
+        }
+
+        // Remove loading state
+        containergic.classList.remove(`loading-stategic-${instanceId}`);
+        textElementgic.classList.remove(`loading-textgic-${instanceId}`);
+
+        // Set up and show modal
         this.currentCaptchaType = this.getRandomCaptchaType();
+        console.log('Selected CAPTCHA type:', this.currentCaptchaType); // Debug log
+        
         this.showCaptchaType(this.currentCaptchaType);
         
-        // Force reflow and ensure modal displays
+        // Show modal with force display
         modalgic.style.display = 'flex';
-        modalgic.style.opacity = '0';
+        modalgic.style.opacity = '1';
         
-        // Trigger animation
-        setTimeout(() => {
-            modalgic.style.opacity = '1';
-            modalgic.style.transition = 'opacity 0.3s ease';
-        }, 10);
-        
+        console.log('Modal should be visible now'); // Debug log
+
     }, 700);
 }
 
@@ -941,26 +954,37 @@ class CustomCaptcha {
     }
 
     showCaptchaType(type) {
-        const instanceId = this.instanceId;
-        const captchaType1 = document.getElementById(`captchaType1gic-${instanceId}`);
-        const captchaType2 = document.getElementById(`captchaType2gic-${instanceId}`);
-        const captchaType3 = document.getElementById(`captchaType3gic-${instanceId}`);
+    const instanceId = this.instanceId;
+    const captchaType1 = document.getElementById(`captchaType1gic-${instanceId}`);
+    const captchaType2 = document.getElementById(`captchaType2gic-${instanceId}`);
+    const captchaType3 = document.getElementById(`captchaType3gic-${instanceId}`);
 
-        captchaType1.style.display = 'none';
-        captchaType2.style.display = 'none';
-        captchaType3.style.display = 'none';
+    console.log('Showing CAPTCHA type:', type); // Debug log
 
-        if (type === 1) {
+    // Hide all types first
+    if (captchaType1) captchaType1.style.display = 'none';
+    if (captchaType2) captchaType2.style.display = 'none';
+    if (captchaType3) captchaType3.style.display = 'none';
+
+    // Show selected type and initialize it
+    if (type === 1 && captchaType1) {
+        captchaType1.style.display = 'block';
+        this.initializeType1();
+    } else if (type === 2 && captchaType2) {
+        captchaType2.style.display = 'block';
+        this.initializeType2();
+    } else if (type === 3 && captchaType3) {
+        captchaType3.style.display = 'block';
+        this.initializeType3();
+    } else {
+        console.error('Invalid CAPTCHA type or element not found:', type);
+        // Fallback to type 1
+        if (captchaType1) {
             captchaType1.style.display = 'block';
             this.initializeType1();
-        } else if (type === 2) {
-            captchaType2.style.display = 'block';
-            this.initializeType2();
-        } else if (type === 3) {
-            captchaType3.style.display = 'block';
-            this.initializeType3();
         }
     }
+}
 
     // Type 1: Image Selection
     initializeType1() {
