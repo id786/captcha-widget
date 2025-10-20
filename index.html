@@ -3,163 +3,497 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Custom CAPTCHA - Multiple Instances Demo</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta name="description" content="Free protected security CAPTCHA widget for your website. Easy to implement with multiple instances support.">
+    <meta name="keywords" content="CAPTCHA, security, widget, protection, free, implementation">
+    <meta name="author" content="Gamer Id47">
+    <meta property="og:title" content="Free Protected Security CAPTCHA Widget">
+    <meta property="og:description" content="Easy-to-implement CAPTCHA protection for your website with multiple instances support.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Free Protected Security CAPTCHA Widget">
+    <meta name="twitter:description" content="Easy-to-implement CAPTCHA protection for your website with multiple instances support.">
+    <title>Free Protected Security CAPTCHA Widget | Easy Implementation</title>
+    <script src="https://id786.github.io/captcha-widget/loader.js"></script>
     <style>
+        .a1b2c3dgic, .spat{
+    white-space: nowrap;
+}
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #4cc9f0;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #4bb543;
+            --warning-color: #ffcc00;
+            --danger-color: #dc3545;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: #f5f7ff;
+            padding: 20px;
             max-width: 1200px;
             margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
             padding: 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
         }
-        .demo-section {
-            border: 2px solid #ddd;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 10px;
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
         }
-        .captcha-container {
-            margin: 20px 0;
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
         }
-        .protected-content {
-            background: #f0f8ff;
-            padding: 15px;
-            border-radius: 5px;
-            margin: 10px 0;
+
+        h2 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-color);
         }
+
+        h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
         button {
-            padding: 10px 20px;
-            margin: 5px;
+            background-color: var(--primary-color);
+            color: white;
             border: none;
-            border-radius: 5px;
+            padding: 12px 24px;
+            border-radius: var(--border-radius);
             cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: var(--transition);
+            margin-right: 10px;
+            margin-bottom: 15px;
+        }
+
+        button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+
+        .protected-con-1, .protected-con-2 {
+            background-color: #e8f4fd;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-top: 20px;
+            border-left: 4px solid var(--accent-color);
+            display: none;
+        }
+
+        .textarea-container {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-family: monospace;
+            background-color: #f8f9fa;
+            resize: vertical;
+        }
+
+        .copy-btn {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+
+        .copy-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .copy-btn.copied {
+            background-color: var(--success-color);
+        }
+
+        mark {
+            background-color: var(--warning-color);
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        pre {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        q {
+            font-style: italic;
+            color: #555;
+        }
+
+        .code-block {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+
+        .link-section {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .link-section a {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .link-section a:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .privacy-section {
+            background-color: white;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: var(--dark-color);
+            color: white;
+            border-radius: var(--border-radius);
+        }
+
+        .note-box {
+            background-color: #fff3cd;
+            border-left: 4px solid var(--warning-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .success-box {
+            background-color: #d4edda;
+            border-left: 4px solid var(--success-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .demo-section {
+                padding: 15px;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Your Custom CAPTCHA - Multiple Instances Demo</h1>
-    
-    <!-- CAPTCHA 1 -->
-    <div class="demo-section">
-        <h2>CAPTCHA Instance 1</h2>
-        <div id="captcha-container-1" class="captcha-container"></div>
-        
-        <button class="protected-btn-1" onclick="alert('Button 1 unlocked!')">
-            Protected Button 1
-        </button>
-        
-        <div class="protected-con-1">
-            <h3>Protected Content 1</h3>
-            <p>This content unlocks when CAPTCHA 1 is completed.</p>
-        </div>
-    </div>
+    <header>
+        <h1>Free Protected Security CAPTCHA</h1>
+        <p class="subtitle">Easy-to-implement CAPTCHA protection for your website</p>
+    </header>
 
-    <!-- CAPTCHA 2 -->
-    <div class="demo-section">
-        <h2>CAPTCHA Instance 2</h2>
-        <div id="captcha-container-2" class="captcha-container"></div>
-        
-        <button class="protected-btn-2" onclick="alert('Button 2 unlocked!')">
-            Protected Button 2
-        </button>
-        
-        <div class="protected-con-2">
-            <h3>Protected Content 2</h3>
-            <p>This content unlocks when CAPTCHA 2 is completed.</p>
-        </div>
-    </div>
+    <main>
+        <section>
+            <h2>Live Demos</h2>
+            
+            <div class="demo-section">
+                <h3>CAPTCHA Instance 1</h3>
+                <div id="captcha-container-1" class="captcha-container"></div>
+                
+                <button class="protected-btn-1" disabled onclick="alert('Button 1 unlocked!')">
+                    protected-btn-1
+                </button>
+                
+                <div class="protected-con-1" style="display:none;">
+                    <h4>protected-con-1</h4>
+                    <p>This content unlocks when CAPTCHA 1 is completed.</p>
+                </div>
+            </div>
 
-    <!-- CAPTCHA 3 -->
-    <div class="demo-section">
-        <h2>CAPTCHA Instance 3</h2>
-        <div id="captcha-container-3" class="captcha-container"></div>
-        
-        <button class="protected-btn-3" onclick="alert('Button 3 unlocked!')">
-            Protected Button 3
-        </button>
-        
-        <div class="protected-con-3">
-            <h3>Protected Content 3</h3>
-            <p>This content unlocks when CAPTCHA 3 is completed.</p>
-        </div>
-    </div>
+            <div class="demo-section">
+                <h3>CAPTCHA Instance 2</h3>
+                <div id="captcha-container-2" class="captcha-container"></div>
+                
+                <button class="protected-btn-2" disabled onclick="alert('Button 2 unlocked!')">
+                    protected-btn-2
+                </button>
+                
+                <div class="protected-con-2" style="display:none;">
+                    <h4>protected-con-2</h4>
+                    <p>This content unlocks when CAPTCHA 2 is completed.</p>
+                </div>
+            </div>
+        </section>
 
-    <!-- Control Panel -->
-    <div class="demo-section">
-        <h2>Control Panel</h2>
-        <button onclick="resetAll()">Reset All CAPTCHAs</button>
-        <button onclick="checkStatus()">Check Verification Status</button>
-        
-        <div id="status" style="margin-top: 20px; padding: 10px; background: #f5f5f5; border-radius: 5px;"></div>
-    </div>
+        <section class="demo-section">
+            <h2>How to Implement the gCAPTCHA Widget on Your Website</h2>
+            
+            <div class="success-box">
+                <p><strong>Quick Implementation Guide:</strong> Follow these simple steps to add CAPTCHA protection to your website.</p>
+            </div>
+            
+            <h3>Step 1: Add the Script</h3>
+            <p>Paste the following script inside the &lt;head&gt; section of your HTML (recommended) or at the bottom of the &lt;body&gt;.</p>
+            <div class="textarea-container">
+                <textarea readonly rows="2"><script src="https://id786.github.io/captcha-widget/loader.js"></script></textarea>
+                <button class="copy-btn">Copy</button>
+            </div>
+            
+            <h3>Step 2: Create a Container for the CAPTCHA</h3>
+            <p>Add an empty div with the appropriate ID where you want the CAPTCHA to appear.</p>
+            <div class="textarea-container">
+                <textarea readonly rows="1">id="captcha-container-1"</textarea>
+                <button class="copy-btn">Copy</button>
+            </div>
+            <p>Add the ID above to any empty div element. The number in the ID is important - we'll explain why below.</p>
+            
+            <h3>Step 3: Protect Your Elements</h3>
+            <p>Add the following classes to elements you want to protect:</p>
+            <div class="textarea-container">
+                <textarea readonly rows="2">class="protected-btn-1"
+class="protected-con-1"</textarea>
+                <button class="copy-btn">Copy</button>
+            </div>
+            <p>Use <code>protected-btn-1</code> to protect buttons (they'll be disabled) and <code>protected-con-1</code> to protect content (it'll be hidden).</p>
+            <p>You can also add <code>protected-con-1</code> to a button to hide it until the CAPTCHA is completed.</p>
+        </section>
 
-    <!-- Load CAPTCHA system -->
-    <script src="loader.js"></script>
-    
+        <section class="demo-section">
+            <h2>Understanding CAPTCHA IDs</h2>
+            
+            <p>The ID number (like '1' in the examples) connects the CAPTCHA container to the protected content and buttons. When CAPTCHA container 1 is completed, it will unlock all protected content and buttons with ID 1.</p>
+            
+            <p>If you use different IDs (e.g., 9999) for the CAPTCHA container, you must use the same ID for the protected content and buttons. Completing <code>captcha-container-9999</code> will unlock all buttons and content with ID 9999.</p>
+            
+            <p>You can use multiple CAPTCHAs on the same page, but each must have a unique ID. For example:</p>
+            <ul>
+                <li>First CAPTCHA: <code>id="captcha-container-1"</code> with protected elements: <code>protected-btn-1</code> and <code>protected-con-1</code></li>
+                <li>Second CAPTCHA: <code>id="captcha-container-2"</code> with protected elements: <code>protected-btn-2</code> and <code>protected-con-2</code></li>
+            </ul>
+            
+            <p>There's no limit to the number of CAPTCHAs you can use on a single page.</p>
+            
+            <div class="note-box">
+                <p><strong>Note:</strong> The ID numbering system allows you to create complex protection scenarios where different CAPTCHAs unlock different parts of your website.</p>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2>Examples and Implementation</h2>
+            
+            <p>Check out these example pages to see the CAPTCHA widget in action:</p>
+            
+            <div class="link-section">
+                <a href="https://id786.github.io/captcha-widget/examples/example1">Example CAPTCHA Implementation 1</a>
+                <a href="https://id786.github.io/captcha-widget/examples/example2">Example CAPTCHA Implementation 2</a>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2>Important Implementation Notes</h2>
+            
+            <div class="note-box">
+                <p><mark>CRITICAL:</mark> Use specific inline styles for protected elements to ensure maximum security.</p>
+            </div>
+            
+            <ul>
+                <li>Add the <mark>disabled</mark> attribute to protected buttons</li>
+                <li>Add <mark>style="display:none;"</mark> to protected content</li>
+            </ul>
+            
+            <h3>Why These Rules Are Important</h3>
+            <p>Our CAPTCHA loader.js needs time to load, depending on your internet speed. Before the script loads, your protected buttons would be enabled and your protected content would be visible, which could create security vulnerabilities until the loader.js fully loads.</p>
+            
+            <h3>Implementation Examples</h3>
+            <p>Your protected button code should look like this:</p>
+            <div class="code-block">
+&lt;button disabled class="protected-btn-1"&gt;DOWNLOAD&lt;/button&gt;
+            </div>
+            
+            <p>Your protected content code should look like this:</p>
+            <div class="code-block">
+&lt;div class="protected-con-1" style="display:none;"&gt;Protected Content&lt;/div&gt;
+            </div>
+        </section>
+
+        <section class="privacy-section" id="Privacy">
+            <h2>Privacy Policy and Terms of Use</h2>
+            
+            <h3>Privacy Policy</h3>
+            <p>Last updated: October 2025</p>
+            
+            <p>This CAPTCHA service ("Service") is provided by Gamer Id47 ("we," "us," or "our"). This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data.</p>
+            
+            <p><strong>Information Collection and Use</strong></p>
+            <p>We collect several different types of information for various purposes to provide and improve our Service to you.</p>
+            
+            <p><strong>Types of Data Collected</strong></p>
+            <ul>
+                <li><strong>Usage Data:</strong> We may collect information on how the Service is accessed and used ("Usage Data"). This Usage Data may include information such as your computer's Internet Protocol address (e.g., IP address), browser type, browser version, the pages of our Service that you visit, the time and date of your visit, the time spent on those pages, unique device identifiers and other diagnostic data.</li>
+                <li><strong>CAPTCHA Interaction Data:</strong> We collect anonymous data related to CAPTCHA interactions, including success/failure rates and response times, to improve the Service and prevent abuse.</li>
+            </ul>
+            
+            <p><strong>Use of Data</strong></p>
+            <p>We use the collected data for various purposes:</p>
+            <ul>
+                <li>To provide and maintain the Service</li>
+                <li>To notify you about changes to our Service</li>
+                <li>To allow you to participate in interactive features of our Service when you choose to do so</li>
+                <li>To provide customer care and support</li>
+                <li>To provide analysis or valuable information so that we can improve the Service</li>
+                <li>To monitor the usage of the Service</li>
+                <li>To detect, prevent and address technical issues</li>
+                <li>To prevent fraud and abuse</li>
+            </ul>
+            
+            <p><strong>Transfer of Data</strong></p>
+            <p>Your information, including Personal Data, may be transferred to — and maintained on — computers located outside of your state, province, country or other governmental jurisdiction where the data protection laws may differ than those from your jurisdiction.</p>
+            
+            <p><strong>Security of Data</strong></p>
+            <p>The security of your data is important to us, but remember that no method of transmission over the Internet, or method of electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your Personal Data, we cannot guarantee its absolute security.</p>
+            
+            <h3>Terms of Use</h3>
+            <p>By accessing and using this Service, you accept and agree to be bound by the terms and provision of this agreement.</p>
+            
+            <p><strong>Use License</strong></p>
+            <p>Permission is granted to temporarily use this Service for personal and commercial purposes. This is the grant of a license, not a transfer of title, and under this license you may not:</p>
+            <ul>
+                <li>modify or copy the materials;</li>
+                <li>use the materials for any commercial purpose or for any public display (commercial or non-commercial);</li>
+                <li>attempt to decompile or reverse engineer any software contained on Gamer Id47's website;</li>
+                <li>remove any copyright or other proprietary notations from the materials; or</li>
+                <li>transfer the materials to another person or "mirror" the materials on any other server.</li>
+            </ul>
+            
+            <p><strong>Disclaimer</strong></p>
+            <p>The materials on Gamer Id47's website are provided on an 'as is' basis. Gamer Id47 makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.</p>
+            
+            <p><strong>Limitations</strong></p>
+            <p>In no event shall Gamer Id47 or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on Gamer Id47's website, even if Gamer Id47 or a Gamer Id47 authorized representative has been notified orally or in writing of the possibility of such damage.</p>
+            
+            <p><strong>Governing Law</strong></p>
+            <p>These terms and conditions are governed by and construed in accordance with the laws of the United States and you irrevocably submit to the exclusive jurisdiction of the courts in that location.</p>
+            
+            <p><strong>Contact Us</strong></p>
+            <p>If you have any questions about this Privacy Policy or Terms of Use, please contact us at id2281449@gmail.com.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>© Copyright <span id="year"></span> Gamer Id47. | All Rights Reserved.</p>
+        <p>Contact Us: id2281449@gmail.com</p>
+    </footer>
+
     <script>
-        // Initialize CAPTCHAs when system is loaded
-        function initializeCAPTCHAs() {
-            if (window.initCaptcha) {
-                // Create multiple CAPTCHA instances
-                window.initCaptcha('captcha-container-1', {
-                    onSuccess: function() {
-                        console.log('CAPTCHA 1 verified!');
+        // Add copy functionality to all copy buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            const copyButtons = document.querySelectorAll('.copy-btn');
+            
+            copyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const textarea = this.parentElement.querySelector('textarea');
+                    textarea.select();
+                    textarea.setSelectionRange(0, 99999); // For mobile devices
+                    
+                    try {
+                        const successful = document.execCommand('copy');
+                        if (successful) {
+                            // Visual feedback
+                            const originalText = this.textContent;
+                            this.textContent = 'Copied!';
+                            this.classList.add('copied');
+                            
+                            setTimeout(() => {
+                                this.textContent = originalText;
+                                this.classList.remove('copied');
+                            }, 2000);
+                        }
+                    } catch (err) {
+                        console.error('Failed to copy text: ', err);
                     }
                 });
-                
-                window.initCaptcha('captcha-container-2', {
-                    onSuccess: function() {
-                        console.log('CAPTCHA 2 verified!');
-                    }
-                });
-                
-                window.initCaptcha('captcha-container-3', {
-                    onSuccess: function() {
-                        console.log('CAPTCHA 3 verified!');
-                    }
-                });
-                
-                console.log('All CAPTCHA instances initialized');
-            } else {
-                // Retry after a delay
-                setTimeout(initializeCAPTCHAs, 100);
-            }
-        }
-        
-        // Wait for CAPTCHA system to load
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initializeCAPTCHAs);
-        } else {
-            setTimeout(initializeCAPTCHAs, 1000);
-        }
-        
-        // Control functions
-        function resetAll() {
-            if (window.captchaVerification) {
-                window.captchaVerification.resetVerification();
-                alert('All CAPTCHAs reset!');
-            }
-        }
-        
-        function checkStatus() {
-            if (window.captchaVerification) {
-                const status = document.getElementById('status');
-                const instances = ['1', '2', '3'];
-                let html = '<strong>Verification Status:</strong><br>';
-                
-                instances.forEach(instance => {
-                    const isVerified = window.captchaVerification.getVerificationStatus(instance);
-                    html += `Instance ${instance}: ${isVerified ? '✅ Verified' : '❌ Not verified'}<br>`;
-                });
-                
-                status.innerHTML = html;
-            }
-        }
-        
-        // Listen for verification events
-        document.addEventListener('captchaVerified', function(event) {
-            console.log(`Instance ${event.detail.instanceId} verified!`);
-        });
+            });
+        }); 
     </script>
+    <script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
