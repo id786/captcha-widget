@@ -26,7 +26,7 @@ class CustomCaptcha {
     createCaptcha() {
         this.container.innerHTML = `
             <style>
-            .a1b2c3dgic-${this.instanceId}, .spat-${this.instanceId} {
+            .a1b2c3dgic, .spat {
     white-space: nowrap;
 }
                 .x1a2b3cgic-${this.instanceId} {
@@ -118,21 +118,21 @@ class CustomCaptcha {
                 .x1a2b3cgic-${this.instanceId}.failed-stategic-${this.instanceId} {
                     border: 1.5px solid red;
                 }
-                .spat-${this.instanceId} {
+                .spat {
     text-decoration: none;
     color: #707070
 }
-.spat-${this.instanceId}:hover {
+.spat:hover {
     text-decoration: underline;
 }
-.spat-${this.instanceId}:link {
+.spat:link {
     text-decoration: none;
 }
-.spat-${this.instanceId}:visited {
+.spat:visited {
     text-decoration: none;
     color: #707070;
 }
-.spat-${this.instanceId}:active {
+.spat:active {
     text-decoration: none;
 }
                 .modal-containergic-${this.instanceId} {
