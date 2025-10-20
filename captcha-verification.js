@@ -14,7 +14,6 @@ class CaptchaVerification {
     }
 
     init() {
-        this.loadFromStorage();
         this.enableProtectedContent();
     }
 
@@ -25,9 +24,6 @@ class CaptchaVerification {
     markAsVerified(instanceId = '1') {
         this.verifiedInstances.add(instanceId);
         this.verificationTokens.set(instanceId, this.generateToken(instanceId));
-        
-        // Store in session storage
-        this.saveToStorage();
         
         // Enable protected content for this instance
         this.enableProtectedContent(instanceId);
@@ -96,8 +92,6 @@ class CaptchaVerification {
             this.verificationTokens.clear();
             this.disableAllContent();
         }
-        
-        this.saveToStorage();
         console.log(`CAPTCHA: Verification reset for instance ${instanceId || 'all'}`);
     }
 
@@ -134,28 +128,6 @@ class CaptchaVerification {
         });
     }
 
-    // Storage management
-    saveToStorage() {
-        const data = {
-            instances: Array.from(this.verifiedInstances),
-            tokens: Object.fromEntries(this.verificationTokens)
-        };
-        sessionStorage.setItem(this.storageKey, JSON.stringify(data));
-    }
-
-    loadFromStorage() {
-        try {
-            const stored = sessionStorage.getItem(this.storageKey);
-            if (stored) {
-                const data = JSON.parse(stored);
-                this.verifiedInstances = new Set(data.instances || []);
-                this.verificationTokens = new Map(Object.entries(data.tokens || {}));
-            }
-        } catch (error) {
-            console.warn('CAPTCHA: Failed to load verification data from storage');
-        }
-    }
-
     // Get all verified instances
     getVerifiedInstances() {
         return Array.from(this.verifiedInstances);
@@ -171,7 +143,6 @@ class CaptchaVerification {
         this.verifiedInstances.delete(instanceId);
         this.verificationTokens.delete(instanceId);
         this.disableInstanceContent(instanceId);
-        this.saveToStorage();
     }
 }
 
