@@ -527,6 +527,7 @@ class CustomCaptcha {
                     transition: all 0.3s ease;
                     border-radius: 50%;
                     margin-right: 10px;
+                    padding: 0px 0px !important;
                 }
 
                 .refresh-buttongic-${this.instanceId}:hover {
