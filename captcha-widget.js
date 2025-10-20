@@ -665,13 +665,21 @@ class CustomCaptcha {
     }
 
     bindEvents() {
-        // Store reference to this instance for event handlers
-        this.container.captchaInstance = this;
-        
+    // Store reference to this instance for event handlers
+    this.container.captchaInstance = this;
+    
+    // Use DOMContentLoaded or a more reliable approach
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            this.setupEventListeners();
+        });
+    } else {
+        // If DOM is already loaded, set a minimal timeout to ensure elements exist
         setTimeout(() => {
             this.setupEventListeners();
-        }, 100);
+        }, 10);
     }
+}
 
     setupEventListeners() {
         const instanceId = this.instanceId;
